@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。 同样表示变量var与val有什么区别？val = 加了final的变量 val message = &amp;quot;Kotlin&amp;quot; // final String message = &amp;quot;Kotlin&amp;quot;; va">
+<meta name="description" content="年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。 同样表示变量var与val有什么区别？">
 <meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin第二讲-初出茅庐">
 <meta property="og:url" content="https://sugarya.github.io/2018/04/05/Kotlin第二讲-初出茅庐/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。 同样表示变量var与val有什么区别？val = 加了final的变量 val message = &amp;quot;Kotlin&amp;quot; // final String message = &amp;quot;Kotlin&amp;quot;; va">
+<meta property="og:description" content="年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。 同样表示变量var与val有什么区别？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-04T04:43:05.299Z">
+<meta property="og:updated_time" content="2018-08-04T06:29:19.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin第二讲-初出茅庐">
-<meta name="twitter:description" content="年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。 同样表示变量var与val有什么区别？val = 加了final的变量 val message = &amp;quot;Kotlin&amp;quot; // final String message = &amp;quot;Kotlin&amp;quot;; va">
+<meta name="twitter:description" content="年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。 同样表示变量var与val有什么区别？">
 
 
 
@@ -113,7 +113,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
@@ -211,6 +211,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -268,7 +288,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ethan Ruan">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -353,7 +373,9 @@
 
       
         <p>年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。</p>
-<h3 id="同样表示变量var与val有什么区别？"><a href="#同样表示变量var与val有什么区别？" class="headerlink" title="同样表示变量var与val有什么区别？"></a>同样表示变量var与val有什么区别？</h3><p>val = 加了final的变量</p>
+<h3 id="同样表示变量var与val有什么区别？"><a href="#同样表示变量var与val有什么区别？" class="headerlink" title="同样表示变量var与val有什么区别？"></a>同样表示变量var与val有什么区别？</h3><a id="more"></a>
+<p>年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。</p>
+<h3 id="同样表示变量var与val有什么区别？-1"><a href="#同样表示变量var与val有什么区别？-1" class="headerlink" title="同样表示变量var与val有什么区别？"></a>同样表示变量var与val有什么区别？</h3><p>val = 加了final的变量</p>
 <pre><code>val message = &quot;Kotlin&quot; // final String message = &quot;Kotlin&quot;;
 var count = 0
 
@@ -624,7 +646,7 @@ fun testCheckedException(){
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/images/my_avatar.jpg"
                alt="Ethan Ruan" />
           <p class="site-author-name" itemprop="name">Ethan Ruan</p>
            
@@ -670,6 +692,30 @@ fun testCheckedException(){
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+          
         </div>
 
         
@@ -693,7 +739,7 @@ fun testCheckedException(){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#同样表示变量var与val有什么区别？"><span class="nav-number">1.</span> <span class="nav-text">同样表示变量var与val有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板"><span class="nav-number">2.</span> <span class="nav-text">字符串模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">3.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于When"><span class="nav-number">4.</span> <span class="nav-text">关于When</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Kotlin里的循环和迭代"><span class="nav-number">5.</span> <span class="nav-text">关于Kotlin里的循环和迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理"><span class="nav-number">6.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#当try-catch-作为表达式的使用时"><span class="nav-number">6.1.</span> <span class="nav-text">当try{}catch{}作为表达式的使用时</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于枚举"><span class="nav-number">7.</span> <span class="nav-text">关于枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于类和属性"><span class="nav-number">8.</span> <span class="nav-text">关于类和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">9.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#同样表示变量var与val有什么区别？"><span class="nav-number">1.</span> <span class="nav-text">同样表示变量var与val有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同样表示变量var与val有什么区别？-1"><span class="nav-number">2.</span> <span class="nav-text">同样表示变量var与val有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板"><span class="nav-number">3.</span> <span class="nav-text">字符串模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于When"><span class="nav-number">5.</span> <span class="nav-text">关于When</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Kotlin里的循环和迭代"><span class="nav-number">6.</span> <span class="nav-text">关于Kotlin里的循环和迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理"><span class="nav-number">7.</span> <span class="nav-text">异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#当try-catch-作为表达式的使用时"><span class="nav-number">7.1.</span> <span class="nav-text">当try{}catch{}作为表达式的使用时</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于枚举"><span class="nav-number">8.</span> <span class="nav-text">关于枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于类和属性"><span class="nav-number">9.</span> <span class="nav-text">关于类和属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">10.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
@@ -731,7 +777,7 @@ fun testCheckedException(){
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Gemini
   </a>
 </div>
 
@@ -810,6 +856,13 @@ fun testCheckedException(){
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>

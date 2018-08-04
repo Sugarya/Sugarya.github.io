@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件  12345678910npm init&amp;quot">
+<meta name="description" content="假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件">
 <meta name="keywords" content="ReactNative">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android原生项目集成ReactNative混合开发">
 <meta property="og:url" content="https://sugarya.github.io/2018/08/03/Android原生项目集成React-Native混合开发/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件  12345678910npm init&amp;quot">
+<meta property="og:description" content="假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-04T04:42:53.904Z">
+<meta property="og:updated_time" content="2018-08-04T06:30:33.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android原生项目集成ReactNative混合开发">
-<meta name="twitter:description" content="假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件  12345678910npm init&amp;quot">
+<meta name="twitter:description" content="假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件">
 
 
 
@@ -113,7 +113,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
@@ -211,6 +211,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -268,7 +288,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ethan Ruan">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -355,6 +375,13 @@
         <p>假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：<a href="https://reactnative.cn/docs/getting-started.html" target="_blank" rel="noopener">搭建开发环境</a></p>
 <p>以下是 本篇的正文:</p>
 <h3 id="初始化React-Native"><a href="#初始化React-Native" class="headerlink" title="初始化React Native"></a>初始化React Native</h3><ol>
+<li>生成package.json文件，该文件用于记录react native版本信息和依赖包</li>
+<li>加入React，React Native类库</li>
+<li>生成flowconfig文件<a id="more"></a>
+假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：<a href="https://reactnative.cn/docs/getting-started.html" target="_blank" rel="noopener">搭建开发环境</a></li>
+</ol>
+<p>以下是 本篇的正文:</p>
+<h3 id="初始化React-Native-1"><a href="#初始化React-Native-1" class="headerlink" title="初始化React Native"></a>初始化React Native</h3><ol>
 <li>生成package.json文件，该文件用于记录react native版本信息和依赖包</li>
 <li>加入React，React Native类库</li>
 <li>生成flowconfig文件</li>
@@ -478,7 +505,7 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/images/my_avatar.jpg"
                alt="Ethan Ruan" />
           <p class="site-author-name" itemprop="name">Ethan Ruan</p>
            
@@ -524,6 +551,30 @@
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+          
         </div>
 
         
@@ -547,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化React-Native"><span class="nav-number">1.</span> <span class="nav-text">初始化React Native</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置原生安卓项目的Gradle"><span class="nav-number">2.</span> <span class="nav-text">配置原生安卓项目的Gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加权限"><span class="nav-number">3.</span> <span class="nav-text">添加权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加React-native入口"><span class="nav-number">4.</span> <span class="nav-text">添加React native入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行到安卓真机"><span class="nav-number">5.</span> <span class="nav-text">编译运行到安卓真机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包"><span class="nav-number">6.</span> <span class="nav-text">打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化React-Native"><span class="nav-number">1.</span> <span class="nav-text">初始化React Native</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化React-Native-1"><span class="nav-number">2.</span> <span class="nav-text">初始化React Native</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置原生安卓项目的Gradle"><span class="nav-number">3.</span> <span class="nav-text">配置原生安卓项目的Gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加权限"><span class="nav-number">4.</span> <span class="nav-text">添加权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加React-native入口"><span class="nav-number">5.</span> <span class="nav-text">添加React native入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译运行到安卓真机"><span class="nav-number">6.</span> <span class="nav-text">编译运行到安卓真机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包"><span class="nav-number">7.</span> <span class="nav-text">打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
@@ -585,7 +636,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Gemini
   </a>
 </div>
 
@@ -664,6 +715,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>

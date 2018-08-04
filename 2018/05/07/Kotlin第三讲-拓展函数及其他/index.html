@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="集合的创建与遍历Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。 创建集合Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。 1234567891011121314151617181920212223242526public interf">
+<meta name="description" content="集合的创建与遍历Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。 创建集合Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。">
 <meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin第三讲-拓展函数及其他">
 <meta property="og:url" content="https://sugarya.github.io/2018/05/07/Kotlin第三讲-拓展函数及其他/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="集合的创建与遍历Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。 创建集合Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。 1234567891011121314151617181920212223242526public interf">
+<meta property="og:description" content="集合的创建与遍历Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。 创建集合Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-04T04:44:03.131Z">
+<meta property="og:updated_time" content="2018-08-04T06:28:31.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin第三讲-拓展函数及其他">
-<meta name="twitter:description" content="集合的创建与遍历Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。 创建集合Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。 1234567891011121314151617181920212223242526public interf">
+<meta name="twitter:description" content="集合的创建与遍历Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。 创建集合Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。">
 
 
 
@@ -113,7 +113,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
@@ -211,6 +211,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -268,7 +288,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ethan Ruan">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -354,6 +374,9 @@
       
         <h2 id="集合的创建与遍历"><a href="#集合的创建与遍历" class="headerlink" title="集合的创建与遍历"></a>集合的创建与遍历</h2><p>Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。</p>
 <h3 id="创建集合"><a href="#创建集合" class="headerlink" title="创建集合"></a>创建集合</h3><p>Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。</p>
+<a id="more"></a>
+<h2 id="集合的创建与遍历-1"><a href="#集合的创建与遍历-1" class="headerlink" title="集合的创建与遍历"></a>集合的创建与遍历</h2><p>Kotlin没有采用它自己的集合类，而是采用标准的Java集合类。大部分Kotlin的标准库是由Java类的拓展函数组成的。</p>
+<h3 id="创建集合-1"><a href="#创建集合-1" class="headerlink" title="创建集合"></a>创建集合</h3><p>Kotlin中对集合增加了一个新的接口MutableList，实现该接口的集合是可变集合。Kotlin中，集合分为可变集合和不可变集合。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public interface MutableList&lt;E&gt; : List&lt;E&gt;, MutableCollection&lt;E&gt; &#123;</span><br><span class="line">   </span><br><span class="line">    override fun add(element: E): Boolean</span><br><span class="line"></span><br><span class="line">    override fun remove(element: E): Boolean</span><br><span class="line"></span><br><span class="line">    override fun addAll(elements: Collection&lt;E&gt;): Boolean</span><br><span class="line"></span><br><span class="line">    public fun addAll(index: Int, elements: Collection&lt;E&gt;): Boolean</span><br><span class="line"></span><br><span class="line">    override fun removeAll(elements: Collection&lt;E&gt;): Boolean</span><br><span class="line">    override fun retainAll(elements: Collection&lt;E&gt;): Boolean</span><br><span class="line">    override fun clear(): Unit</span><br><span class="line"></span><br><span class="line">    public operator fun set(index: Int, element: E): E</span><br><span class="line"></span><br><span class="line">    public fun add(index: Int, element: E): Unit</span><br><span class="line"></span><br><span class="line">    public fun removeAt(index: Int): E</span><br><span class="line"></span><br><span class="line">    override fun listIterator(): MutableListIterator&lt;E&gt;</span><br><span class="line"></span><br><span class="line">    override fun listIterator(index: Int): MutableListIterator&lt;E&gt;</span><br><span class="line"></span><br><span class="line">    override fun subList(fromIndex: Int, toIndex: Int): MutableList&lt;E&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>MutableList接口提供了增加和删除集合元素的能力。</p>
 <h4 id="创建不可变集合"><a href="#创建不可变集合" class="headerlink" title="创建不可变集合"></a>创建不可变集合</h4><pre><code>val list = listOf&lt;String&gt;(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
@@ -577,7 +600,7 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/images/my_avatar.jpg"
                alt="Ethan Ruan" />
           <p class="site-author-name" itemprop="name">Ethan Ruan</p>
            
@@ -623,6 +646,30 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+          
         </div>
 
         
@@ -646,7 +693,7 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的创建与遍历"><span class="nav-number">1.</span> <span class="nav-text">集合的创建与遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建集合"><span class="nav-number">1.1.</span> <span class="nav-text">创建集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建不可变集合"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建不可变集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建可变集合"><span class="nav-number">1.1.2.</span> <span class="nav-text">创建可变集合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顶层函数与属性"><span class="nav-number">3.</span> <span class="nav-text">顶层函数与属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顶层函数"><span class="nav-number">3.1.</span> <span class="nav-text">顶层函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顶层属性"><span class="nav-number">3.2.</span> <span class="nav-text">顶层属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展函数与属性"><span class="nav-number">4.</span> <span class="nav-text">拓展函数与属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展函数基本使用"><span class="nav-number">4.1.</span> <span class="nav-text">拓展函数基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入范围"><span class="nav-number">4.2.</span> <span class="nav-text">导入范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展函数的本质和特性"><span class="nav-number">4.3.</span> <span class="nav-text">扩展函数的本质和特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展属性"><span class="nav-number">4.4.</span> <span class="nav-text">扩展属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展函数的应用"><span class="nav-number">4.5.</span> <span class="nav-text">扩展函数的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分割字符串"><span class="nav-number">4.5.1.</span> <span class="nav-text">分割字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析文件路径"><span class="nav-number">4.5.2.</span> <span class="nav-text">解析文件路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部属性"><span class="nav-number">5.</span> <span class="nav-text">局部属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中缀调用"><span class="nav-number">6.</span> <span class="nav-text">中缀调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三重引号的字符串"><span class="nav-number">7.</span> <span class="nav-text">三重引号的字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的创建与遍历"><span class="nav-number">1.</span> <span class="nav-text">集合的创建与遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建集合"><span class="nav-number">1.1.</span> <span class="nav-text">创建集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的创建与遍历-1"><span class="nav-number">2.</span> <span class="nav-text">集合的创建与遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建集合-1"><span class="nav-number">2.1.</span> <span class="nav-text">创建集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建不可变集合"><span class="nav-number">2.1.1.</span> <span class="nav-text">创建不可变集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建可变集合"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建可变集合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">3.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顶层函数与属性"><span class="nav-number">4.</span> <span class="nav-text">顶层函数与属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顶层函数"><span class="nav-number">4.1.</span> <span class="nav-text">顶层函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顶层属性"><span class="nav-number">4.2.</span> <span class="nav-text">顶层属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展函数与属性"><span class="nav-number">5.</span> <span class="nav-text">拓展函数与属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展函数基本使用"><span class="nav-number">5.1.</span> <span class="nav-text">拓展函数基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入范围"><span class="nav-number">5.2.</span> <span class="nav-text">导入范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展函数的本质和特性"><span class="nav-number">5.3.</span> <span class="nav-text">扩展函数的本质和特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展属性"><span class="nav-number">5.4.</span> <span class="nav-text">扩展属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展函数的应用"><span class="nav-number">5.5.</span> <span class="nav-text">扩展函数的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分割字符串"><span class="nav-number">5.5.1.</span> <span class="nav-text">分割字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析文件路径"><span class="nav-number">5.5.2.</span> <span class="nav-text">解析文件路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部属性"><span class="nav-number">6.</span> <span class="nav-text">局部属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中缀调用"><span class="nav-number">7.</span> <span class="nav-text">中缀调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三重引号的字符串"><span class="nav-number">8.</span> <span class="nav-text">三重引号的字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">9.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
@@ -684,7 +731,7 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Gemini
   </a>
 </div>
 
@@ -763,6 +810,13 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="本专栏的第一篇，分享下Kotlin里输入参数的特性 命名参数我们先来看一个需求：把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go） 我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下： 1234567891011121314151617181920212223242526272829">
+<meta name="description" content="命名参数我们先来看一个需求：把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go） 我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下：">
 <meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin第一讲-输入参数">
 <meta property="og:url" content="https://sugarya.github.io/2018/03/22/ Kotlin第一讲-输入参数/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="本专栏的第一篇，分享下Kotlin里输入参数的特性 命名参数我们先来看一个需求：把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go） 我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下： 1234567891011121314151617181920212223242526272829">
+<meta property="og:description" content="命名参数我们先来看一个需求：把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go） 我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T04:47:15.864Z">
+<meta property="og:updated_time" content="2018-08-04T06:29:52.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin第一讲-输入参数">
-<meta name="twitter:description" content="本专栏的第一篇，分享下Kotlin里输入参数的特性 命名参数我们先来看一个需求：把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go） 我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下： 1234567891011121314151617181920212223242526272829">
+<meta name="twitter:description" content="命名参数我们先来看一个需求：把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go） 我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下：">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -115,7 +115,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
@@ -213,6 +213,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -270,7 +290,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ethan Ruan">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -354,8 +374,9 @@
       
 
       
-        <p>本专栏的第一篇，分享下Kotlin里输入参数的特性</p>
-<h2 id="命名参数"><a href="#命名参数" class="headerlink" title="命名参数"></a>命名参数</h2><p>我们先来看一个需求：<br>把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go）</p>
+        <h2 id="命名参数"><a href="#命名参数" class="headerlink" title="命名参数"></a>命名参数</h2><p>我们先来看一个需求：<br>把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go）</p>
+<p>我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下：<br><a id="more"></a><br>本专栏的第一篇，分享下Kotlin里输入参数的特性</p>
+<h2 id="命名参数-1"><a href="#命名参数-1" class="headerlink" title="命名参数"></a>命名参数</h2><p>我们先来看一个需求：<br>把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go）</p>
 <p>我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class SeparatorUtils &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     *</span><br><span class="line">     * @param collections 集合</span><br><span class="line">     * @param prefix 前缀</span><br><span class="line">     * @param separator 分隔符</span><br><span class="line">     * @param postfix 后缀</span><br><span class="line">     * @param &lt;T&gt; 集合泛型</span><br><span class="line">     * @return 分隔后的结果</span><br><span class="line">     */</span><br><span class="line">    public static &lt;T&gt; String separator(Collection&lt;T&gt; collections, String prefix, String separator, String postfix) &#123;</span><br><span class="line">        Objects.requireNonNull(collections);</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = new StringBuilder();</span><br><span class="line">        sb.append(prefix);</span><br><span class="line">        int size = collections.size();</span><br><span class="line">        int index = 0;</span><br><span class="line">        for (T t : collections) &#123;</span><br><span class="line">            sb.append(t.toString());</span><br><span class="line">            if(index &lt; size - 1)&#123;</span><br><span class="line">                sb.append(separator);</span><br><span class="line">            &#125;</span><br><span class="line">            index ++;</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(postfix);</span><br><span class="line">        return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <pre><code>private static void testSeparator(){
@@ -515,7 +536,7 @@ val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/images/my_avatar.jpg"
                alt="Ethan Ruan" />
           <p class="site-author-name" itemprop="name">Ethan Ruan</p>
            
@@ -561,6 +582,30 @@ val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
 
         <div class="links-of-author motion-element">
           
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+          
         </div>
 
         
@@ -584,7 +629,7 @@ val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名参数"><span class="nav-number">1.</span> <span class="nav-text">命名参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#默认参数"><span class="nav-number">2.</span> <span class="nav-text">默认参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可变参数"><span class="nav-number">3.</span> <span class="nav-text">可变参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#展开运算符"><span class="nav-number">4.</span> <span class="nav-text">展开运算符 *</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名参数"><span class="nav-number">1.</span> <span class="nav-text">命名参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名参数-1"><span class="nav-number">2.</span> <span class="nav-text">命名参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#默认参数"><span class="nav-number">3.</span> <span class="nav-text">默认参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可变参数"><span class="nav-number">4.</span> <span class="nav-text">可变参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#展开运算符"><span class="nav-number">5.</span> <span class="nav-text">展开运算符 *</span></a></li></ol></div>
             
 
           </div>
@@ -622,7 +667,7 @@ val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Gemini
   </a>
 </div>
 
@@ -701,6 +746,13 @@ val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
