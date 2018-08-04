@@ -686,7 +686,7 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/04/05/ Kotlin第一讲-输入参数/">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/04/05/Kotlin第二讲-初出茅庐/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ethan Ruan">
@@ -705,7 +705,7 @@ println(&quot;directory path = $dirPath, fileName = $fileName, extendName = $ext
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/05/ Kotlin第一讲-输入参数/" itemprop="url">Kotlin第二讲-初出茅庐</a></h1>
+                <a class="post-title-link" href="/2018/04/05/Kotlin第二讲-初出茅庐/" itemprop="url">Kotlin第二讲-初出茅庐</a></h1>
         
 
         <div class="post-meta">
@@ -992,7 +992,7 @@ fun testCheckedException(){
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/04/05/Kotlin第二讲-初出茅庐/">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/03/22/ Kotlin第一讲-输入参数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ethan Ruan">
@@ -1011,7 +1011,7 @@ fun testCheckedException(){
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/05/Kotlin第二讲-初出茅庐/" itemprop="url">Kotlin第二讲-初出茅庐</a></h1>
+                <a class="post-title-link" href="/2018/03/22/ Kotlin第一讲-输入参数/" itemprop="url">Kotlin第一讲-输入参数</a></h1>
         
 
         <div class="post-meta">
@@ -1023,8 +1023,8 @@ fun testCheckedException(){
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T13:03:00+08:00">
-                2018-04-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T15:48:00+08:00">
+                2018-03-22
               </time>
             
 
@@ -1085,171 +1085,64 @@ fun testCheckedException(){
       
         
           
-            <p>年前快速地过了一遍Kotlin语法。这回计划花上半年的时间，从代码细节上重新系统的梳理一遍Kotlin语言。当然，性价比最高的方式是通过Kotlin开发项目来学习。</p>
-<h3 id="同样表示变量var与val有什么区别？"><a href="#同样表示变量var与val有什么区别？" class="headerlink" title="同样表示变量var与val有什么区别？"></a>同样表示变量var与val有什么区别？</h3><p>val = 加了final的变量</p>
-<pre><code>val message = &quot;Kotlin&quot; // final String message = &quot;Kotlin&quot;;
-var count = 0
+            <p>本专栏的第一篇，分享下Kotlin里输入参数的特性</p>
+<h2 id="命名参数"><a href="#命名参数" class="headerlink" title="命名参数"></a>命名参数</h2><p>我们先来看一个需求：<br>把集合里每个元素用分号分隔并打印到括号里，例如（Java,Kotlin,Python,JavaScript,Ruby,Go）</p>
+<p>我还想改变输出格式，前缀，分隔符，后缀都有可能发生改变，于是提取出参数，Java实现代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class SeparatorUtils &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     *</span><br><span class="line">     * @param collections 集合</span><br><span class="line">     * @param prefix 前缀</span><br><span class="line">     * @param separator 分隔符</span><br><span class="line">     * @param postfix 后缀</span><br><span class="line">     * @param &lt;T&gt; 集合泛型</span><br><span class="line">     * @return 分隔后的结果</span><br><span class="line">     */</span><br><span class="line">    public static &lt;T&gt; String separator(Collection&lt;T&gt; collections, String prefix, String separator, String postfix) &#123;</span><br><span class="line">        Objects.requireNonNull(collections);</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = new StringBuilder();</span><br><span class="line">        sb.append(prefix);</span><br><span class="line">        int size = collections.size();</span><br><span class="line">        int index = 0;</span><br><span class="line">        for (T t : collections) &#123;</span><br><span class="line">            sb.append(t.toString());</span><br><span class="line">            if(index &lt; size - 1)&#123;</span><br><span class="line">                sb.append(separator);</span><br><span class="line">            &#125;</span><br><span class="line">            index ++;</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(postfix);</span><br><span class="line">        return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>private static void testSeparator(){
+    List&lt;String&gt; list = new ArrayList&lt;&gt;();
+    list.add(&quot;Java&quot;);
+    list.add(&quot;Kotlin&quot;);
+    list.add(&quot;Python&quot;);
+    list.add(&quot;JavaScript&quot;);
+    list.add(&quot;Ruby&quot;);
+    list.add(&quot;Go&quot;);
 
-val msg: String = &quot;Kotlin&quot; //value
-var count2: Int = 0  // variant
-
-val p = Person(&quot;Kotlin&quot;)
-p.name
-/*
-    Q1 var与val什么区别？
-    val = 加了final变量
- */
-
-val languageList = arrayListOf&lt;String&gt;(&quot;Kotlin&quot;, &quot;Java&quot;)
-languageList.add(&quot;Go&quot;)
-</code></pre><h3 id="字符串模板"><a href="#字符串模板" class="headerlink" title="字符串模板"></a>字符串模板</h3><p>类比Java Web JSP里的EL表达式</p>
-<pre><code>println(&quot;message = &quot; + message)
-
-println(&quot;message = $message&quot;)
-println(&quot;count = ${count}&quot;)
-println(&quot;language list size = ${languageList.size}&quot;)
-println(&quot;\$: ${count2}&quot;)
-</code></pre><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><pre><code>fun max(a: Int, b: Int): Int {
-    if (a &gt; b) {
-        return a
-    }
-    return b
+    String separator = SeparatorUtils.separator(list, &quot;(&quot;, &quot;,&quot;, &quot;)&quot;);
+    System.out.println(&quot;separator result = &quot; + separator);
 }
-
-fun max2(a: Int, b: Int) = if (a &gt; b) a else b
-</code></pre><p><strong>问题：表达式和语句有什么区别？</strong></p>
-<p>表达式有返回值，语句没有。表达式可以包含在语句或表达式里。语句与语句之间是并列的</p>
-<p>Kotlin常见的表达式有：if，when，try{}catch </p>
-<h3 id="关于When"><a href="#关于When" class="headerlink" title="关于When"></a>关于When</h3><pre><code>fun filter(a: Int) {
-    when (a) {
-        0 -&gt; println(&quot;0&quot;)
-        1 -&gt; println(&quot;1&quot;)
-        in 2..10 -&gt; println(&quot;in 2..10&quot;)
-        !in 11..20 -&gt; println(&quot;! in 11..20&quot;)
-        Integer.parseInt(&quot;21&quot;) -&gt; println(&quot;21&quot;)
-        22, 23 -&gt; println(&quot;22 , 23&quot;)
-        else -&gt; println(&quot;else&quot;)
-    }
-}
-
-fun filter2(x: Any) {
-    when (x) {
-        is Int -&gt; println(&quot;Int&quot;)
-        is String -&gt; println(&quot;String&quot;)
-        is Person -&gt; print(&quot;JavaPerson&quot;)
-    }
-}
-
-
-fun filter3(x: Any) =
-        when (x) {
-            is Int -&gt; {
-                val a = 3
-                &quot;Int&quot;
-            }
-            is String -&gt; {
-                val b = &quot;&quot;
-                &quot;String&quot;
-            }
-            else -&gt; {
-                &quot;else&quot;
-            }
-        }
-
-fun filter4(x: Any) =
-        when {
-            x is Int -&gt; &quot;Int&quot;
-            x is String -&gt; &quot;String&quot;
-            else -&gt; &quot;else&quot;
-        }
-}
-</code></pre><h3 id="关于Kotlin里的循环和迭代"><a href="#关于Kotlin里的循环和迭代" class="headerlink" title="关于Kotlin里的循环和迭代"></a>关于Kotlin里的循环和迭代</h3><pre><code>for (i in 0..5) {
-    println(&quot;i : $i&quot;)
-}
-
-for(j in 0 until 5){
-    println(&quot;j : $j&quot;)
-}
-
-for(k in 5 downTo 0){
-    println(&quot;k : $k&quot;)
-}
-
-
-val languageList = arrayListOf&lt;String&gt;(&quot;Kotlin&quot;, &quot;Java&quot;, &quot;Go&quot;)
-for((index, value) in languageList.withIndex()){
-    println(&quot;index = $index, value = $value&quot;)
-}
-
-val languageMap = hashMapOf&lt;String, String&gt;(&quot;j&quot; to &quot;Java&quot;, &quot;k&quot; to &quot;Kotlin&quot;, &quot;g&quot; to &quot;Go&quot;)
-for((key, v) in languageMap){
-    println(&quot;$key : map value = $v&quot;)
-}
-</code></pre><h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p><strong>背景知识：</strong></p>
-<p>Java异常继承自Throwable，分为两种</p>
+</code></pre><p>输出结果：  </p>
+<pre><code>separator result = (Java,Kotlin,Python,JavaScript,Ruby,Go)
+</code></pre><p>这是一个完整的编码过程，来了一个需求，通过新增类和方法，在需要的地方，调用实现。需求被解决了，代码默默地在角落发挥着作用。</p>
+<p>转眼三个月过去，团队里来了新人，他阅读到testSeparator方法；当读到SeparatorUtils.separator（）方法，对于传的四个参数代表什么含义，乍看之下他并不清楚，需要点进去读实现代码或者看注释说明才确切明白。那么还有没有更易于阅读的方式呢？Kotlin的命名参数能做到。</p>
+<p>SeparatorUtils.separator方法用Kotlin重写如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">fun &lt;T&gt; joinToString(</span><br><span class="line">        collection: Collection&lt;T&gt;,</span><br><span class="line">        separator: String,</span><br><span class="line">        prefix: String,</span><br><span class="line">        postfix: String</span><br><span class="line">): String &#123;</span><br><span class="line">    val sb = StringBuffer(prefix)</span><br><span class="line"></span><br><span class="line">    for ((index, element) in collection.withIndex()) &#123;</span><br><span class="line">        if (index &gt; 0) &#123;</span><br><span class="line">            sb.append(separator)</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(element)</span><br><span class="line">    &#125;</span><br><span class="line">    sb.append(postfix)</span><br><span class="line"></span><br><span class="line">    return sb.toString()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用joinToString方法可以这样</p>
+<pre><code>val list = arrayListOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+val s = joinToString(list, postfix = &quot;)&quot;, separator = &quot;,&quot;, prefix = &quot;(&quot;)
+println(&quot;s = $s&quot;)
+</code></pre><p>上述即是命名参数，在调用处使用，形式为：参数名=参数值；<br>这样的入参带来了两个便利：</p>
 <ol>
-<li>运行时异常RuntimeException，也叫非受检异常</li>
-<li>受检异常 CheckedException</li>
+<li>便于阅读，按顺序阅读代码就能知晓方法参数的含义</li>
+<li>调用时入参的位置可以任意（调用的入参顺序和定义的入参的顺序允许不一致）</li>
 </ol>
-<p>Java处理异常有两种方式：</p>
-<ol>
-<li>try catch 捕获异常</li>
-<li>throws抛出异常</li>
-</ol>
-<p>先看下Java的例子</p>
-<pre><code>//非受检异常
-private static void testRuntimeException() {
-    int i = Integer.parseInt(&quot;!&quot;);
-}
-
-//受检异常
-private void testCheckedException() {
-    try {
-        FileInputStream fileInputStream = new FileInputStream(&quot;/temp&quot;);
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    }
-}
-
-private void testCheckedException2() throws FileNotFoundException {
-    FileInputStream fileInputStream = new FileInputStream(&quot;/temp&quot;);
-}
-</code></pre><p>从上面程序可知：Java强制要求开发人员处理受检异常.</p>
-<p><strong>常见的受检异常：</strong> Exception, FileNotFoundException, IOException, SQLException</p>
-<p><strong>常见的未检查异常：</strong> NullPointerException, ClassCastException, ArrayIndexsOutOfBoundsException, ArithmeticException, NumberFormatException</p>
-<p>上述Kotlin下的代码如下：</p>
-<pre><code>fun testRuntimeException(){
-    val i = Integer.parseInt(&quot;!&quot;)
-}
-
-fun testCheckedException(){
-    val fis = FileInputStream(&quot;/temp&quot;)
-    throw IllegalArgumentException(&quot;&quot;)
-}
-</code></pre><p>可知：与Java不同，对受检异常，Kotlin不强制开发人员处理。</p>
-<p><strong>小结</strong><br>对于异常，Kotlin与Java的不同之处如下：</p>
-<ol>
-<li>Kotlin不区分受检异常和非受检异常, 都不强制处理异常</li>
-<li>Kotlin不存在throws，不允许抛出异常</li>
-</ol>
-<h4 id="当try-catch-作为表达式的使用时"><a href="#当try-catch-作为表达式的使用时" class="headerlink" title="当try{}catch{}作为表达式的使用时"></a>当try{}catch{}作为表达式的使用时</h4><pre><code>fun readNumber(){
-    val a = try {
-        val c = &quot;&quot;
-        Integer.parseInt(&quot;!&quot;)
-    }catch (e: Exception){
-        e.printStackTrace()
-        0
-    }
-
-    println(&quot;a = $a&quot;)
-}
-</code></pre><h3 id="关于枚举"><a href="#关于枚举" class="headerlink" title="关于枚举"></a>关于枚举</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">enum class Season&#123;</span><br><span class="line">    SPRING,</span><br><span class="line">    SUMMER,</span><br><span class="line">    AUTUMN,</span><br><span class="line">    WINTER</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">enum class Color(val r: Int, val g: Int, val b: Int)&#123;</span><br><span class="line">    RED(255, 0, 0),</span><br><span class="line">    GREEN(0, 255, 0),</span><br><span class="line">    BLUE(0,0,255);</span><br><span class="line"></span><br><span class="line">    fun rgb() = r * 255 * 255 + g * 255 + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="关于类和属性"><a href="#关于类和属性" class="headerlink" title="关于类和属性"></a>关于类和属性</h3><p>我们看下Java的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class Rectangle &#123;</span><br><span class="line">    private final int width;</span><br><span class="line">    private final int height;</span><br><span class="line">    private final boolean isSquare;</span><br><span class="line"></span><br><span class="line">    public Rectangle(int width, int height, boolean isSquare) &#123;</span><br><span class="line">        this.width = width;</span><br><span class="line">        this.height = height;</span><br><span class="line">        this.isSquare = isSquare;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getWidth() &#123;</span><br><span class="line">        return width;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getHeight() &#123;</span><br><span class="line">        return height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean isSquare() &#123;</span><br><span class="line">        return isSquare;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">等效Kotlin实现</span><br></pre></td></tr></table></figure>
-<p>class Rectangle(val width: Int, val height: Int){<br>    val isSquare get() = width == height<br>}<br><code>`</code></p>
-<p>Java中，成员变量就是一个字段，访问成员变量通过setter或者getter方法，相当于变量的访问器。Kotlin把这个概念作为语言层面的支持了。kotlin中每个属性，如果是val变量就自带访问器get(),如果是var属性则自带get()和set()</p>
-<p>因此Kotlin中，一个属性 = 字段 + 访问器；这是Kotlin对Java语言的进化。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>该文是对Kotlin实战一书第二章知识点代码的梳理和总结，完整代码，已上传到GitHub上，<a href="https://github.com/Sugarya/KotlinInActionExample" target="_blank" rel="noopener">KotlinInActionExample 传送门</a></p>
+<p>这样看起来真不错的</p>
+<h2 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h2><p>定义函数时，给入参提供默认值，在调用处，如果不传入实参，则该参数使用默认值，可用于方法重载。例如对上述Kotlin代码的joinToString方法改变入参</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@JvmOverloads</span><br><span class="line">fun &lt;T&gt; joinToString(</span><br><span class="line">        collection: Collection&lt;T&gt;,</span><br><span class="line">        separator: String = &quot;,&quot;,</span><br><span class="line">        prefix: String = &quot;(&quot;,</span><br><span class="line">        postfix: String = &quot;)&quot;</span><br><span class="line">): String &#123;</span><br><span class="line">    val sb = StringBuffer(prefix)</span><br><span class="line"></span><br><span class="line">    for ((index, element) in collection.withIndex()) &#123;</span><br><span class="line">        if (index &gt; 0) &#123;</span><br><span class="line">            sb.append(separator)</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(element)</span><br><span class="line">    &#125;</span><br><span class="line">    sb.append(postfix)</span><br><span class="line"></span><br><span class="line">    return sb.toString()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Kotlin调用joinToString（）支持如下，最后一个我们同时使用了Kotlin的命名参数和默认参数的特性。</p>
+<pre><code>val list = arrayListOf(&quot;Java&quot;, &quot;Kotlin&quot;, &quot;Python&quot;, &quot;JavaScript&quot;, &quot;Ruby&quot;, &quot;Go&quot;)
+val s = joinToString(list)
+val s2 = joinToString(list,&quot;,&quot;)
+val s3 = joinToString(list,&quot;,&quot;,&quot;[&quot;)
+val s4 = joinToString(list,&quot;,&quot;,&quot;[&quot;,&quot;]&quot;)
+val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
+</code></pre><p>上述调用体现了方法重载，默认参数可提供方法重载的效果</p>
+<p>上面出现的@JvmOverloads注解是用来做什么的呢？</p>
+<p>默认参数特性，使用是有前提的：用Kotlin定义函数，并在Kotlin代码里调用该函数。因此，如果在Java文件里调用Kotlin定义的joinToString方法，默认不支持默认参数特性的，也即方法重载失效。</p>
+<p>@JvmOverloads提供了让默认参数特性在Java环境也得到支持。原理是：kotlin代码编译成java代码时，会增加增加下面的方法，这些正是Java方法重载。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">public final class StringUtils &#123;</span><br><span class="line">   public static final int count = 11;</span><br><span class="line"></span><br><span class="line">   @JvmOverloads</span><br><span class="line">   @NotNull</span><br><span class="line">   public static final String joinToString(@NotNull Collection collection, @NotNull String separator, @NotNull String prefix, @NotNull String postfix) &#123;</span><br><span class="line">      Intrinsics.checkParameterIsNotNull(collection, &quot;collection&quot;);</span><br><span class="line">      Intrinsics.checkParameterIsNotNull(separator, &quot;separator&quot;);</span><br><span class="line">      Intrinsics.checkParameterIsNotNull(prefix, &quot;prefix&quot;);</span><br><span class="line">      Intrinsics.checkParameterIsNotNull(postfix, &quot;postfix&quot;);</span><br><span class="line">      StringBuffer sb = new StringBuffer(prefix);</span><br><span class="line"></span><br><span class="line">      Object element;</span><br><span class="line">      for(Iterator var6 = CollectionsKt.withIndex((Iterable)collection).iterator(); var6.hasNext(); sb.append(element)) &#123;</span><br><span class="line">         IndexedValue var5 = (IndexedValue)var6.next();</span><br><span class="line">         int index = var5.component1();</span><br><span class="line">         element = var5.component2();</span><br><span class="line">         if (index &gt; 0) &#123;</span><br><span class="line">            sb.append(separator);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      sb.append(postfix);</span><br><span class="line">      String var10000 = sb.toString();</span><br><span class="line">      Intrinsics.checkExpressionValueIsNotNull(var10000, &quot;sb.toString()&quot;);</span><br><span class="line">      return var10000;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   // $FF: synthetic method</span><br><span class="line">   // $FF: bridge method</span><br><span class="line">   @JvmOverloads</span><br><span class="line">   @NotNull</span><br><span class="line">   public static String joinToString$default(Collection var0, String var1, String var2, String var3, int var4, Object var5) &#123;</span><br><span class="line">      if ((var4 &amp; 2) != 0) &#123;</span><br><span class="line">         var1 = &quot;,&quot;;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      if ((var4 &amp; 4) != 0) &#123;</span><br><span class="line">         var2 = &quot;(&quot;;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      if ((var4 &amp; 8) != 0) &#123;</span><br><span class="line">         var3 = &quot;)&quot;;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      return joinToString(var0, var1, var2, var3);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @JvmOverloads</span><br><span class="line">   @NotNull</span><br><span class="line">   public static final String joinToString(@NotNull Collection collection, @NotNull String separator, @NotNull String prefix) &#123;</span><br><span class="line">      return joinToString$default(collection, separator, prefix, (String)null, 8, (Object)null);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @JvmOverloads</span><br><span class="line">   @NotNull</span><br><span class="line">   public static final String joinToString(@NotNull Collection collection, @NotNull String separator) &#123;</span><br><span class="line">      return joinToString$default(collection, separator, (String)null, (String)null, 12, (Object)null);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @JvmOverloads</span><br><span class="line">   @NotNull</span><br><span class="line">   public static final String joinToString(@NotNull Collection collection) &#123;</span><br><span class="line">      return joinToString$default(collection, (String)null, (String)null, (String)null, 14, (Object)null);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public static final void testExtend(@NotNull Container $receiver) &#123;</span><br><span class="line">      Intrinsics.checkParameterIsNotNull($receiver, &quot;$receiver&quot;);</span><br><span class="line">      String var1 = &quot;call the container testExtend method&quot;;</span><br><span class="line">      System.out.println(var1);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>可变参数关键词：vararg(分别取variate和arguments前三个字母)</p>
+<p>来看一个Kotlin的Collections类里的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a new [ArrayList] with the given elements.</span><br><span class="line"> * @sample samples.collections.Collections.Lists.arrayList</span><br><span class="line"> */</span><br><span class="line">public fun &lt;T&gt; arrayListOf(vararg elements: T): ArrayList&lt;T&gt;</span><br><span class="line">        = if (elements.size == 0) ArrayList() else ArrayList(ArrayAsCollection(elements, isVarargs = true))</span><br></pre></td></tr></table></figure>
+<p>调用</p>
+<pre><code>val list = arrayListOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;)
+</code></pre><p>arrayListOf入参数量可以任意多个</p>
+<p>Java实现可变参数，在数据类型后面加三个点：… ，看下Java里的Arrays里的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@SafeVarargs</span><br><span class="line">@SuppressWarnings(&quot;varargs&quot;)</span><br><span class="line">public static &lt;T&gt; List&lt;T&gt; asList(T... a) &#123;</span><br><span class="line">    return new ArrayList&lt;&gt;(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="展开运算符"><a href="#展开运算符" class="headerlink" title="展开运算符 *"></a>展开运算符 *</h2><p>把数组展开成一个一个元素。展开运算符常与可变运算符联合使用。比如这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val array = arrayOf(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</span><br><span class="line">val list = arrayListOf(*array)</span><br></pre></td></tr></table></figure>
+<p>我得到了一个ArrayList集合，集合里的元素是”a”, “b”, “c”</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
 
           
         
