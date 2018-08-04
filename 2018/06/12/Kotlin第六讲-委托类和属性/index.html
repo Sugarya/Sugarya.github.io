@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="委托类实现一个接口，可以使用by关键字将接口实现委托给另一个对象。 1234567891011121314151617181920212223interface OnClickListener&amp;#123;    fun onClick()    fun onLongClick()&amp;#125;class ViewClickDelegate : OnClickListener&amp;#123;    ove">
+<meta name="description" content="类委托的本质是：把抽象方法的实现交给了by后的委托对象 属性委托的本质是：把属性访问器的实现交给了by后的委托对象 扩展函数也能实现属性委托">
 <meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin第六讲-委托类和属性">
 <meta property="og:url" content="https://sugarya.github.io/2018/06/12/Kotlin第六讲-委托类和属性/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="委托类实现一个接口，可以使用by关键字将接口实现委托给另一个对象。 1234567891011121314151617181920212223interface OnClickListener&amp;#123;    fun onClick()    fun onLongClick()&amp;#125;class ViewClickDelegate : OnClickListener&amp;#123;    ove">
+<meta property="og:description" content="类委托的本质是：把抽象方法的实现交给了by后的委托对象 属性委托的本质是：把属性访问器的实现交给了by后的委托对象 扩展函数也能实现属性委托">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-04T04:58:01.183Z">
+<meta property="og:updated_time" content="2018-08-04T06:23:48.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin第六讲-委托类和属性">
-<meta name="twitter:description" content="委托类实现一个接口，可以使用by关键字将接口实现委托给另一个对象。 1234567891011121314151617181920212223interface OnClickListener&amp;#123;    fun onClick()    fun onLongClick()&amp;#125;class ViewClickDelegate : OnClickListener&amp;#123;    ove">
+<meta name="twitter:description" content="类委托的本质是：把抽象方法的实现交给了by后的委托对象 属性委托的本质是：把属性访问器的实现交给了by后的委托对象 扩展函数也能实现属性委托">
 
 
 
@@ -352,7 +352,11 @@
       
 
       
-        <h2 id="委托类"><a href="#委托类" class="headerlink" title="委托类"></a>委托类</h2><p>实现一个接口，可以使用by关键字将接口实现委托给另一个对象。</p>
+        <p>类委托的本质是：把抽象方法的实现交给了by后的委托对象</p>
+<p>属性委托的本质是：把属性访问器的实现交给了by后的委托对象</p>
+<p>扩展函数也能实现属性委托</p>
+<a id="more"></a> 
+<h2 id="委托类"><a href="#委托类" class="headerlink" title="委托类"></a>委托类</h2><p>实现一个接口，可以使用by关键字将接口实现委托给另一个对象。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">interface OnClickListener&#123;</span><br><span class="line">    fun onClick()</span><br><span class="line"></span><br><span class="line">    fun onLongClick()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ViewClickDelegate : OnClickListener&#123;</span><br><span class="line"></span><br><span class="line">    override fun onClick()&#123;</span><br><span class="line">        println(&quot;ViewClickDelegate onClick&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun onLongClick() &#123;</span><br><span class="line">        println(&quot;ViewClickDelegate onLongClick&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class View(val name: String, onClickListener: OnClickListener) : OnClickListener by onClickListener&#123;</span><br><span class="line"></span><br><span class="line">    override fun onLongClick() &#123;</span><br><span class="line">        println(&quot;$name onLongClick&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>类委托后我们依然可以通过重写的方式来覆盖委托类的实现，这里View实现onLongClick方法，覆盖重写了ViewClickDelegate类里的onLongClick方法。</p>
 <p><strong>类委托的本质是：把抽象方法的实现交给了by后的委托对象</strong></p>

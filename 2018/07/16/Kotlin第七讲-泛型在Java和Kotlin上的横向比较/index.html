@@ -94,20 +94,20 @@
 
 
 
-<meta name="description" content="阅读本文前，如果对Java泛型不够了解，不妨先阅读我之前写的两篇说Java泛型的文章 重拾Java泛型 上篇 重拾Java泛型 下篇 语法比较泛型方法Java 1234567891011public static&amp;lt;T extends Comparable&amp;lt;? super T&amp;gt;&amp;gt; T max(List&amp;lt;? extends T&amp;gt; list)&amp;#123;">
+<meta name="description" content="Kotlin和Java的差异，体现在语法和功能两个方面 语法上  Kotlin使用：替代 extends； 用星投影 * 替代？ 用out, in来体现协变和逆变； 泛型类型多约束条件，Kotlin使用where关键词，而不用Java里&amp;amp;表示  功能上：  新增了实化参数类型">
 <meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin第七讲-泛型在Java和Kotlin上的横向比较">
 <meta property="og:url" content="https://sugarya.github.io/2018/07/16/Kotlin第七讲-泛型在Java和Kotlin上的横向比较/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="阅读本文前，如果对Java泛型不够了解，不妨先阅读我之前写的两篇说Java泛型的文章 重拾Java泛型 上篇 重拾Java泛型 下篇 语法比较泛型方法Java 1234567891011public static&amp;lt;T extends Comparable&amp;lt;? super T&amp;gt;&amp;gt; T max(List&amp;lt;? extends T&amp;gt; list)&amp;#123;">
+<meta property="og:description" content="Kotlin和Java的差异，体现在语法和功能两个方面 语法上  Kotlin使用：替代 extends； 用星投影 * 替代？ 用out, in来体现协变和逆变； 泛型类型多约束条件，Kotlin使用where关键词，而不用Java里&amp;amp;表示  功能上：  新增了实化参数类型">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1933990-0e965487f430a9ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T04:59:53.819Z">
+<meta property="og:updated_time" content="2018-08-04T06:23:51.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin第七讲-泛型在Java和Kotlin上的横向比较">
-<meta name="twitter:description" content="阅读本文前，如果对Java泛型不够了解，不妨先阅读我之前写的两篇说Java泛型的文章 重拾Java泛型 上篇 重拾Java泛型 下篇 语法比较泛型方法Java 1234567891011public static&amp;lt;T extends Comparable&amp;lt;? super T&amp;gt;&amp;gt; T max(List&amp;lt;? extends T&amp;gt; list)&amp;#123;">
+<meta name="twitter:description" content="Kotlin和Java的差异，体现在语法和功能两个方面 语法上  Kotlin使用：替代 extends； 用星投影 * 替代？ 用out, in来体现协变和逆变； 泛型类型多约束条件，Kotlin使用where关键词，而不用Java里&amp;amp;表示  功能上：  新增了实化参数类型">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1933990-0e965487f430a9ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -355,7 +355,20 @@
       
 
       
-        <p>阅读本文前，如果对Java泛型不够了解，不妨先阅读我之前写的两篇说Java泛型的文章</p>
+        <p>Kotlin和Java的差异，体现在语法和功能两个方面</p>
+<p>语法上</p>
+<ol>
+<li>Kotlin使用：替代 extends；</li>
+<li>用星投影 * 替代？</li>
+<li>用out, in来体现协变和逆变；</li>
+<li>泛型类型多约束条件，Kotlin使用where关键词，而不用Java里&amp;表示</li>
+</ol>
+<p>功能上：</p>
+<ol>
+<li>新增了实化参数类型</li>
+</ol>
+<a id="more"></a> 
+<p>阅读本文前，如果对Java泛型不够了解，不妨先阅读我之前写的两篇说Java泛型的文章</p>
 <p><a href="https://mp.weixin.qq.com/s/2z4eVX_ftdTkx4exr-H7Ew" target="_blank" rel="noopener">重拾Java泛型 上篇</a></p>
 <p><a href="https://mp.weixin.qq.com/s/o3pyQEZf7DdsZZPIneBuyg" target="_blank" rel="noopener">重拾Java泛型 下篇</a></p>
 <h2 id="语法比较"><a href="#语法比较" class="headerlink" title="语法比较"></a>语法比较</h2><h3 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h3><p>Java</p>
