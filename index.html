@@ -427,6 +427,922 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/07/16/Kotlin第七讲-泛型在Java和Kotlin上的横向比较/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/16/Kotlin第七讲-泛型在Java和Kotlin上的横向比较/" itemprop="url">Kotlin第七讲-泛型在Java和Kotlin上的横向比较</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-16T16:24:00+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin编程之旅/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin编程之旅</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>阅读本文前，如果对Java泛型不够了解，不妨先阅读我之前写的两篇说Java泛型的文章</p>
+<p><a href="https://mp.weixin.qq.com/s/2z4eVX_ftdTkx4exr-H7Ew" target="_blank" rel="noopener">重拾Java泛型 上篇</a></p>
+<p><a href="https://mp.weixin.qq.com/s/o3pyQEZf7DdsZZPIneBuyg" target="_blank" rel="noopener">重拾Java泛型 下篇</a></p>
+<h2 id="语法比较"><a href="#语法比较" class="headerlink" title="语法比较"></a>语法比较</h2><h3 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h3><p>Java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static&lt;T extends Comparable&lt;? super T&gt;&gt; T max(List&lt;? extends T&gt; list)&#123;</span><br><span class="line">        Iterator&lt;? extends T&gt; iterator = list.iterator();</span><br><span class="line">        T result = iterator.next();</span><br><span class="line">        while (iterator.hasNext())&#123;</span><br><span class="line">            T t = iterator.next();</span><br><span class="line">            if(t.compareTo(result) &gt; 0)&#123;</span><br><span class="line">                result = t;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>Kotlin<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun &lt;T : Comparable&lt;in T&gt;&gt; max(list: List&lt;out T&gt;): T &#123;</span><br><span class="line">    val iterator = list.iterator()</span><br><span class="line">    var result: T = iterator.next()</span><br><span class="line">    while (iterator.hasNext()) &#123;</span><br><span class="line">        val t = iterator.next()</span><br><span class="line">        if (t.compareTo(result) &gt; 0) &#123;</span><br><span class="line">            result = t</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>查看Kotlin里的Comparable类和List类源码，Comparable类定义<in t="">，List类定义<out t="">，所以可以不必重复表明Comparable的逆变能力和List的协变能力。</out></in></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fun &lt;T : Comparable&lt;T&gt;&gt; max(list: List&lt;T&gt;): T &#123;</span><br><span class="line">    val iterator = list.iterator()</span><br><span class="line">    var result: T = iterator.next()</span><br><span class="line">    while (iterator.hasNext()) &#123;</span><br><span class="line">        val t = iterator.next()</span><br><span class="line">        if (t.compareTo(result) &gt; 0) &#123;</span><br><span class="line">            result = t</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不管是泛型类还是泛型方法，泛型的使用分为两个步骤</p>
+<ol>
+<li>第一步，声明泛型参数</li>
+<li>第二步，才是使用泛型参数</li>
+</ol>
+<p>上面的泛型方法，以Java泛型方法为例，泛型声明部分是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? super T&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>引入泛型类型名称为T，这个数据类型的关系是实现Comparable的类。</p>
+<p>使用泛型的部分如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;? extends T&gt;</span><br></pre></td></tr></table></figure>
+<p>入参的集合具有对类型T的协变能力。</p>
+<p>所以，有些书或者网上资料，会出现两个概念：声明点变型，使用点变型。这个概念说的就是这件事</p>
+<p>再来看下in位置，和out位置的概念</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1933990-0e965487f430a9ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="in_out位置图.png"></p>
+<p>所以，类型参数T上的关键字out有两方面含义：</p>
+<ol>
+<li>具有协变的能力</li>
+<li>T只能用在out位置</li>
+</ol>
+<p>我们再看一个有趣的例子</p>
+<p>我有一个方法，入参的一个集合，我希望入参集合元素是EditText的子类的集合，如何构建满足这个关系的方法呢？至少有下面的两种方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fun test2(list: MutableList&lt;out EditText&gt;)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun &lt;T: EditText&gt;test3(list: MutableList&lt;T&gt;)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面test2， test3方法都能实现预期的效果。不同的是，test2使用协变来实现，也意味着只能读不能写操作，test2不是泛型方法。test3方法通过在声明表明泛型参数的类型关系来实现，可读可写，它是泛型方法。</p>
+<p>对应的Java代码如下</p>
+<pre><code>private void test2(List&lt;? extends EditText&gt; list){
+
+}
+
+private &lt;T extends EditText&gt; void test3(List&lt;T&gt; list){
+
+}
+</code></pre><h3 id="实现泛型参数多约束"><a href="#实现泛型参数多约束" class="headerlink" title="实现泛型参数多约束"></a>实现泛型参数多约束</h3><p>Java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private &lt;T extends Serializable &amp; CharSequence&gt; void ensureTrailingPeriod(T seq)&#123;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>kotlin</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun &lt;T&gt; ensureTrailingPeriod(seq: T) where T: Serializable, T: CharSequence&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是Java语法上很大的不同，Kotlin要实现多约束，使用到where关键词，这是全新的表示法。</p>
+<h3 id="实化类型参数"><a href="#实化类型参数" class="headerlink" title="实化类型参数"></a>实化类型参数</h3><p>来看一段Java代码：</p>
+<pre><code>private &lt;T&gt; void test(T t){
+    if(t instanceof String){
+        String s = (String)t;
+
+    }else if(t instanceof Integer){
+        Integer i = (Integer)t;
+    }
+}
+</code></pre><p>入参是泛型的，通过instanceof来判断泛型具体是哪个类型。再看一段代码</p>
+<pre><code>private &lt;T&gt; void test2(Object o){
+    //编译不通过
+    if(o instanceof T){
+
+    }
+}
+</code></pre><p>泛型作为参数类型时，编译不通过。如果要完成上述的逻辑，要怎么实现？可以通过class近似等效实现</p>
+<pre><code>class ClassJudge&lt;T&gt;{
+    Class&lt;T&gt; kind;
+
+    public ClassJudge(Class&lt;T&gt; kind) {
+        this.kind = kind;
+    }
+
+    public boolean isInstance(Object o){
+        return kind.isInstance(o);
+    }
+}
+</code></pre><p>调用</p>
+<pre><code>Integer a = 12;
+boolean instance = new ClassJudge&lt;String&gt;(String.class).isInstance(a);
+System.out.println(&quot;instance = &quot; + instance);
+</code></pre><p>Kotlin在语言层面作出了支持，对上述Java代码test2方法，kotlin代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">inline fun&lt;reified T&gt; test2(any: Any)&#123;</span><br><span class="line">    if(any is T)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此需要具备两个条件：</p>
+<ol>
+<li>是内联函数 inline</li>
+<li>关键词 reified</li>
+</ol>
+<h3 id="集合协变"><a href="#集合协变" class="headerlink" title="集合协变"></a>集合协变</h3><p>在Kotlin里，非空类型是可空类型的子类型。</p>
+<p>Java实现的协变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;? extends Number&gt; list = new ArrayList&lt;Integer&gt;();</span><br></pre></td></tr></table></figure>
+<p>Kotlin实现的协变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val list: MutableList&lt;out Number&gt; = arrayListOf&lt;Int&gt;()</span><br></pre></td></tr></table></figure>
+<h3 id="集合逆变"><a href="#集合逆变" class="headerlink" title="集合逆变"></a>集合逆变</h3><p>Java实现的逆变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;? super Integer&gt; list = new ArrayList&lt;Number&gt;();</span><br></pre></td></tr></table></figure>
+<p>对应的Kotlin逆变的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val list: MutableList&lt;in Int&gt; = arrayListOf&lt;Number&gt;()</span><br></pre></td></tr></table></figure>
+<p>变型（协变和逆变）涉及到集合元素，集合类。协变讲的是两个集合的元素是子类关系，这两个集合也是子类关系，有了子类关系，就可以用多态表示。逆变的关系是反过来的，逆变说得是，两个集合的元素是父类关系，这两个集合却能成为子类关系。</p>
+<p>由此可见，在泛型里，extends 不全等于 ：。extends代表子类型关系和协变，而Kotlin的 ：只代表子类型关系。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;out T&gt; = &lt;? extends T&gt;</span><br><span class="line">&lt;in T&gt; = &lt;? super T&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="星投影和Java无限制通配符？差异"><a href="#星投影和Java无限制通配符？差异" class="headerlink" title="星投影和Java无限制通配符？差异"></a>星投影和Java无限制通配符？差异</h3><p>星投影如何使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;*&gt; = &lt;out Any?&gt;</span><br><span class="line">&lt;*&gt; = &lt;in nothing&gt;</span><br></pre></td></tr></table></figure>
+<p>投影一词，顾名思义，是对Any？的投影，获得了Any？部分的能力—Any？协变的能力，即失去写操作，只能读操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fun printFirst(list: List&lt;*&gt;)&#123;</span><br><span class="line">    if(list.isNotEmpty())&#123;</span><br><span class="line">        println(list.first())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="场景二：泛型类存储"><a href="#场景二：泛型类存储" class="headerlink" title="场景二：泛型类存储"></a>场景二：泛型类存储</h4><p>所有不安全的逻辑都被隐藏在类的主体中，通过把这些逻辑局部化到一个分开的位置，预防了误用，保证了它不会被错误地使用。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="非空性与泛型"><a href="#非空性与泛型" class="headerlink" title="非空性与泛型"></a>非空性与泛型</h3><p>Java和Kotlin默认，泛型参数都是可空的，以Kotlin为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Processor&lt;T&gt; &#123;</span><br><span class="line">    fun process(value: T)&#123;</span><br><span class="line">        value?.hashCode()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>泛型参数是可空类型，可以理解为默认实现&lt;T: Any?&gt;，因此要实现非空类型，只需&lt;T: Any&gt;，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Processor2&lt;T: Any&gt; &#123;</span><br><span class="line">    fun process(value: T)&#123;</span><br><span class="line">        value.hashCode()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，泛型<t> 和&lt;T: Any&gt;是有区别的，前者是可空类型，后者是非空类型，确切说，<t>和&lt;T:Any?&gt;等效</t></t></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Kotlin和Java的差异，体现在语法和功能两个方面</p>
+<p>语法上</p>
+<ol>
+<li>Kotlin使用：替代 extends；</li>
+<li>用星投影 * 替代？</li>
+<li>用out, in来体现协变和逆变；</li>
+<li>泛型类型多约束条件，Kotlin使用where关键词，而不用Java里&amp;表示</li>
+</ol>
+<p>功能上：</p>
+<ol>
+<li>新增了实化参数类型</li>
+</ol>
+<p>##参考资料</p>
+<p><a href="https://zhuanlan.zhihu.com/p/31137677" target="_blank" rel="noopener">仔细说说Java中的泛型</a></p>
+<p><a href="https://www.zhihu.com/question/20400700/answer/117464182" target="_blank" rel="noopener">Java 泛型 &lt;? super T&gt; 中 super 怎么 理解？与 extends 有何不同？</a></p>
+<p><a href="https://www.jianshu.com/p/4caf2567f91d" target="_blank" rel="noopener">Java 泛型进阶</a></p>
+<p><a href="https://www.zhihu.com/question/36645143/answer/68650398" target="_blank" rel="noopener">Java为什么要添加运行时获取泛型的方法</a></p>
+<p><a href="https://book.douban.com/subject/27093660/" target="_blank" rel="noopener">Kotlin实战</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/06/12/Kotlin第六讲-委托类和属性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/12/Kotlin第六讲-委托类和属性/" itemprop="url">Kotlin第六讲-委托类和属性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T10:28:00+08:00">
+                2018-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin编程之旅/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin编程之旅</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="委托类"><a href="#委托类" class="headerlink" title="委托类"></a>委托类</h2><p>实现一个接口，可以使用by关键字将接口实现委托给另一个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">interface OnClickListener&#123;</span><br><span class="line">    fun onClick()</span><br><span class="line"></span><br><span class="line">    fun onLongClick()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ViewClickDelegate : OnClickListener&#123;</span><br><span class="line"></span><br><span class="line">    override fun onClick()&#123;</span><br><span class="line">        println(&quot;ViewClickDelegate onClick&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun onLongClick() &#123;</span><br><span class="line">        println(&quot;ViewClickDelegate onLongClick&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class View(val name: String, onClickListener: OnClickListener) : OnClickListener by onClickListener&#123;</span><br><span class="line"></span><br><span class="line">    override fun onLongClick() &#123;</span><br><span class="line">        println(&quot;$name onLongClick&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类委托后我们依然可以通过重写的方式来覆盖委托类的实现，这里View实现onLongClick方法，覆盖重写了ViewClickDelegate类里的onLongClick方法。</p>
+<p><strong>类委托的本质是：把抽象方法的实现交给了by后的委托对象</strong></p>
+<h2 id="延迟初始化和委托属性"><a href="#延迟初始化和委托属性" class="headerlink" title="延迟初始化和委托属性"></a>延迟初始化和委托属性</h2><h3 id="延迟初始化属性"><a href="#延迟初始化属性" class="headerlink" title="延迟初始化属性"></a>延迟初始化属性</h3><p>不在对象创建的时候初始化，而是在第一次使用时初始化。完成后像普通属性一样使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">open class Food(val name: String) &#123;</span><br><span class="line"></span><br><span class="line">    override fun toString(): String &#123;</span><br><span class="line">        return &quot;[$name]&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Container(val name: String) &#123;</span><br><span class="line"></span><br><span class="line">    lateinit var foodList: List&lt;Food&gt;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="惰性初始化属性"><a href="#惰性初始化属性" class="headerlink" title="惰性初始化属性"></a>惰性初始化属性</h3><p>第一次使用该属性时才初始化，且只初始化一次。用旗号标示是否初始化过，旗号有多种选择和实现方式。</p>
+<p>在代码定义处执行初始化，有助于代码维护。</p>
+<p>对指令式语言，这个模式可能潜藏着危险，尤其是使用共享状态的程式习惯。</p>
+<h4 id="普通实现"><a href="#普通实现" class="headerlink" title="普通实现"></a>普通实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Container2(val name: String) &#123;</span><br><span class="line">    private var _foodList: List&lt;Food&gt;? = null</span><br><span class="line">    val foodList: List&lt;Food&gt;</span><br><span class="line">        get() &#123;</span><br><span class="line">            if (_foodList == null) &#123;</span><br><span class="line">                _foodList = arrayListOf(Food(&quot;米糊&quot;))</span><br><span class="line">            &#125;</span><br><span class="line">            return _foodList!!</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="by-lazy-实现惰性初始化"><a href="#by-lazy-实现惰性初始化" class="headerlink" title="by lazy(){}实现惰性初始化"></a>by lazy(){}实现惰性初始化</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Container4(val name: String) &#123;</span><br><span class="line">    val food: Food by lazy&#123;</span><br><span class="line">        Food(&quot;米糊&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//指定锁</span><br><span class="line">class Container5(val name: String) &#123;</span><br><span class="line">    val food: Food by lazy(Container5::class)&#123;</span><br><span class="line">        Food(&quot;米糊&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//默认 线程安全 SYNCHRONIZED</span><br><span class="line">//PUBLICATION，同步锁不是必需的，允许多个线程同时执行</span><br><span class="line">class Container6(val name: String) &#123;</span><br><span class="line">    val food: Food by lazy(LazyThreadSafetyMode.SYNCHRONIZED)&#123;</span><br><span class="line">        Food(&quot;米糊&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在JavaBean的设计中，按照属性的不同作用又细分为四类：单值属性，索引属性；关联属性，限制属性。接下来看下Kotlin如何实现关联属性和限制属性的</p>
+<h3 id="关联属性（可观察属性）"><a href="#关联属性（可观察属性）" class="headerlink" title="关联属性（可观察属性）"></a>关联属性（可观察属性）</h3><h4 id="通过PropertyChangeSupport代码实现属性监听"><a href="#通过PropertyChangeSupport代码实现属性监听" class="headerlink" title="通过PropertyChangeSupport代码实现属性监听"></a>通过PropertyChangeSupport代码实现属性监听</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Shelf(val name: String, _book: Book) &#123;</span><br><span class="line"></span><br><span class="line">    private val propertyChange: PropertyChangeSupport = PropertyChangeSupport(this)</span><br><span class="line">    var book: Book = _book</span><br><span class="line">        set(value) &#123;</span><br><span class="line">            val oldBook = field</span><br><span class="line">            field = value</span><br><span class="line">            propertyChange.firePropertyChange(&quot;book&quot;, oldBook, value)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    fun addBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        propertyChange.addPropertyChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun removeBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        propertyChange.removePropertyChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把逻辑封装，抽取出基类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">open class BasePropertyChange &#123;</span><br><span class="line"></span><br><span class="line">    val propertyChange = PropertyChangeSupport(this)</span><br><span class="line"></span><br><span class="line">    protected fun addChangeListener(key: String, propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        propertyChange.addPropertyChangeListener(key, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected fun removeChangeListener(key: String, propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        propertyChange.removePropertyChangeListener(key, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Shelf_2(val name: String, _book: Book) : BasePropertyChange() &#123;</span><br><span class="line"></span><br><span class="line">    var book: Book = _book</span><br><span class="line">        set(value) &#123;</span><br><span class="line">            val oldBook = field</span><br><span class="line">            field = value</span><br><span class="line">            propertyChange.firePropertyChange(&quot;book&quot;, oldBook, value)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    fun addBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        addChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun removeBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        removeChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把book里的set访问器的逻辑封装成一个类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class BookDelegate(_book: Book, val propertyChange: PropertyChangeSupport) &#123;</span><br><span class="line"></span><br><span class="line">    var field: Book = _book</span><br><span class="line"></span><br><span class="line">    fun getValue(): Book = field</span><br><span class="line"></span><br><span class="line">    fun setValue(value: Book) &#123;</span><br><span class="line">        val oldBook = field</span><br><span class="line">        field = value</span><br><span class="line">        propertyChange.firePropertyChange(&quot;book&quot;, oldBook, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Shelf2(val name: String, _book: Book) : BasePropertyChange() &#123;</span><br><span class="line"></span><br><span class="line">    val _bookDelegate: BookDelegate = BookDelegate(_book, propertyChange)</span><br><span class="line">    var book: Book</span><br><span class="line">        set(value) &#123;</span><br><span class="line">            _bookDelegate.setValue(value)</span><br><span class="line">        &#125;</span><br><span class="line">        get() = _bookDelegate.getValue()</span><br><span class="line"></span><br><span class="line">    fun addBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        addChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun removeBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        removeChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，我们用Kotlin手工实现了可观察属性变化的功能，测试下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fun testObserverField() &#123;</span><br><span class="line">    val shelf = Shelf2(&quot;书架&quot;, Book(&quot;Think in java&quot;))</span><br><span class="line">    shelf.addBookChangeListener(object : PropertyChangeListener &#123;</span><br><span class="line">        override fun propertyChange(evt: PropertyChangeEvent?) &#123;</span><br><span class="line">            val oldBook = evt?.oldValue as Book</span><br><span class="line">            val newBook = evt.newValue as Book</span><br><span class="line"></span><br><span class="line">            println(&quot;old book = $oldBook , new book = $newBook&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    shelf.book = Book(&quot;Kotlin in action&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行上述代码结果如下：</p>
+<blockquote>
+<p>old book = Book(name=Think in java) , new book = Book(name=Kotlin in action)</p>
+</blockquote>
+<h4 id="使用Kotlin委托实现"><a href="#使用Kotlin委托实现" class="headerlink" title="使用Kotlin委托实现"></a>使用Kotlin委托实现</h4><p>Kotlin的委托属性在语言层面提供了在属性的读访问器里调用委托类里operator修饰的两参数getValue方法，属性写访问器调用operator修饰setValue三个参数方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class BookDelegate2(_book: Book, val propertyChange: PropertyChangeSupport) &#123;</span><br><span class="line"></span><br><span class="line">    var field: Book = _book</span><br><span class="line"></span><br><span class="line">    operator fun getValue(shelf3: Shelf3, prop: KProperty&lt;*&gt;): Book = field</span><br><span class="line"></span><br><span class="line">    operator fun setValue(shelf3: Shelf3, prop: KProperty&lt;*&gt;, newValue: Book) &#123;</span><br><span class="line">        val oldBook = field</span><br><span class="line">        field = newValue</span><br><span class="line">        propertyChange.firePropertyChange(&quot;book&quot;, oldBook, newValue)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Shelf3(val name: String, _book: Book) : BasePropertyChange() &#123;</span><br><span class="line"></span><br><span class="line">    var book: Book by BookDelegate2(_book, propertyChange)</span><br><span class="line"></span><br><span class="line">    fun addBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        addChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun removeBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        removeChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常借助ReadWriteProperty接口能方便我们实现委托</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class BookDelegate3(var field: Book, val propertyChange: PropertyChangeSupport) : ReadWriteProperty&lt;Shelf3_1, Book&gt; &#123;</span><br><span class="line"></span><br><span class="line">    override fun getValue(thisRef: Shelf3_1, property: KProperty&lt;*&gt;): Book &#123;</span><br><span class="line">        return field</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun setValue(thisRef: Shelf3_1, property: KProperty&lt;*&gt;, value: Book) &#123;</span><br><span class="line">        val oldBook = field</span><br><span class="line">        field = value</span><br><span class="line">        propertyChange.firePropertyChange(&quot;book&quot;, oldBook, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Shelf3_1(val name: String, _book: Book) : BasePropertyChange() &#123;</span><br><span class="line"></span><br><span class="line">    var book: Book by BookDelegate3(_book, propertyChange)</span><br><span class="line"></span><br><span class="line">    fun addBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        addChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun removeBookChangeListener(propertyChangeListener: PropertyChangeListener) &#123;</span><br><span class="line">        removeChangeListener(&quot;book&quot;, propertyChangeListener)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试上述代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">fun testDelegateFieldForKotlin() &#123;</span><br><span class="line">    val shelf = Shelf3_1(&quot;书架&quot;, Book(&quot;Think in java&quot;))</span><br><span class="line"></span><br><span class="line">    shelf.addBookChangeListener(object : PropertyChangeListener &#123;</span><br><span class="line">        override fun propertyChange(evt: PropertyChangeEvent?) &#123;</span><br><span class="line">            val oldBook = evt?.oldValue as Book</span><br><span class="line">            val newBook = evt?.newValue as Book</span><br><span class="line"></span><br><span class="line">            println(&quot;Kotlin委托 old book is $oldBook, and new book is $newBook&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    shelf.book = Book(&quot;Kotlin in action!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<blockquote>
+<p>Kotlin委托 old book is Book(name=Think in java), and new book is Book(name=Kotlin in action!)</p>
+</blockquote>
+<p><strong>委托属性的本质：把属性访问器的实现交给了by后的委托对象</strong></p>
+<h4 id="使用Kotlin的自带的实现可观察属性"><a href="#使用Kotlin的自带的实现可观察属性" class="headerlink" title="使用Kotlin的自带的实现可观察属性"></a>使用Kotlin的自带的实现可观察属性</h4><p>其实，Delegate.observable()类实现了上面提到的所有逻辑了。</p>
+<p>我们看下Delegate.observable方法的源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public inline fun &lt;T&gt; observable(initialValue: T, crossinline onChange: (property: KProperty&lt;*&gt;, oldValue: T, newValue: T) -&gt; Unit):</span><br><span class="line">        ReadWriteProperty&lt;Any?, T&gt; = object : ObservableProperty&lt;T&gt;(initialValue) &#123;</span><br><span class="line">            override fun afterChange(property: KProperty&lt;*&gt;, oldValue: T, newValue: T) = onChange(property, oldValue, newValue)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>该方法返回ObservableProperty对象，看下ObservableProperty对象源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public abstract class ObservableProperty&lt;T&gt;(initialValue: T) : ReadWriteProperty&lt;Any?, T&gt; &#123;</span><br><span class="line">    private var value = initialValue</span><br><span class="line"></span><br><span class="line">    protected open fun beforeChange(property: KProperty&lt;*&gt;, oldValue: T, newValue: T): Boolean = true</span><br><span class="line"></span><br><span class="line">    protected open fun afterChange (property: KProperty&lt;*&gt;, oldValue: T, newValue: T): Unit &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public override fun getValue(thisRef: Any?, property: KProperty&lt;*&gt;): T &#123;</span><br><span class="line">        return value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;, value: T) &#123;</span><br><span class="line">        val oldValue = this.value</span><br><span class="line">        if (!beforeChange(property, oldValue, value)) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        this.value = value</span><br><span class="line">        afterChange(property, oldValue, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该对象有getValue和setValue方法，这和我们自己实现的BookDelegate3类里的getValue和setValue方法逻辑几乎相同。不同之处是，官方还多了beforeChange()控制，和afterChange()供实现类覆盖重写。</p>
+<p>Kotlin标准库已经提供了可观察属性的属性委托实现了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Shelf4(val name: String, _book: Book) &#123;</span><br><span class="line"></span><br><span class="line">    var book: Book by Delegates.observable(_book, &#123;property, oldValue, newValue -&gt;</span><br><span class="line">        println(&quot;The old book&apos;s name is \&quot;$&#123;oldValue.name&#125;\&quot;, and the new book&apos;s name is \&quot;$&#123;newValue.name&#125;\&quot;&quot;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试下上述的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fun testObserverFieldForKotlin()&#123;</span><br><span class="line">    val shelf = Shelf4(&quot;书架&quot;, Book(&quot;think in java&quot;))</span><br><span class="line">    shelf.book = Book(&quot;Kotlin in action&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下</p>
+<blockquote>
+<p>The old book’s name is “think in java”, and the new book’s name is “Kotlin in action”</p>
+</blockquote>
+<h4 id="限制属性"><a href="#限制属性" class="headerlink" title="限制属性"></a>限制属性</h4><p>Kotlin也为我们提供了现成的委托类来实现限制属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Shelf5(val name: String, val book: Book ,_year: Int) &#123;</span><br><span class="line">    var year: Int by Delegates.vetoable(_year, &#123;property, oldValue, newValue -&gt;</span><br><span class="line">        newValue &lt;= 99</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试上述代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fun testVetoableFieldForKotlin()&#123;</span><br><span class="line">    val shelf = Shelf5(&quot;书架&quot;, Book(&quot;think in java&quot;), 0)</span><br><span class="line">    shelf.year = 200</span><br><span class="line">    println(&quot;current book is $&#123;shelf.year&#125;&quot;)</span><br><span class="line"></span><br><span class="line">    shelf.year = 20</span><br><span class="line">    println(&quot;current book is $&#123;shelf.year&#125;&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<blockquote>
+<p>current book is 0<br>current book is 20</p>
+</blockquote>
+<p><strong>注意：</strong><br>上述用的是成员函数，事实上，扩展函数也能实现委托属性</p>
+<h3 id="使用Map实现委托属性"><a href="#使用Map实现委托属性" class="headerlink" title="使用Map实现委托属性"></a>使用Map实现委托属性</h3><p>MapAccessors.kt文件里，有如下扩展函数源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@kotlin.jvm.JvmName(&quot;getVarContravariant&quot;)</span><br><span class="line">@kotlin.internal.LowPriorityInOverloadResolution</span><br><span class="line">@kotlin.internal.InlineOnly</span><br><span class="line">public inline fun &lt;V&gt; MutableMap&lt;in String, in V&gt;.getValue(thisRef: Any?, property: KProperty&lt;*&gt;): V</span><br><span class="line">        = @Suppress(&quot;UNCHECKED_CAST&quot;) (getOrImplicitDefault(property.name) as V)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@kotlin.internal.InlineOnly</span><br><span class="line">public inline operator fun &lt;V&gt; MutableMap&lt;in String, in V&gt;.setValue(thisRef: Any?, property: KProperty&lt;*&gt;, value: V) &#123;</span><br><span class="line">    this.put(property.name, value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由此可见， MutableMap存在getValue方法和setValue方法，那么就可以用于委托，事实上，也确实如此。</p>
+<p>举个例子:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Fruit(name: String) : Food(name)&#123;</span><br><span class="line"></span><br><span class="line">    private val attributeMap = HashMap&lt;String, String&gt;()</span><br><span class="line"></span><br><span class="line">    val color: String by attributeMap</span><br><span class="line"></span><br><span class="line">    val size: String by attributeMap</span><br><span class="line"></span><br><span class="line">    fun setAttributeMap(name: String, value: String)&#123;</span><br><span class="line">        attributeMap.put(name, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun testDelegateMap()&#123;</span><br><span class="line">    val fruit = Fruit(&quot;西瓜&quot;)</span><br><span class="line"></span><br><span class="line">    fruit.setAttributeMap(&quot;color&quot;, &quot;绿色&quot;)</span><br><span class="line">    fruit.setAttributeMap(&quot;size&quot;, &quot;2kg&quot;)</span><br><span class="line"></span><br><span class="line">    println(&quot;color = $&#123;fruit.color&#125;, size = $&#123;fruit.size&#125;&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<blockquote>
+<p>color = 绿色, size = 2kg</p>
+</blockquote>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><strong>类委托的本质是：把抽象方法的实现交给了by后的委托对象</strong></p>
+<p><strong>属性委托的本质是：把属性访问器的实现交给了by后的委托对象</strong></p>
+<p><strong>扩展函数也能实现属性委托</strong></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zh.wikipedia.org/wiki/%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">维基百科：惰性初始化模式</a></p>
+<p><a href="https://zh.wikipedia.org/wiki/%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC" target="_blank" rel="noopener">维基百科：惰性求值</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/06/03/Kotlin第五讲-Kotlin的类型和空处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/03/Kotlin第五讲-Kotlin的类型和空处理/" itemprop="url">Kotlin第五讲-Kotlin的类型和空处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T17:20:00+08:00">
+                2018-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin编程之旅/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin编程之旅</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##Kotlin的类型<br>类型就是数据的分类，不同类型代表不同种类的数据。</p>
+<p>Kotlin里类型分为：可空类型，非空类型，平台类型</p>
+<p>####对平台类型的理解<br><strong>平台类型：</strong>Kotlin不知道可空性信息的类型，即当作可空类型也可当作非空类型。所以在这个类型上的所有操作需要程序员自己负责，编译器允许所有的操作。通常发生在Kotlin调用Java代码的场景上。</p>
+<p>以字符串类型举例，字符串平台类型如下：</p>
+<blockquote>
+<p>String！</p>
+</blockquote>
+<p>程序员不能使用这种语法，Java代码转Kotlin代码的时候会出现，表示可控性未知，也可以理解为己有肯能是非空类型也有可能是可空类型</p>
+<p>####非空类型和可空类型的理解<br>可空类型 = 非空类型 + null</p>
+<blockquote>
+<p>Type? = Type + null</p>
+</blockquote>
+<p>因此，String？，String是两种不同的数据类型，就像Int和String是两种数据类型那般。</p>
+<p>###基本数据类型<br>Kotlin不区分基本数据类型和包装类型，都是使用一种基本类型：</p>
+<p>下面是非空基本类型  </p>
+<blockquote>
+<p>Char, Boolean, Byte, Short, Int，Long, Float, Double </p>
+</blockquote>
+<p>可空基本类型  </p>
+<blockquote>
+<p>Char？, Boolean?, Byte?, Short?, Int?，Long?, Float?, Double? </p>
+</blockquote>
+<p>Kotlin的基本类型如果转成Java基本数据类型，要怎么办？</p>
+<p>对于变量、属性、参数和返回类型，Kotlin的基本类型会被编译成Java的基本数据类型。<br>用作泛型类型参数的基本数据类型会被编译成对应的Java包装类型。</p>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p>和Java不同，小范围的值不能自动转化为大范围的值，而是看成两种不同的类型</p>
+</blockquote>
+<p>下面的代码演示了数据类型的表示，各类型转化，数据类型智能推断，字符串类型转成基本数据类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">fun testBasicType() &#123;</span><br><span class="line">    val bb: Byte = 127</span><br><span class="line">    val boolean = false</span><br><span class="line">    val aa: Char = &apos;a&apos;</span><br><span class="line"></span><br><span class="line">    var i: Int = 21_4748_3647 //10位</span><br><span class="line">    var l: Long = 922_3372_0368_5477_5807L  //19位 //不存在小写的l</span><br><span class="line"></span><br><span class="line">    val f: Float = 123f</span><br><span class="line">    val f2: Float = 124F</span><br><span class="line"></span><br><span class="line">    val a16 = 0x123ef3</span><br><span class="line">    val b16 = 0XcCCef3</span><br><span class="line"></span><br><span class="line">    val c2 = 0b1010</span><br><span class="line">    val cc2 = 0B11001</span><br><span class="line"></span><br><span class="line">    val b: Byte = 1</span><br><span class="line"></span><br><span class="line">    val eas = b + 1L //Long + Byte =&gt; Long , eas为Long类型</span><br><span class="line"></span><br><span class="line">    fun foo(l: Long) &#123;</span><br><span class="line">        println(l)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    foo(44) //单独写44可能是byte，int long，这里智能推断44会被认为是long</span><br><span class="line"></span><br><span class="line">    //字符串转基本数据类型</span><br><span class="line">    val p = &quot;44&quot;.toInt()</span><br><span class="line">    val p2 = &quot;44&quot;.toLong()</span><br><span class="line">    val p3 = &quot;44&quot;.toFloatOrNull()</span><br><span class="line">    val p4 = &quot;44&quot;.toDouble()</span><br><span class="line"></span><br><span class="line">    val translate = l.toInt().toLong().toFloat().toDouble().toInt()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###Any，Unit，Nothing类型</p>
+<p>Any 相当于 Object，不同点：是非空类型，缺少Object的wait，notify方法</p>
+<p>Unit相当于Java的Void；不同点：Unit是一个完备的类型，可以作为类型参数。Unit是Any的子类</p>
+<p>Nothong表明函数不会有返回类型（没有返回类型），该函数不会正常终止，Nothing是Unit的子类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">fun getStrinLenght(s: String?): Int &#123;</span><br><span class="line">    if (s == null) &#123;</span><br><span class="line">        throw IllegalArgumentException()</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return s.length</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun fail(): Nothing = throw IllegalArgumentException()</span><br><span class="line"></span><br><span class="line">fun getStrinLenght2(s: String?): Int =</span><br><span class="line">        if (s == null) &#123;</span><br><span class="line">            fail()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            s.length</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">fun testAnyAndNothing(o: Any?): View &#123;</span><br><span class="line">    val filterO = o ?: fail()</span><br><span class="line"></span><br><span class="line">    return when (filterO) &#123;</span><br><span class="line">        is View -&gt; &#123;</span><br><span class="line">            View(&quot;View&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        is TextView -&gt; &#123;</span><br><span class="line">            TextView(&quot;TextView&quot;, &quot;&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        else -&gt; &#123;</span><br><span class="line">            fail()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以认为：throw IllegalArgumentException()返回的类型是Nothing，nothing是Int的子类型。</p>
+<p>####小结<br>Any，Unit和Nothing三者关系： <a href="http://natpryce.com/articles/000818.html" target="_blank" rel="noopener">A Whirlwind Tour of the Kotlin Type Hierarchy</a></p>
+<p>##空安全相关的运算符</p>
+<p>###安全调用？.<br>如果值是null，整个表达式的值为null。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">open class Company(val name: String, val address: String?)</span><br><span class="line"></span><br><span class="line">fun testNullType()&#123;</span><br><span class="line">    val company = Company(&quot;京东&quot;, null)</span><br><span class="line"></span><br><span class="line">    val length = company.address?.length</span><br><span class="line">    println(&quot;length = $length&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###Elvis运算符 ？：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun testElvis(list: List&lt;Company?&gt;?, defaultAddress: String?)&#123;</span><br><span class="line">    val defaultAdd = defaultAddress ?: &quot;&quot;</span><br><span class="line">    val length = defaultAddress?.length ?: 0 //.?为空调用，表达式返回null，遇到了？：</span><br><span class="line">    println(&quot;defaultAdd = $defaultAdd, length = $length&quot;)</span><br><span class="line"></span><br><span class="line">    val companyList = list ?: throw IllegalArgumentException(&quot;null list&quot;)</span><br><span class="line"></span><br><span class="line">    val address = companyList[0]?.address?.toUpperCase() ?: defaultAddress //多重空安全调用和Elvis联合使用</span><br><span class="line">    println(&quot;address = $address&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###安全转换as?<br>as？运算法尝试把值转换成制定的类型，如果值不是合适的类型就返回null。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">open class View(val name: String)</span><br><span class="line"></span><br><span class="line">class TextView(name: String, val text: String) : View(name)</span><br><span class="line"></span><br><span class="line">fun testAsClient()&#123;</span><br><span class="line">    val company = Company(&quot;JD&quot;, &quot;亦庄&quot;)</span><br><span class="line">    testAs(company)</span><br><span class="line"></span><br><span class="line">    testAs2(company)</span><br><span class="line"></span><br><span class="line">    val tv = TextView(&quot;TextView&quot;, &quot;I am a message content&quot;)</span><br><span class="line">    testAs2(tv)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun testAs(o: Any)&#123;</span><br><span class="line">    val tv = o as TextView</span><br><span class="line">    println(&quot;name = $&#123;tv.name&#125;&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun testAs2(o: Any)&#123;</span><br><span class="line">    val tv = o as? TextView ?: TextView(&quot;Default TextView&quot;, &quot;&quot;)</span><br><span class="line">    println(&quot;The content of $&#123;tv.name&#125; is = $&#123;tv.text&#125;&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###非空断言 !!</p>
+<p>把任何值转换成非空类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun testNoNullClient()&#123;</span><br><span class="line">    val result = testNoNull(&quot;Kotlin&quot;)</span><br><span class="line">    println(&quot;result = $result&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun testNoNull(s: String?) : String&#123;</span><br><span class="line">    val length = s!!.length</span><br><span class="line">    println(&quot;$s&apos;s length is $length&quot;)</span><br><span class="line">    return s!!.toUpperCase()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###let函数 </p>
+<p>把可空值作为实参传递一个只接收非空值的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fun testLet()&#123;</span><br><span class="line">    val length = getTheBigCompanyInTheWorld().address?.length</span><br><span class="line">    val upperCase = getTheBigCompanyInTheWorld().address?.toUpperCase()</span><br><span class="line">    val letter = getTheBigCompanyInTheWorld().address?.get(0)</span><br><span class="line">    println(&quot;address&apos;s length is $length , uppercase  = $upperCase, letter = $letter&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun testLet2()&#123;</span><br><span class="line">    getTheBigCompanyInTheWorld().address?.let &#123;</span><br><span class="line">        val upperCase = it.toUpperCase()</span><br><span class="line">        val length = it.length</span><br><span class="line">        val letter = it[0]</span><br><span class="line">        println(&quot;address&apos;s length is $length , uppercase  = $upperCase, letter = $letter&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun getTheBigCompanyInTheWorld(): Company = Company(&quot;JD&quot;, &quot;Beijing&quot;)</span><br></pre></td></tr></table></figure>
+<p>###可空类型的扩展函数</p>
+<p>允许接收者为null的调用，在扩展函数内部处理null。不需要安全调用了</p>
+<p>看几个Kotlin标准库，String定义的扩展函数isNullOrEmpty</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public inline fun CharSequence?.isNullOrEmpty(): Boolean &#123;</span><br><span class="line">    return this == null || this.length == 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p>在Java中，this永远是非空的，在Kotlin中，this可以为null。    </p>
+</blockquote>
+<blockquote>
+<p>因此在定义扩展函数时，需要考虑扩展是否需要为可空类型定义。本质上是对null在哪个环节处理的思考，是要在调用时使用空安全调用处理呢，还是在调用的函数内部处理。</p>
+</blockquote>
+<p>###泛型参数默认是可空类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fun &lt;T&gt; myPrintln(t: T)&#123;</span><br><span class="line">    println(t.toString())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun testGenericityClient()&#123;</span><br><span class="line">    myPrintln(null)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###转Java代码为Kotlin代码时，对空的处理</p>
+<p>####带注解的Java变量翻译到Kotlin时被认为是可空类型或者非空类型</p>
+<ol>
+<li>Javax.annotation包下</li>
+<li>android.support.annotation包下</li>
+<li>org.jetbrains.annotations下</li>
+</ol>
+<blockquote>
+<p>@Nullable + Type = Type?<br>@NotNull + Type = Type</p>
+</blockquote>
+<p>##参考资料<br><a href="https://book.douban.com/subject/27093660/" target="_blank" rel="noopener">Kotlin实战</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/05/27/Kotlin第四讲-Kotlin的类、对象和接口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/27/Kotlin第四讲-Kotlin的类、对象和接口/" itemprop="url">Kotlin第四讲-Kotlin的类、对象和接口</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T17:22:00+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin编程之旅/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin编程之旅</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>类是逻辑组织的基本单元，类含有以下成分：依赖包，类名，构造方法，属性，成员方法，伴生对象，接口，父类等</p>
+<h3 id="类的构造方法的完整逻辑过程"><a href="#类的构造方法的完整逻辑过程" class="headerlink" title="类的构造方法的完整逻辑过程"></a>类的构造方法的完整逻辑过程</h3><p>先考虑主构造函数，当主构造函数不够用时，再引入从构造函数。最初的主构造函数是这样的:步骤1通过主构造函数的参数传入数据，步骤2在类里定义所需的属性，步骤3在init代码块里对属性做初始化/赋值操作，这三个步骤分工明确，前后关联，共同完成了一个类的构造。</p>
+<p>为了简化，Kotlin支持步骤2和步骤1合并操作，在主构造函数参数前加var/val；</p>
+<p>支持步骤3和步骤2合并，对定义的属性直接赋值。支持步骤3和步骤2和步骤1合并操作，使用主构造函数的默认参数表达。</p>
+<p>当然这些合并带来简便的同时，降低了构造的能力。</p>
+<p>最初的状态（步骤1，步骤2，步骤3都存在）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class User(_sickName: String)&#123;</span><br><span class="line"></span><br><span class="line">    val sickName: String</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">    	println(&quot;init&quot;)</span><br><span class="line">        sickName = _sickName</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>步骤2和步骤1的合并，在主构造函数里传参和定义类的属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class User(val sickName: String)&#123;</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        println(&quot;init&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>步骤3，步骤2和步骤1的合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">open class User private constructor(val sickName: String = &quot;Kotlin&quot;, var age: Int)&#123;</span><br><span class="line">    </span><br><span class="line">    init &#123;</span><br><span class="line">        println(&quot;init&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>Java中需要重载构造方法的场景大多数都被Kotlin参数默认值和参数命名的语法特性涵盖了</p>
+<h4 id="子类的构造方法"><a href="#子类的构造方法" class="headerlink" title="子类的构造方法"></a>子类的构造方法</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> open class AirBook(name: String, val year: Int, val size: Int) &#123;</span><br><span class="line"></span><br><span class="line">    constructor(name: String, year: Int) : this(name, year, 22)&#123;</span><br><span class="line">		println(&quot;constructor&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> class MacBookPro: AirBook&#123;</span><br><span class="line"></span><br><span class="line">    public constructor(name: String, year: Int) : super(name, year) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public constructor(name: String, year: Int, size: Int) : super(name, year, size)&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子类在创建的时候，必须调用父类的构造函数，如果其父类还有父类，仍然要调用父类的父类的构造函数，直至顶层的基类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">open class AirBook(name: String, val year: Int, val size: Int)&#123;</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    constructor(name: String, year: Int) : this(name, year, 22)&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构造函数可以调用当前自身的构造函数，因为自身的构造函数必然有至少一个调用了父类的构造函数。</p>
+<h3 id="属性访问器"><a href="#属性访问器" class="headerlink" title="属性访问器"></a>属性访问器</h3><p>在kotlin里，一个属性 = 字段 + 属性访问器；这里的字段是Java里的成员变量</p>
+<p>属性访问器分为读访问器getter，和写访问器setter</p>
+<p>访问器里存在field字段，用来连接写访问器和读访问器，作为两者的通信桥梁</p>
+<p>val修饰的属性只有读访问器，var修饰的属性既有有读也有写访问器</p>
+<p>Kotlin引入属性访问器后，凡事对属性进行赋值操作，就会调用属性的写访问器setter；读取值的操作对应调用的是属性的读访问器</p>
+<p>那么如果我们要自定义一个类似Java里的setter方法，要怎么做呢？</p>
+<p>通过var变量的私有setter来实行</p>
+<p>代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class TableLamp(val name: String, lightness: Int)&#123;</span><br><span class="line"></span><br><span class="line">    var lightness: Int = 1</span><br><span class="line">    private set</span><br><span class="line">    </span><br><span class="line">    fun setupLightness(lightness: Int)&#123;</span><br><span class="line">        this.lightness = lightness</span><br><span class="line">        println(&quot;setupLightness lightness = $lightness&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样对属性lightness的修改，只能通过setupLightness方法。</p>
+<h3 id="修饰词final-open-abstract相互影响和使用"><a href="#修饰词final-open-abstract相互影响和使用" class="headerlink" title="修饰词final, open, abstract相互影响和使用"></a>修饰词final, open, abstract相互影响和使用</h3><p>Kotlin的函数，类默认是final的，如果想重写函数，类有子类，则需使用open修饰。abstract修饰的函数和类，意味着有open的特性。这和Java的用法是一致的。</p>
+<h3 id="Kotlin自带的特殊类"><a href="#Kotlin自带的特殊类" class="headerlink" title="Kotlin自带的特殊类"></a>Kotlin自带的特殊类</h3><p>数据类，嵌套类，内部类，密封类的基本写法这里就略去不谈。</p>
+<h4 id="数据类data"><a href="#数据类data" class="headerlink" title="数据类data"></a>数据类data</h4><p>data修饰的类，必须有主构造函数，且主构造每个入参必须都val或var修饰</p>
+<p>data修饰补充的方法里的所用的变量取决于主构造函数的入参</p>
+<h4 id="嵌套类和内部类"><a href="#嵌套类和内部类" class="headerlink" title="嵌套类和内部类"></a>嵌套类和内部类</h4><p>定义在某个类内部并用inner修饰的类称为内部类</p>
+<p>嵌套类可以类比Java的静态内部类，Kotlin的内部类类比Java的内部类，他们含有外部类的引用。<strong>与Java内部类不同的是，Kotlin的内部类能对外部类的变量进行写操作。</strong></p>
+<p>举个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class TextView&#123;</span><br><span class="line">    var counter: Int= 0</span><br><span class="line">    </span><br><span class="line">    inner class Operator&#123;</span><br><span class="line">        fun calculate()&#123;</span><br><span class="line">            counter ++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>内部类Operator的成员函数可以写外部类的counter属性，这在Java里是做不到的。</p>
+<h4 id="密封类"><a href="#密封类" class="headerlink" title="密封类"></a>密封类</h4><p>sealed关键词修饰的类，表达有限个子类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sealed class Color constructor(val name: String)</span><br><span class="line"></span><br><span class="line">class Red : Color(&quot;Red&quot;)</span><br><span class="line"></span><br><span class="line">class Green : Color(&quot;Green&quot;)</span><br><span class="line"></span><br><span class="line">class Blue : Color(&quot;Blue&quot;)</span><br><span class="line"></span><br><span class="line">class Gray : Color(&quot;Gray&quot;)</span><br></pre></td></tr></table></figure>
+<p>上述写法，编译器就会知道，Color的子类的数量，此例Color一共只有四个子类，分别是：Red，Green， Blue， Gray。如果增加或删除Color的子类，编译器是能感知到的。密封类的子类可以作为嵌套类，也可以写在密封类所在的文件里，但是不能写在其他文件里。</p>
+<p>举个和When搭配的应用例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">fun testSealed(color: Color): Int =</span><br><span class="line">        when (color) &#123;</span><br><span class="line">            is Red -&gt; &#123;</span><br><span class="line">                println(&quot;Red&quot;)</span><br><span class="line">                1</span><br><span class="line">            &#125;</span><br><span class="line">            is Green -&gt; &#123;</span><br><span class="line">                println(&quot;Green&quot;)</span><br><span class="line">                2</span><br><span class="line">            &#125;</span><br><span class="line">            is Blue -&gt; &#123;</span><br><span class="line">                println(&quot;Blue&quot;)</span><br><span class="line">                3</span><br><span class="line">            &#125;</span><br><span class="line">            is GRAY -&gt;&#123;</span><br><span class="line">                println(&quot;GRAY&quot;)</span><br><span class="line">                4</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>密封类的意义：</strong><br>如果不用密封类，使用when总是不得不添加一个默认分支。更重要的是，如果你添加了一个新的子类，编译器并不能发现有地方改变了。如果你忘记了添加一个分支，就会选择默认的选项，这可能导致潜在的bug。</p>
+<p>使用密封类就能解决上述的问题。</p>
+<h2 id="Object的使用"><a href="#Object的使用" class="headerlink" title="Object的使用"></a>Object的使用</h2><p>声明一个类并创建一个对应的实例。与类一样，对象可以包含属性，方法，初始化语句块等的声明。对象声明可以继承类和实现接口，尤其不包含状态的时候很适用，也可以有扩展函数。</p>
+<h3 id="对象声明"><a href="#对象声明" class="headerlink" title="对象声明"></a>对象声明</h3><p>创建单一的实例，对象声明在定义的时候就创建了，不需要在代码的其他地方调用构造方法。</p>
+<p>因此，对象声明不允许有构造函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">object NameComparator : Comparator&lt;String&gt;&#123;</span><br><span class="line"></span><br><span class="line">    override fun compare(o1: String, o2: String): Int &#123;</span><br><span class="line">        return o1.compareTo(o2, true)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Java调用上述代码，则需要通过INSTANCE来调用，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CaseInsensitiveFileComparator.INSTANCE.compare(&quot;abc&quot;, &quot;abe&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="伴生对象"><a href="#伴生对象" class="headerlink" title="伴生对象"></a>伴生对象</h3><p>创建单一的实例，可以实现Java里访问类的私有成员的静态方法</p>
+<p>在对象声明的基础上，使用companion关键字来标记，这样做就获得了直接通过容器类名称来访问这个对象的方法和属性的能力。</p>
+<p>举个例子，实现CarFactory工厂</p>
+<p>通过对象声明的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class CarFactory&#123;</span><br><span class="line">    object Instance&#123;</span><br><span class="line">        fun newCar(name: String): Car&#123;</span><br><span class="line">            return Car(name)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fun newRedCar(name: String): Car&#123;</span><br><span class="line">            return Car(name, Red())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用</p>
+<pre><code>CarFactory.Instance.newCar(&quot;Mini Cooper&quot;)
+</code></pre><p>通过伴生对象的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class CarFactory&#123;</span><br><span class="line">    companion object &#123;</span><br><span class="line">        fun newCar(name: String): Car&#123;</span><br><span class="line">            return Car(name)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fun newRedCar(name: String): Car&#123;</span><br><span class="line">            return Car(name, Red())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用</p>
+<pre><code>CarFactory.newCar(&quot;Mini Cooper&quot;)
+</code></pre><h3 id="对象表达式"><a href="#对象表达式" class="headerlink" title="对象表达式"></a>对象表达式</h3><p>既然是表达式，就意味着有返回值</p>
+<p>与Java的匿名内部类只能扩展一个类或者实现一个接口不同，Kotlin的匿名对象可以实现多个接口或者不实现接口。</p>
+<p>与对象声明不通，匿名对象不是单例的。每次对象表达式被执行都会创建一个新的对象实例。<strong>在对象表达式里不经可以访问创建它的函数中的变量，还可以修改变量的值</strong></p>
+<p>举个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fun countClick(view: View)&#123;</span><br><span class="line">    var clickCount = 0</span><br><span class="line">    </span><br><span class="line">    view.addClick(object : IClick&#123;</span><br><span class="line">        </span><br><span class="line">        override fun onClick() &#123;</span><br><span class="line">            clickCount ++ </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>object对象在Kotlin中的意义：</p>
+<ol>
+<li>实现Java里静态的功能，等效实现静态调用</li>
+<li>代替Java匿名内部类书写</li>
+</ol>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface IFocus &#123;</span><br><span class="line">    val focusName: String</span><br><span class="line"></span><br><span class="line">    fun showOff()&#123;</span><br><span class="line">        println(&quot;IFocus foucusName length = $&#123;focusName.length&#125;&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun onFocus()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IFocus接口声明函数，让子类实现，默认方法showOff，和抽象方法onFucus</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class View : IFocus&#123;</span><br><span class="line"></span><br><span class="line">    override val focusName: String</span><br><span class="line">        get() = &quot;View&quot;</span><br><span class="line"></span><br><span class="line">    override fun onFocus() &#123;</span><br><span class="line">        showOff()</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>View实现IFocus接口，focusName由View来确定，获取focusName逻辑写在IFocus的默认方法里。调用如下</p>
+<pre><code>val view = View()
+view.onFocus()
+</code></pre><p>调用返回内容</p>
+<blockquote>
+<p>IFocus foucusName length = 4</p>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="访问权限修饰词"><a href="#访问权限修饰词" class="headerlink" title="访问权限修饰词"></a>访问权限修饰词</h3><p><strong>protected在Kotlin和Java的区别</strong><br>kotlin中protected只能是其子类和自身才能访问；Java中则是同包下所有文件和不同包的子类能访问</p>
+<p><strong>Kotiln访问权限由小到大排列依次是：</strong><br>private, protected, internal, public</p>
+<p>Kotlin函数和属性默认是public的，Java的默认是包级访问范围，即同一个包下的类能访问。<br>Kotlin缺少包级别访问控制，而多了一个模块访问范围internal。internal表示同一个项目模块下的类都能访问</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://book.douban.com/subject/27093660/" target="_blank" rel="noopener">Kotlin实战</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/05/07/Kotlin第三讲-拓展函数及其他/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1224,7 +2140,7 @@ val s5 = joinToString(list, prefix = &quot;[&quot;, postfix = &quot;]&quot;)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
