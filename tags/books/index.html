@@ -82,7 +82,7 @@
 <meta name="description" content="Java Coder &amp; Kotlin Lover">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ethan Ruan&#39;s Blog">
-<meta property="og:url" content="https://sugarya.github.io/tags/Books/index.html">
+<meta property="og:url" content="https://sugarya.github.io/tags/books/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="Java Coder &amp; Kotlin Lover">
 <meta property="og:locale" content="zh-Hans">
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="https://sugarya.github.io/tags/Books/"/>
+  <link rel="canonical" href="https://sugarya.github.io/tags/books/"/>
 
 
 
 
 
-  <title>标签: Books | Ethan Ruan's Blog</title>
+  <title>标签: books | Ethan Ruan's Blog</title>
   
 
 
@@ -288,7 +288,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>Books<small>标签</small>
+        <h1>books<small>标签</small>
         </h1>
       </div>
 
@@ -300,37 +300,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2016/10/30/2016/2016-10-30/" itemprop="url">
+            <a class="post-title-link" href="/2016/05/23/2016/2016-05-23/" itemprop="url">
               
-                <span itemprop="name">把时间当作朋友 下</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-10-30T00:01:00+08:00"
-              content="2016-10-30" >
-          10-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/10/28/2016/2016-10-28/" itemprop="url">
-              
-                <span itemprop="name">把时间当作朋友 上</span>
+                <span itemprop="name">活法3－寻找你自己的人生王道</span>
               
             </a>
         
@@ -338,65 +310,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2016-10-28T00:30:00+08:00"
-              content="2016-10-28" >
-          10-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/08/08/2016/2016-08-08/" itemprop="url">
-              
-                <span itemprop="name">《黑客与画家》之如何创造财富</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-08T00:30:00+08:00"
-              content="2016-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/07/31/2016/2016-07-31/" itemprop="url">
-              
-                <span itemprop="name">读《途客圈创业记》有感</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-07-31T22:40:00+08:00"
-              content="2016-07-31" >
-          07-31
+              datetime="2016-05-23T00:30:00+08:00"
+              content="2016-05-23" >
+          05-23
         </time>
       </div>
 
@@ -460,7 +376,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -482,7 +398,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1104,6 +1020,80 @@
       var $visitors = $(".leancloud_visitors");
       var url = $visitors.attr('id').trim();
       var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+= $visitors.attr('data-flag-title').trim();
       var query = new AV.Query(Counter);
 
       query.equalTo("url", url);
