@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Lambda,Functional Programming," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="还记得上次分享的练习题么   有一箱东港九九草莓，想吃其中最大的一颗草莓？（可模拟所需的所有数据）">
+<meta name="keywords" content="Java,Lambda,Functional Programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lambda表达式实战分析 下篇">
+<meta property="og:url" content="https://sugarya.github.io/2018/01/17/2018/2018-01-17/index.html">
+<meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
+<meta property="og:description" content="还记得上次分享的练习题么   有一箱东港九九草莓，想吃其中最大的一颗草莓？（可模拟所需的所有数据）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-05T02:34:04.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lambda表达式实战分析 下篇">
+<meta name="twitter:description" content="还记得上次分享的练习题么   有一箱东港九九草莓，想吃其中最大的一颗草莓？（可模拟所需的所有数据）">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sugarya.github.io/2018/01/17/2018/2018-01-17/"/>
+
+
+
+
+
+  <title>Lambda表达式实战分析 下篇 | Ethan Ruan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan Ruan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow my nose and connect the dots</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2018/01/17/2018/2018-01-17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Lambda表达式实战分析 下篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-17T17:16:00+08:00">
+                2018-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java专题/" itemprop="url" rel="index">
+                    <span itemprop="name">Java专题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/17/2018/2018-01-17/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/01/17/2018/2018-01-17/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/01/17/2018/2018-01-17/" class="leancloud_visitors" data-flag-title="Lambda表达式实战分析 下篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,077 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>还记得上次分享的练习题么  </p>
+<p>有一箱东港九九草莓，想吃其中最大的一颗草莓？（可模拟所需的所有数据）</p>
+<a id="more"></a>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>还记得上次分享的练习题么  </p>
+<p>有一箱东港九九草莓，想吃其中最大的一颗草莓？（可模拟所需的所有数据）</p>
+<h3 id="自己实现筛选工具类"><a href="#自己实现筛选工具类" class="headerlink" title="自己实现筛选工具类"></a>自己实现筛选工具类</h3><pre><code>public static &lt;T&gt; T getMax(List&lt;T&gt; list, Comparator&lt;T&gt; comparator) {
+    Objects.requireNonNull(list);
+
+    Iterator&lt;T&gt; iterator = list.iterator();
+    T result = iterator.next();
+    while (iterator.hasNext()) {
+        T next = iterator.next();
+        int value = comparator.compare(result, next);
+        if (value &gt; 0) {
+            result = next;
+        }
+    }
+    return result;
+}
+</code></pre><p>其中Comparator不是系统的类，是我自己实现的接口</p>
+<p><strong>Comparator类代码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@FunctionalInterface</span><br><span class="line">public interface Comparator&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    int compare(T t1, T t2);</span><br><span class="line"></span><br><span class="line">    static &lt;E&gt; Comparator&lt;E&gt; comparing(ToIntFunction&lt;E&gt; function) &#123;</span><br><span class="line">        return (E b1, E b2) -&gt; function.applyAsInt(b2) - function.applyAsInt(b1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static &lt;E&gt; Comparator&lt;E&gt; comparing(ToIntFunction&lt;E&gt; function, ToIntFunction&lt;E&gt; function2) &#123;</span><br><span class="line">        return (E b1, E b2) -&gt; function.applyAsInt(b2) - function.applyAsInt(b1) == 0 ? function2.applyAsInt(b2) - function2.applyAsInt(b1) : function.applyAsInt(b2) - function.applyAsInt(b1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    default Comparator&lt;T&gt; thenCompare(ToIntFunction&lt;T&gt; function)&#123;</span><br><span class="line">        return (T t1, T t2) -&gt; compare(t1, t2) == 0 ? Comparator.comparing(function).compare(t1, t2) : compare(t1, t2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用lambda如何实现"><a href="#使用lambda如何实现" class="headerlink" title="使用lambda如何实现"></a>使用lambda如何实现</h3><pre><code>private static void filterVersion1() {
+    Strawberry strawberry = CollectionUtils.getMax(RAW_STRAWBERRY_LIST,
+            (Strawberry b1, Strawberry b2) -&gt; b2.getWeight() - b1.getWeight());
+    Out.println(&quot;我想吃最大的草莓是：&quot;);
+    Out.println(strawberry.toString());
+}
+</code></pre><h3 id="通过方法引用如何实现"><a href="#通过方法引用如何实现" class="headerlink" title="通过方法引用如何实现"></a>通过方法引用如何实现</h3><pre><code>private static int getComparator(Strawberry b1, Strawberry b2) {
+    return b2.getWeight() - b1.getWeight();
+}
+
+private static void filterVersion2() {
+    Strawberry strawberry = CollectionUtils.getMax(RAW_STRAWBERRY_LIST,
+            Practice2Client::getComparator);
+    Out.println(&quot;我想吃最大的草莓是：&quot;);
+    Out.println(strawberry.toString());
+}
+</code></pre><p>在使用方法引用时，取方法名要格外恰当，好的方法名能让代码像是在描述问题而不是在解决问题</p>
+<h3 id="现在我不想吃最大的草莓了，我想吃最甜的草莓，要怎么做呢？"><a href="#现在我不想吃最大的草莓了，我想吃最甜的草莓，要怎么做呢？" class="headerlink" title="现在我不想吃最大的草莓了，我想吃最甜的草莓，要怎么做呢？"></a>现在我不想吃最大的草莓了，我想吃最甜的草莓，要怎么做呢？</h3><p><strong>高阶函数：</strong><br>如果一个函数的输入或者输出也是函数，那么这个函数就是高阶函数。举个例子</p>
+<pre><code>private static com.sugarya.interfaces.Comparator&lt;Strawberry&gt; comparing(Function&lt;Strawberry, Integer&gt; function) {
+    return (Strawberry b1, Strawberry b2) -&gt; function.apply(b2) - function.apply(b1);
+}
+
+private static void filterVersion4() {
+    Strawberry strawberry = CollectionUtils.getMax(RAW_STRAWBERRY_LIST, comparing(Strawberry::getSweetness));
+    Out.println(&quot;我想吃最甜的草莓是：&quot;);
+    Out.println(strawberry.toString());
+}
+</code></pre><h3 id="如果最大的草莓重量相同时，我想吃其中最甜的，怎么做？"><a href="#如果最大的草莓重量相同时，我想吃其中最甜的，怎么做？" class="headerlink" title="如果最大的草莓重量相同时，我想吃其中最甜的，怎么做？"></a>如果最大的草莓重量相同时，我想吃其中最甜的，怎么做？</h3><pre><code>private static com.sugarya.interfaces.Comparator&lt;Strawberry&gt; comparing(Function&lt;Strawberry, Integer&gt; function, Function&lt;Strawberry, Integer&gt; function2) {
+    return (Strawberry b1, Strawberry b2) -&gt; function.apply(b2) - function.apply(b1) == 0 ? function2.apply(b2) - function2.apply(b1) : function.apply(b2) - function.apply(b1);
+}
+
+/**
+ * 找到最大的草莓，如果一样大，就要其中最甜的
+ */
+private static void filterVersion5() {
+    Strawberry strawberry = CollectionUtils.getMax(RAW_STRAWBERRY_LIST,
+            comparing(Strawberry::getWeight, Strawberry::getSweetness));
+    Out.println(&quot;我想吃最甜的草莓是：&quot;);
+    Out.println(strawberry.toString());
+}
+</code></pre><p>java8的接口允许定义<strong>静态方法</strong>，要定义实例方法，需要关键词default，即为<strong>默认方法</strong></p>
+<p>如果要在其他类里再次筛选，代码就要重复，因此，考虑把逻辑封装到接口里，代码如下：</p>
+<h3 id="有没有办法像链式调用那样，在外层添加新的判断逻辑呢？"><a href="#有没有办法像链式调用那样，在外层添加新的判断逻辑呢？" class="headerlink" title="有没有办法像链式调用那样，在外层添加新的判断逻辑呢？"></a>有没有办法像链式调用那样，在外层添加新的判断逻辑呢？</h3><p>可以的，Comparator接口里，实现thenCompare方法。</p>
+<pre><code>default Comparator&lt;T&gt; thenCompare(ToIntFunction&lt;T&gt; function){
+    return (T t1, T t2) -&gt; compare(t1, t2) == 0 ? Comparator.comparing(function).compare(t1, t2) : compare(t1, t2);
+}
+
+/**
+ * 最大的草莓，如果一样大，就要其中最甜的
+ */
+private static void filterVersion7() {
+    Strawberry strawberry = CollectionUtils.getMax(RAW_STRAWBERRY_LIST,
+            Comparator.comparing(Strawberry::getWeight).thenCompare(Strawberry::getSweetness));
+    Out.println(&quot;我想吃最甜的草莓是：&quot;);
+    Out.println(strawberry.toString());
+}
+</code></pre><h3 id="复合Lambda表达式"><a href="#复合Lambda表达式" class="headerlink" title="复合Lambda表达式"></a>复合Lambda表达式</h3><p>这里我们自己实现了一个Lambda表达式的复合使用。把多个简单的Lambda复合成复杂的表达式</p>
+<h2 id="lambda重构"><a href="#lambda重构" class="headerlink" title="lambda重构"></a>lambda重构</h2><h3 id="Lambda与匿名内部类的差异"><a href="#Lambda与匿名内部类的差异" class="headerlink" title="Lambda与匿名内部类的差异"></a>Lambda与匿名内部类的差异</h3><p>匿名类中this代表的是函数式接口对象，但是在Lambda表达式中代表的是外部所在的类。</p>
+<p>lambda表达式里的局部变量不能和外部的变量重名，匿名内部类可以</p>
+<p>匿名内部类可以实现非函数式接口，lambda表达式只能作为是函数式接口的传入</p>
+<h3 id="lambda表达式的类型问题"><a href="#lambda表达式的类型问题" class="headerlink" title="lambda表达式的类型问题"></a>lambda表达式的类型问题</h3><p>lambda表达式反映的是结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private static void testLambda() &#123;</span><br><span class="line">    testLambdaSign((Task) () -&gt; &#123;</span><br><span class="line">        println(&quot;&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void testLambdaSign(Runnable runnable) &#123;</span><br><span class="line">    println(&quot;testLambdaSign Runnable&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void testLambdaSign(Task task) &#123;</span><br><span class="line">    println(&quot;testLambdaSign task&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lambda实战应用"><a href="#lambda实战应用" class="headerlink" title="lambda实战应用"></a>lambda实战应用</h3><p>表达式解决设计模式与生俱来的设计僵化问题</p>
+<h4 id="lamdba表达式与设计模式"><a href="#lamdba表达式与设计模式" class="headerlink" title="lamdba表达式与设计模式"></a>lamdba表达式与设计模式</h4><p>对策略方法，观察者模式时，把设计模式里涉及到函数式接口替换成lambda表达式表示即可。</p>
+<h4 id="模板设计模式"><a href="#模板设计模式" class="headerlink" title="模板设计模式"></a>模板设计模式</h4><p>模板设计模式，通过继承抽象类，实现抽象方法来实现。这时候可以直接引入一个新的参数，来替换抽象类，函数描述符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public abstract class AbstractComputer &#123;</span><br><span class="line"></span><br><span class="line">    public void work()&#123;</span><br><span class="line">        powerOn();</span><br><span class="line">        int hardware = checkHardware();</span><br><span class="line">        loadOS(hardware);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void work(Consumer&lt;Integer&gt; consumer)&#123;</span><br><span class="line">        powerOn();</span><br><span class="line">        int hardwareParam = checkHardware();</span><br><span class="line">        consumer.accept(hardwareParam);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected void powerOn()&#123;</span><br><span class="line">        Out.println(&quot;开启电源&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected int checkHardware()&#123;</span><br><span class="line">        Out.println(&quot;检查硬件&quot;);</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected abstract void loadOS(int hardware);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h4><p>而责任链模式使用了复合lambda表达式</p>
+<p>把数据结构里的链式思维应用在面向对象的编程里，将每一个链条的节点看作是一个对象，每个对象拥有不同的处理逻辑。一个业务逻辑被看作从链条的首端发出，途径一个个链节点，至末端结束。</p>
+<p>面向对象的编程：</p>
+<ol>
+<li>使用父类&amp;子类建立思维体系</li>
+<li>通过类与类的相互联系和通信来组织逻辑</li>
+<li>用重写来表达变化</li>
+<li>用抽象方法表达抽象</li>
+<li>用接口来表达抽象</li>
+</ol>
+<p><strong>链节点：</strong>作为对象，我们建立一个基类来表示，具体的每个节点是它的子类。</p>
+<p><strong>每个对象／节点处理不同的逻辑：</strong>不同是变化，需要抽象出来，可以用抽象方法表达抽象，也可以用接口表达抽象。这里我们用抽象方法来做</p>
+<p><strong>链式思维：</strong>每个当前节点，持有下一个节点，如果是双向的链式，则再持有上一个节点。常用的方式，当前节点的输出作为下一个节点的输入</p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public abstract class AbstractNode&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private AbstractNode&lt;T&gt; nextNode;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public T startChain(T t)&#123;</span><br><span class="line">        T element = handle(t);</span><br><span class="line">        if(nextNode != null)&#123;</span><br><span class="line">            return nextNode.handle(element);</span><br><span class="line">        &#125;</span><br><span class="line">        return t;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public AbstractNode&lt;T&gt; getNextNode() &#123;</span><br><span class="line">        return nextNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNextNode(AbstractNode&lt;T&gt; nextNode) &#123;</span><br><span class="line">        this.nextNode = nextNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public abstract T handle(T t);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="FirstNode"><a href="#FirstNode" class="headerlink" title="FirstNode"></a>FirstNode</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class FirstNode extends AbstractNode&lt;String&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String handle(String s) &#123;</span><br><span class="line">        return &quot;Hello, &quot; + s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="SecondNode"><a href="#SecondNode" class="headerlink" title="SecondNode"></a>SecondNode</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class SecondNode extends AbstractNode&lt;String&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String handle(String s) &#123;</span><br><span class="line">        return s.replace(&quot;lamda&quot;,&quot;lambda&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private static void testChainByLambda() &#123;</span><br><span class="line">        Function&lt;String, String&gt; firstNode = s -&gt; &quot;Hello, &quot; + s;</span><br><span class="line">        Function&lt;String, String&gt; secondNode = s -&gt; s.replace(&quot;lamda&quot;, &quot;lambda&quot;);</span><br><span class="line"></span><br><span class="line">        Function&lt;String, String&gt; chain = firstNode.andThen(secondNode);</span><br><span class="line">        String result = chain.apply(&quot;This is lamda&quot;);</span><br><span class="line">        Out.println(&quot;chain result = &quot; + result);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h4><p>工厂设计模式，使用到构造函数的方法引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class FruitFactory2 &#123;</span><br><span class="line"></span><br><span class="line">    private static Map&lt;FruitType, Supplier&lt;? extends Fruit&gt;&gt; FRUIT_MAP = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        FRUIT_MAP.put(FruitType.Apple, Apple::new);</span><br><span class="line">        FRUIT_MAP.put(FruitType.Strawberry, Strawberry::new);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static &lt;T extends Fruit&gt; T createFruit(FruitType fruitType) &#123;</span><br><span class="line">        Objects.requireNonNull(fruitType);</span><br><span class="line">        return (T)FRUIT_MAP.get(fruitType).get();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Java8的lambda表达式与Kotlin，Python的差异"><a href="#Java8的lambda表达式与Kotlin，Python的差异" class="headerlink" title="Java8的lambda表达式与Kotlin，Python的差异"></a>Java8的lambda表达式与Kotlin，Python的差异</h2><p>这些设计模式在使用lambda表达式重写会更简洁，但是也有人疑问，lambda只是让代码简洁而已，我用匿名内部类或接口仍然可以健壮的实现功能啊。对于这个疑问，我的理解是，如果赞同函数式编程是未来的方向，那么就很有必要使用lambda表达式，lambda表达式这套新的符号背后承载的是不同以往的思维方式–即所谓的“函数式”的思维。不够好的式Java8的lambda是不完全的函数式，但是从另一个角度来说，这也是好的，java8不完全的函数式能让java 7的程序员更容易和平稳得从面向对象过渡到函数式编程。</p>
+<p>函数式的程度由低到高是：</p>
+<p>Java8 《 Kotlin 《 Python</p>
+<p>我分别举个Koltin和Python的例子</p>
+<h3 id="Kotlin实现链式"><a href="#Kotlin实现链式" class="headerlink" title="Kotlin实现链式"></a>Kotlin实现链式</h3><pre><code>private fun startChain(str: String): String{
+    val firstNode: (String) -&gt; String = {s -&gt; &quot;Hello, &quot; + s}
+    val secondNode = { s: String -&gt; s.replace(&quot;lamba&quot;, &quot;lambda&quot;)}
+
+    return secondNode(firstNode(str))
+}
+</code></pre><p>Kotlin比Java8更加函数式</p>
+<h3 id="Python实现链式"><a href="#Python实现链式" class="headerlink" title="Python实现链式"></a>Python实现链式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def startChain(x):</span><br><span class="line">    firstNode = lambda x: &quot;Hello, &quot; + x</span><br><span class="line">    secondNode = lambda x: x.replace(&quot;lamda&quot;, &quot;lambda&quot;)</span><br><span class="line">    return secondNode(firstNode(x))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(startChain(&quot;This is lamda&quot;))</span><br></pre></td></tr></table></figure>
+<p>Python比Kotlin更加函数式</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Lambda/" rel="tag"># Lambda</a>
+          
+            <a href="/tags/Functional-Programming/" rel="tag"># Functional Programming</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/10/2018/2018-01-10/" rel="next" title="Lambda表达式实战分析 上篇">
+                <i class="fa fa-chevron-left"></i> Lambda表达式实战分析 上篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/22/2018/2018-01-22/" rel="prev" title="再谈Java反射">
+                再谈Java反射 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b656298cdac292e" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpg"
+                alt="Ethan Ruan" />
+            
+              <p class="site-author-name" itemprop="name">Ethan Ruan</p>
+              <p class="site-description motion-element" itemprop="description">Java Coder & Kotlin Lover</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sugaryaruan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自己实现筛选工具类"><span class="nav-number">1.1.</span> <span class="nav-text">自己实现筛选工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用lambda如何实现"><span class="nav-number">1.2.</span> <span class="nav-text">使用lambda如何实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过方法引用如何实现"><span class="nav-number">1.3.</span> <span class="nav-text">通过方法引用如何实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现在我不想吃最大的草莓了，我想吃最甜的草莓，要怎么做呢？"><span class="nav-number">1.4.</span> <span class="nav-text">现在我不想吃最大的草莓了，我想吃最甜的草莓，要怎么做呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果最大的草莓重量相同时，我想吃其中最甜的，怎么做？"><span class="nav-number">1.5.</span> <span class="nav-text">如果最大的草莓重量相同时，我想吃其中最甜的，怎么做？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有没有办法像链式调用那样，在外层添加新的判断逻辑呢？"><span class="nav-number">1.6.</span> <span class="nav-text">有没有办法像链式调用那样，在外层添加新的判断逻辑呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合Lambda表达式"><span class="nav-number">1.7.</span> <span class="nav-text">复合Lambda表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda重构"><span class="nav-number">2.</span> <span class="nav-text">lambda重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda与匿名内部类的差异"><span class="nav-number">2.1.</span> <span class="nav-text">Lambda与匿名内部类的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda表达式的类型问题"><span class="nav-number">2.2.</span> <span class="nav-text">lambda表达式的类型问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda实战应用"><span class="nav-number">2.3.</span> <span class="nav-text">lambda实战应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lamdba表达式与设计模式"><span class="nav-number">2.3.1.</span> <span class="nav-text">lamdba表达式与设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板设计模式"><span class="nav-number">2.3.2.</span> <span class="nav-text">模板设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#责任链模式"><span class="nav-number">2.3.3.</span> <span class="nav-text">责任链模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FirstNode"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">FirstNode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SecondNode"><span class="nav-number">2.3.3.3.</span> <span class="nav-text">SecondNode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用"><span class="nav-number">2.3.3.4.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单工厂"><span class="nav-number">2.3.4.</span> <span class="nav-text">简单工厂</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java8的lambda表达式与Kotlin，Python的差异"><span class="nav-number">3.</span> <span class="nav-text">Java8的lambda表达式与Kotlin，Python的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin实现链式"><span class="nav-number">3.1.</span> <span class="nav-text">Kotlin实现链式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python实现链式"><span class="nav-number">3.2.</span> <span class="nav-text">Python实现链式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Ruan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'KucTheGGj0jth3TFNY573jRN-gzGzoHsz',
+        appKey: 'WzvVriXrWbkpVb5Qdn6CICLP',
+        placeholder: 'Umm, say something ...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KucTheGGj0jth3TFNY573jRN-gzGzoHsz", "WzvVriXrWbkpVb5Qdn6CICLP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

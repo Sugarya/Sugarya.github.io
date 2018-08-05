@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安卓App里，搜索是一个常用功能，是开发中高频需求。借着在公司技术分享的契机，我们一起聊聊那些年我们开发过的搜索栏。 本文分为两大部分：1. 搜索栏的产品逻辑  2. 搜索交互的代码实现。（如果对搜索栏产品逻辑不感兴趣，可以直接跳到第二部分阅读）">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊安卓App里的搜索">
+<meta property="og:url" content="https://sugarya.github.io/2017/03/26/2017/2017-03-26/index.html">
+<meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
+<meta property="og:description" content="安卓App里，搜索是一个常用功能，是开发中高频需求。借着在公司技术分享的契机，我们一起聊聊那些年我们开发过的搜索栏。 本文分为两大部分：1. 搜索栏的产品逻辑  2. 搜索交互的代码实现。（如果对搜索栏产品逻辑不感兴趣，可以直接跳到第二部分阅读）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-f1bce69ed9cee6ec.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-be71e212cf0b9428.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-05T01:59:44.635Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊聊安卓App里的搜索">
+<meta name="twitter:description" content="安卓App里，搜索是一个常用功能，是开发中高频需求。借着在公司技术分享的契机，我们一起聊聊那些年我们开发过的搜索栏。 本文分为两大部分：1. 搜索栏的产品逻辑  2. 搜索交互的代码实现。（如果对搜索栏产品逻辑不感兴趣，可以直接跳到第二部分阅读）">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-f1bce69ed9cee6ec.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sugarya.github.io/2017/03/26/2017/2017-03-26/"/>
+
+
+
+
+
+  <title>聊聊安卓App里的搜索 | Ethan Ruan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan Ruan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow my nose and connect the dots</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2017/03/26/2017/2017-03-26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">聊聊安卓App里的搜索</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-26T16:05:00+08:00">
+                2017-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/26/2017/2017-03-26/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/03/26/2017/2017-03-26/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/26/2017/2017-03-26/" class="leancloud_visitors" data-flag-title="聊聊安卓App里的搜索">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,265 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>安卓App里，搜索是一个常用功能，是开发中高频需求。借着在公司技术分享的契机，我们一起聊聊那些年我们开发过的搜索栏。</p>
+<p>本文分为两大部分：1. 搜索栏的产品逻辑  2. 搜索交互的代码实现。（如果对搜索栏产品逻辑不感兴趣，可以直接跳到第二部分阅读）</p>
+<a id="more"></a>
+<p>安卓App里，搜索是一个常用功能，是开发中高频需求。借着在公司技术分享的契机，我们一起聊聊那些年我们开发过的搜索栏。</p>
+<p>本文分为两大部分：1. 搜索栏的产品逻辑  2. 搜索交互的代码实现。（如果对搜索栏产品逻辑不感兴趣，可以直接跳到第二部分阅读）</p>
+<h2 id="产品经理篇"><a href="#产品经理篇" class="headerlink" title="产品经理篇"></a>产品经理篇</h2><p>没有系统的论述搜索栏的交互体系和生命周期，而是尝试通过回答以下三个问题来表达我对搜索栏的理解</p>
+<h3 id="什么时候需要搜索栏"><a href="#什么时候需要搜索栏" class="headerlink" title="什么时候需要搜索栏"></a>什么时候需要搜索栏</h3><p>对于用户来说，用户喜欢点击、长按、滑动、拖拽，而不喜欢输入；搜索需要用户打字输入。另一方面，并不是任何阶段的App都需要搜索栏</p>
+<h4 id="当列表不够用时"><a href="#当列表不够用时" class="headerlink" title="当列表不够用时"></a>当列表不够用时</h4><p>搜索是为了提供用户快速获得他们最想要的数据内容，当总的数据量很少时，直接列表展示所有数据即可。</p>
+<p>比如一款旅行类的App，提供各个城市的景点，美食，商城的攻略和介绍。最初，这家初创的互联网公司只提供国内城市， 用户想要查看的各个城市的景点，直接通过滑动城市列表找寻</p>
+<p>如果列表展示不够了，考虑在App里增加搜索栏。</p>
+<h4 id="当一种元素分类不够用时"><a href="#当一种元素分类不够用时" class="headerlink" title="当一种元素分类不够用时"></a>当一种元素分类不够用时</h4><p>随着这家旅游公司的成长，它能提供的国内城市由最初的十个不到，增多到的几十个，列表展示这几十个城市已经不合适了，这时候需要对城市进行分类。比如按城市名首字的字母表排序分类，比如按城市所在区域分类。通过分类，每个类别下只有若干个城市名，用户就能快速找到想要的数据。</p>
+<p>如果一种分类展示不够用了，考虑在App里增加搜索栏</p>
+<h4 id="多种维度分类不够用时"><a href="#多种维度分类不够用时" class="headerlink" title="多种维度分类不够用时"></a>多种维度分类不够用时</h4><p>这家旅游公司发展迅速，不仅能提供国内的城市，还提供国外城市，比如美国，欧洲等旅游城市，城市名增加到了上千个，这时候需要从之前的一种分类变成多种维度分类。按区域划分变成按五大洲分类，每个州按国家二级分类，每个国家按城市首字字母表三级分类。</p>
+<p>如果多级分类不够用了，考虑在App里增加搜索栏</p>
+<h3 id="用户搜索时都在想什么"><a href="#用户搜索时都在想什么" class="headerlink" title="用户搜索时都在想什么"></a>用户搜索时都在想什么</h3><h4 id="搜索速度"><a href="#搜索速度" class="headerlink" title="搜索速度"></a>搜索速度</h4><p>用户输入关键词查询，能接受的等待时间是有一个范围的，当超过这个范围，用户就会明显感受到等待，这个时间大体为一秒。另一方面，在搜索的时候吸引用户注意力能让用户的时间感知降低，比如引入加载的动画，立刻展示预置的通用图案和内容等</p>
+<h4 id="查看关心的信息"><a href="#查看关心的信息" class="headerlink" title="查看关心的信息"></a>查看关心的信息</h4><p>用户之所以搜索，就是想找到自己想要的搜索内容。这个搜索结果的构成，可以根据App的特性和下一个交互流程来决定。</p>
+<p>还是以上文提到的旅游App为例，用户搜索城市，想要知道这个城市好玩的景点，好吃的美食，搜索的结果就需要体现这个城市的景点和美食。这家旅行App的的盈利方式之一是提供车票预订服务，那么搜索结果可以提供跳转到去往该城市的机票或火车票的下单页面。</p>
+<h3 id="搜索结束，用户接下来要做什么"><a href="#搜索结束，用户接下来要做什么" class="headerlink" title="搜索结束，用户接下来要做什么"></a>搜索结束，用户接下来要做什么</h3><p>一旦搜索结束，就意味着下一个交互流程的开始。给用户什么新的交互流程，根据两个方面吧：</p>
+<h4 id="延续搜索交互"><a href="#延续搜索交互" class="headerlink" title="延续搜索交互"></a>延续搜索交互</h4><p>分析App运营数据，分析用户高频的行为，用户搜索的心理活动，对于搜索结果，用户希望获得什么内容。通常是支持用户点击进入详情。比如城市名搜索完，点击进入城市详情页，详细展示该城市的景点和美食</p>
+<h4 id="提供新的流程"><a href="#提供新的流程" class="headerlink" title="提供新的流程"></a>提供新的流程</h4><p>这部分需要结合App的产品定位和业务需求。</p>
+<p>依然拿上文那家旅游公司为例，该公司后期提供了车票下单服务，提供用户和当地城市导游一对一聊天提问的服务。在App里，底栏Tab有四个：“城市”，“车票”，“聊天”，“我的”</p>
+<p>这时候搜索到的城市结果展示，就需要提供点击跳转到该城市的车票下单页面，以及点击进入和当地导游聊天的页面</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><p><a href="http://www.jianshu.com/p/0db6585dddde" target="_blank" rel="noopener">搜索产品功能浅谈</a></p>
+</li>
+<li><p><a href="http://www.jianshu.com/p/a863c3cd8658" target="_blank" rel="noopener">设计搜索栏，你遵守这五条原则了吗？</a></p>
+</li>
+</ul>
+<h2 id="程序员篇"><a href="#程序员篇" class="headerlink" title="程序员篇"></a>程序员篇</h2><p>有了搜索栏产品经理篇所述的认识，开发搜索栏的意义和方向和产品经理感同身受，对UI交互要求有了共鸣</p>
+<h3 id="Gmail搜索交互效果"><a href="#Gmail搜索交互效果" class="headerlink" title="Gmail搜索交互效果"></a>Gmail搜索交互效果</h3><p><img src="http://upload-images.jianshu.io/upload_images/1933990-f1bce69ed9cee6ec.gif?imageMogr2/auto-orient/strip" alt="谷歌邮箱App的搜索页交互效果"></p>
+<p>上面是谷歌邮箱App搜索的交互效果，如何实现这个UI效果？</p>
+<p>实现这个效果，有三个步骤</p>
+<ol>
+<li>有两层标题栏，前层是一个toolbar，背后的自己写的布局</li>
+<li>当点击前层搜索，让后层的布局显示，前层的布局不显示</li>
+<li>实施搜索动画，让背后的布局淡入显示出来，返回时则是上述的逆过程</li>
+</ol>
+<h4 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h4><p>toolbar的使用有规范，自制的布局这里也不详诉了</p>
+<h4 id="步骤二"><a href="#步骤二" class="headerlink" title="步骤二"></a>步骤二</h4><p>如果两个布局，一个显示，一个隐藏，通常会想到setVisible()方法来控制，这里提供另一种思路:View对象里，有一个方法bringToFront()，能改变子View在父容器位置顺序，改变了位置，就能改变前景的显示了。API文档对bringToFront的介绍如下：</p>
+<pre><code>bringToFront()
+Change the view&apos;s z order in the tree, so it&apos;s on top of other sibling views.
+</code></pre><h4 id="步骤三"><a href="#步骤三" class="headerlink" title="步骤三"></a>步骤三</h4><p>上图看到，点击搜索图标后，标题栏和状态栏从红色变成了白色，这里涉及到如何代码改变状态栏，淡入和后退键标题栏谈出用到了属性动画</p>
+<p>核心代码如下：</p>
+<pre><code>private void reactionToClickSearchAction() {
+    View childView = mRevealFrameLayout.getChildAt(0);
+    childView.bringToFront();
+
+    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.status_bar_gray));
+    }
+
+    ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mLlSearchBar, &quot;alpha&quot;, 0, 1);
+    objectAnimator.setDuration(300).setInterpolator(new FastOutSlowInInterpolator());
+    objectAnimator.addListener(new AnimatorListenerAdapter() {
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            super.onAnimationEnd(animation);
+            mIsShowSearch = true;
+
+            mEdSearch.requestFocus();
+            KeyboardUtils.showSoftInput(mEdSearch, GMailMainActivity.this);
+        }
+    });
+
+    objectAnimator.start();
+}
+
+@Override
+public void onBackPressed() {
+    if (mIsShowSearch) {
+        mEdSearch.clearFocus();
+        KeyboardUtils.hideSoftInput(mEdSearch, this);
+
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mLlSearchBar, &quot;alpha&quot;, 1, 0);
+        objectAnimator.setDuration(200).setInterpolator(new FastOutSlowInInterpolator());
+        objectAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                View childView = mRevealFrameLayout.getChildAt(0);
+                childView.bringToFront();
+            }
+        });
+        objectAnimator.start();
+
+        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+        mIsShowSearch = false;
+
+        return;
+    }
+    super.onBackPressed();
+}
+</code></pre><h3 id="Google-Play搜索交互效果"><a href="#Google-Play搜索交互效果" class="headerlink" title="Google Play搜索交互效果"></a>Google Play搜索交互效果</h3><p><img src="http://upload-images.jianshu.io/upload_images/1933990-be71e212cf0b9428.gif?imageMogr2/auto-orient/strip" alt="Google Play搜索页"></p>
+<p>上面是Google Play子目录页搜索的交互效果，这个交互效果怎么实现呢？</p>
+<p>会发现它和Gmail的交互很像，不同的之处有两点：</p>
+<ol>
+<li>点击搜索的动画不同，Google Play的动画不是淡入而是像水波纹一样展开的</li>
+<li>状态栏颜色不改变</li>
+</ol>
+<p>如何让一个布局水波纹似地展开呢？<br>从API 21 android5.0 棒棒糖版本开始，安卓提供了一个方法ViewAnimationUtils.createCircularReveal() </p>
+<pre><code>static Animator    createCircularReveal(View view, int centerX, int centerY, float startRadius, float endRadius)
+Returns an Animator which can animate a clipping circle.
+</code></pre><p>那么在5.0以下的版本怎么办，除了自己实现这种效果外，github上已经有人开源了<a href="https://github.com/ozodrukh/CircularReveal" target="_blank" rel="noopener">ozodrukh/CircularReveal</a></p>
+<p>核心代码如下：</p>
+<pre><code>/**
+ * 点击搜索
+ */
+private void reactionToClickSearchAction() {
+    mShowSearchToolbar = true;
+
+    View childView = mRevealFrameLayout.getChildAt(0);
+    childView.setVisibility(View.VISIBLE);
+    childView.bringToFront();
+
+    int centerX = childView.getRight();
+    int centerY = childView.getBottom() / 2;
+    Animator circularReveal = ViewAnimationUtils.createCircularReveal(childView, centerX, centerY, 0, childView.getWidth());
+    circularReveal.setDuration(300).setInterpolator(new LinearInterpolator());
+    circularReveal.start();
+
+    circularReveal.addListener(new AnimatorListenerAdapter() {
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            super.onAnimationEnd(animation);
+
+            reactionToCover(true);
+
+            mEdSearch.requestFocus();
+            KeyboardUtils.showSoftInput(mEdSearch, GplayMainActivity.this);
+        }
+    });
+}
+
+private boolean reactionToBackPressed() {
+    if (mShowSearchToolbar) {
+        KeyboardUtils.hideSoftInput(mEdSearch, this);
+
+        View childView = mRevealFrameLayout.getChildAt(0);
+        childView.bringToFront();
+
+        int centerX = childView.getLeft();
+        int centerY = childView.getBottom() / 2;
+        Animator circularReveal = ViewAnimationUtils.createCircularReveal(childView, centerX, centerY, 0, childView.getWidth());
+        circularReveal.setDuration(300).setInterpolator(new DecelerateInterpolator());
+
+        circularReveal.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                reactionToCover(false);
+            }
+        });
+        circularReveal.start();
+
+        mShowSearchToolbar = false;
+        return true;
+    }
+    return false;
+}
+
+public void reactionToCover(boolean isDark){
+    if(isDark) {
+        mFrameBodyCover.setVisibility(View.VISIBLE);
+    }else{
+        mFrameBodyCover.setVisibility(View.GONE);
+    }
+}
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>上述代码已提交到<a href="https://github.com/Sugarya/SearchBarDemo" target="_blank" rel="noopener">Github:SearchBarDemo</a>，欢迎star。</p>
+<h2 id="参考资料-1"><a href="#参考资料-1" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a href="https://mp.weixin.qq.com/s?__biz=MzIwMTQwNTA3Nw==&amp;mid=402563060&amp;idx=1&amp;sn=2ebd064dcc5d3ec461c7457269e5670f&amp;scene=1&amp;srcid=0323FQ1xOlI1AdCDlC9nyDRj&amp;key=710a5d99946419d9f2b39f2b88caefd01a80ad652c6eeed3673763eceba1ddf7fec0950d9e06e2880aea4c52d0b4f418&amp;ascene=0&amp;uin=MTYyMDMzMTAwMA%3D%3D&amp;devicetype=iMac+MacBookPro11%2C5+OSX+OSX+10.10.5+build(14F1509" target="_blank" rel="noopener">深入浅出搜索系列之（一）- 初识搜索</a>&amp;version=11020201&amp;pass_ticket=yWwF3qj71PEzLDT%2F02c0%2FFTzD6F%2BT41pTSgxYv5QasYtOCUo42uJXEMTPrVjbiiz)</p>
+</li>
+<li><p><a href="http://www.jianshu.com/p/e4b3cff04579" target="_blank" rel="noopener">Material Design中全新的动画</a></p>
+</li>
+<li><p><a href="http://www.jianshu.com/p/50f62d9e60e1" target="_blank" rel="noopener">深入理解Android L新特性之 页面内容&amp;共享元素过渡动画</a></p>
+</li>
+<li><p><a href="https://github.com/ozodrukh/CircularReveal" target="_blank" rel="noopener">Github:ozodrukh/CircularReveal</a></p>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/2017/2017-03-12/" rel="next" title="异类：一万小时练习的力量">
+                <i class="fa fa-chevron-left"></i> 异类：一万小时练习的力量
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/21/2017/2017-04-21/" rel="prev" title="松本行弘眼里的代码未来">
+                松本行弘眼里的代码未来 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b656298cdac292e" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpg"
+                alt="Ethan Ruan" />
+            
+              <p class="site-author-name" itemprop="name">Ethan Ruan</p>
+              <p class="site-description motion-element" itemprop="description">Java Coder & Kotlin Lover</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sugaryaruan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#产品经理篇"><span class="nav-number">1.</span> <span class="nav-text">产品经理篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候需要搜索栏"><span class="nav-number">1.1.</span> <span class="nav-text">什么时候需要搜索栏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#当列表不够用时"><span class="nav-number">1.1.1.</span> <span class="nav-text">当列表不够用时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#当一种元素分类不够用时"><span class="nav-number">1.1.2.</span> <span class="nav-text">当一种元素分类不够用时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多种维度分类不够用时"><span class="nav-number">1.1.3.</span> <span class="nav-text">多种维度分类不够用时</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户搜索时都在想什么"><span class="nav-number">1.2.</span> <span class="nav-text">用户搜索时都在想什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索速度"><span class="nav-number">1.2.1.</span> <span class="nav-text">搜索速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看关心的信息"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看关心的信息</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索结束，用户接下来要做什么"><span class="nav-number">1.3.</span> <span class="nav-text">搜索结束，用户接下来要做什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#延续搜索交互"><span class="nav-number">1.3.1.</span> <span class="nav-text">延续搜索交互</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提供新的流程"><span class="nav-number">1.3.2.</span> <span class="nav-text">提供新的流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.4.</span> <span class="nav-text">参考资料</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序员篇"><span class="nav-number">2.</span> <span class="nav-text">程序员篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gmail搜索交互效果"><span class="nav-number">2.1.</span> <span class="nav-text">Gmail搜索交互效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤一"><span class="nav-number">2.1.1.</span> <span class="nav-text">步骤一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤二"><span class="nav-number">2.1.2.</span> <span class="nav-text">步骤二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤三"><span class="nav-number">2.1.3.</span> <span class="nav-text">步骤三</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Play搜索交互效果"><span class="nav-number">2.2.</span> <span class="nav-text">Google Play搜索交互效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料-1"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Ruan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'KucTheGGj0jth3TFNY573jRN-gzGzoHsz',
+        appKey: 'WzvVriXrWbkpVb5Qdn6CICLP',
+        placeholder: 'Umm, say something ...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KucTheGGj0jth3TFNY573jRN-gzGzoHsz", "WzvVriXrWbkpVb5Qdn6CICLP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

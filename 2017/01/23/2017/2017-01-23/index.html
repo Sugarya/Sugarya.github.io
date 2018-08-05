@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,RecyclerView," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。">
+<meta name="keywords" content="Android,RecyclerView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="是时候自己来造个轮子了－－增强型RecyclerView">
+<meta property="og:url" content="https://sugarya.github.io/2017/01/23/2017/2017-01-23/index.html">
+<meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
+<meta property="og:description" content="该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-05T01:47:03.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="是时候自己来造个轮子了－－增强型RecyclerView">
+<meta name="twitter:description" content="该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sugarya.github.io/2017/01/23/2017/2017-01-23/"/>
+
+
+
+
+
+  <title>是时候自己来造个轮子了－－增强型RecyclerView | Ethan Ruan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan Ruan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow my nose and connect the dots</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2017/01/23/2017/2017-01-23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">是时候自己来造个轮子了－－增强型RecyclerView</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-23T10:48:00+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/23/2017/2017-01-23/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/01/23/2017/2017-01-23/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/01/23/2017/2017-01-23/" class="leancloud_visitors" data-flag-title="是时候自己来造个轮子了－－增强型RecyclerView">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,066 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>该增强型RecyclerView，增加了以下特性：</p>
+<ul>
+<li>上拉滑动到底部，加载更多</li>
+<li>支持添加Header头视图</li>
+<li>支持加载数据为空时，显示特定视图</li>
+<li>支持拖拽，侧滑删除</li>
+</ul>
+<p>下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。<br><a id="more"></a></p>
+<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>该增强型RecyclerView，增加了以下特性：</p>
+<ul>
+<li>上拉滑动到底部，加载更多</li>
+<li>支持添加Header头视图</li>
+<li>支持加载数据为空时，显示特定视图</li>
+<li>支持拖拽，侧滑删除</li>
+</ul>
+<p>下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。</p>
+<p>本文重点分享上拉加载更多的实现，同时实现添加头部视图，侧滑，拖拽功能实现，该实现存在以下注意点：</p>
+<ol>
+<li>如何判断RecyclerView滑动到了底部</li>
+<li>通常RecyclerView显示的item布局相同，怎么做到上拉加载更多时出现一个底栏视图</li>
+<li>滑动到底栏出现加载更多动画，这个动画什么时候结束？动画生命周期是？</li>
+<li>ReclcerViewyou多种布局，如果是网格布局（有多列），怎么做到让上拉加载更多的动画视图和头部视图占用一整行？</li>
+<li>自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？</li>
+<li>如何实现item的拖拽和侧滑删除？</li>
+</ol>
+<h2 id="实现的注意点解析"><a href="#实现的注意点解析" class="headerlink" title="实现的注意点解析"></a>实现的注意点解析</h2><h4 id="如何判断RecyclerView滑动到了底部"><a href="#如何判断RecyclerView滑动到了底部" class="headerlink" title="如何判断RecyclerView滑动到了底部"></a>如何判断RecyclerView滑动到了底部</h4><p>关于布局的逻辑设置，就找LayoutManager。的确，通过查阅官方API手册，有findLastVisibleItemPosition()/findLastCompletelyVisibleItePosition()，在滑动监听里，使用这两个方法就能实现判断</p>
+<h4 id="怎么做到上拉加载更多时出现一个底栏视图"><a href="#怎么做到上拉加载更多时出现一个底栏视图" class="headerlink" title="怎么做到上拉加载更多时出现一个底栏视图"></a>怎么做到上拉加载更多时出现一个底栏视图</h4><p>这里涉及到RecyclerView如何实现多布局显示的知识，通过getItemViewType()，底部上拉加载更多视图设定一种ItemViewType值，对应新建一个ViewHolder.</p>
+<h4 id="滑动到底栏出现加载更多动画"><a href="#滑动到底栏出现加载更多动画" class="headerlink" title="滑动到底栏出现加载更多动画"></a>滑动到底栏出现加载更多动画</h4><p>这个动画什么时候结束？动画生命周期是？</p>
+<p>动画的开始时刻是列表滑倒底部，当滑倒底部时，在客户类（Fragment／Activity）里接口回调，开始网络请求数据，动画的结束时刻是网络加载完成，刷新列表时</p>
+<h4 id="ReclcerViewyou多种布局，"><a href="#ReclcerViewyou多种布局，" class="headerlink" title="ReclcerViewyou多种布局，"></a>ReclcerViewyou多种布局，</h4><p>如果是网格布局（有多列），怎么做到让上拉加载更多的动画视图和头部视图占用一整行？</p>
+<p>和布局相关的，找LayoutManager，这里要找GridLayoutManager，它提供了setSpanSizeLookup（GridLayoutManager.SpanSizeLookup），通过这个方法，可以根据位置来设置item占用一整行还是正常显示</p>
+<h4 id="自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？"><a href="#自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？" class="headerlink" title="自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？"></a>自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？</h4><p>使用装饰器设计模式，能很好的实现对用户透明使用效果</p>
+<h4 id="如何实现item的拖拽和侧滑删除？"><a href="#如何实现item的拖拽和侧滑删除？" class="headerlink" title="如何实现item的拖拽和侧滑删除？"></a>如何实现item的拖拽和侧滑删除？</h4><p>使用android提供的ItemTouchHelper工具类，能快速的实现</p>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><h3 id="EnhanceRecyclerView"><a href="#EnhanceRecyclerView" class="headerlink" title="EnhanceRecyclerView"></a>EnhanceRecyclerView</h3><pre><code>public class EnhanceRecyclerView extends RecyclerView {
+
+private static final String TAG = &quot;EnhanceRecyclerView&quot;;
+
+private OnLoadMoreListener mOnLoadMoreListener;
+private InternalAdapter mInternalAdapter;
+private View mEmptyView;
+private @LayoutRes int mHeaderResId;
+private AdapterDataObserver mAdapterDataObserver = new EnhanceAdapterDataObserver();
+/**
+ * 滚动方向
+ */
+private int mScrollDy = 0;
+
+public EnhanceRecyclerView(Context context) {
+    super(context);
+}
+
+public EnhanceRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    super(context, attrs);
+}
+
+public EnhanceRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+}
+
+
+@Override
+public void onScrolled(int dx, int dy) {
+    super.onScrolled(dx, dy);
+    mScrollDy = dy;
+}
+
+@Override
+public void onScrollStateChanged(int state) {
+    super.onScrollStateChanged(state);
+    switch (state) {
+        case SCROLL_STATE_IDLE:
+            LayoutManager layoutManager = getLayoutManager();
+            int itemCount = getAdapter().getItemCount();
+            int lastVisibleItemPosition = 0;
+
+            if (layoutManager instanceof GridLayoutManager) {
+                GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+                lastVisibleItemPosition = gridLayoutManager.findLastVisibleItemPosition();
+            } else if (layoutManager instanceof LinearLayoutManager) {
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+                lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+            }
+
+            if (lastVisibleItemPosition &gt;= itemCount - 1) {
+                if (getParent() instanceof SwipeRefreshLayout) {
+                    SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) getParent();
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        break;
+                    }
+                }
+                if (mOnLoadMoreListener != null &amp;&amp; mScrollDy &gt; 0) {
+                    mInternalAdapter.setLoadingIndicatorViewVisible(VISIBLE);
+                    mOnLoadMoreListener.onLoadMore();
+                }
+            }
+            break;
+    }
+}
+
+
+/**
+ * 重写此方法，设置GridLayout的上拉加载更多视图的位置
+ *
+ * @param layout
+ */
+@Override
+public void setLayoutManager(LayoutManager layout) {
+    if (layout instanceof GridLayoutManager) {
+        final GridLayoutManager externalGridLayoutManager = (GridLayoutManager) layout;
+        final int spanCount = externalGridLayoutManager.getSpanCount();
+        int orientation = externalGridLayoutManager.getOrientation();
+
+        final GridLayoutManager innerGridLayoutManager = new GridLayoutManager(getContext(), spanCount, orientation, false);
+        innerGridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int headerViewCount = mInternalAdapter.getHeaderViewCount();
+                int footViewCount = mInternalAdapter.getFootViewCount();
+                if (position &lt; headerViewCount) {
+                    return spanCount;
+                }
+
+                int totalItemCount = innerGridLayoutManager.getItemCount();
+                if (position &gt;= totalItemCount - footViewCount) {
+                    return spanCount;
+                }
+
+                return externalGridLayoutManager.getSpanSizeLookup().getSpanSize(position - headerViewCount);
+            }
+        });
+        super.setLayoutManager(innerGridLayoutManager);
+    } else {
+        super.setLayoutManager(layout);
+    }
+}
+
+public View getEmptyView() {
+    return mEmptyView;
+}
+
+public final void setEmptyView(View emptyView) {
+    mEmptyView = emptyView;
+    setupEmptyViewHierarchy(emptyView);
+}
+
+protected void setupEmptyViewHierarchy(View emptyView) {
+    ((ViewGroup) getParent().getParent()).addView(emptyView,0);
+}
+
+public void addHeaderResId(@LayoutRes int resId) {
+    mHeaderResId = resId;
+    if (mInternalAdapter != null) {
+        mInternalAdapter.setExternalHeaderResId(resId);
+    }
+}
+
+
+
+@Override
+public void setAdapter(Adapter adapter) {
+    mInternalAdapter = new InternalAdapter(adapter);
+    super.setAdapter(mInternalAdapter);
+    //addHeaderView方法依赖于setAdapter方法
+    if (mHeaderResId &gt; 0) {
+        addHeaderResId(mHeaderResId);
+    }
+    mInternalAdapter.registerAdapterDataObserver(mAdapterDataObserver);
+    mAdapterDataObserver.onChanged();
+}
+
+public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+    mOnLoadMoreListener = onLoadMoreListener;
+}
+
+
+public void loadMoreOnSuccess() {
+    if (mInternalAdapter != null) {
+        mInternalAdapter.loadMoreOnSuccess();
+    }
+}
+
+public void loadMoreOnError() {
+    if (mInternalAdapter != null) {
+        mInternalAdapter.loadMoreOnError();
+    }
+}
+
+public void loadMoreOnComplete() {
+    if (mInternalAdapter != null) {
+        mInternalAdapter.loadMoreOnComplete();
+    }
+}
+
+
+public final void notifyDataSetChanged() {
+    mInternalAdapter.notifyDataSetChanged();
+}
+
+public final void notifyItemChanged(int position) {
+    mInternalAdapter.notifyItemChanged(position);
+}
+
+public final void notifyItemChanged(int position, Object payload) {
+    position = position + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemChanged(position, payload);
+}
+
+public final void notifyItemRangeChanged(int positionStart, int itemCount) {
+    positionStart = positionStart + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemRangeChanged(positionStart, itemCount);
+}
+
+public final void notifyItemRangeChanged(int positionStart, int itemCount, Object payload) {
+    positionStart = positionStart + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
+}
+
+public final void notifyItemInserted(int position) {
+    position = position + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemInserted(position);
+}
+
+public final void notifyItemMoved(int fromPosition, int toPosition) {
+    fromPosition = fromPosition + mInternalAdapter.getHeaderViewCount();
+    toPosition = toPosition + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemMoved(fromPosition, toPosition);
+}
+
+public final void notifyItemRangeInserted(int positionStart, int itemCount) {
+    positionStart = positionStart + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemRangeInserted(positionStart, itemCount);
+}
+
+public final void notifyItemRemoved(int position) {
+    position = position + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemRemoved(position);
+}
+
+public final void notifyItemRangeRemoved(int positionStart, int itemCount) {
+    positionStart = positionStart + mInternalAdapter.getHeaderViewCount();
+    mInternalAdapter.notifyItemRangeRemoved(positionStart, itemCount);
+}
+
+
+public InternalAdapter getInternalAdapter() {
+    return mInternalAdapter;
+}
+
+/**
+ * 上拉加载更多回调
+ */
+public interface OnLoadMoreListener {
+    void onLoadMore();
+}
+
+private class EnhanceAdapterDataObserver extends AdapterDataObserver {
+
+    @Override
+    public void onChanged() {
+        super.onChanged();
+        if (getEmptyView() != null &amp;&amp; getAdapter() != null) {
+            int itemCount = getAdapter().getItemCount();
+            if (itemCount == 0) {
+                getEmptyView().setVisibility(VISIBLE);
+                setVisibility(GONE);
+            } else {
+                getEmptyView().setVisibility(GONE);
+                setVisibility(VISIBLE);
+            }
+        }
+    }
+
+    @Override
+    public void onItemRangeChanged(int positionStart, int itemCount) {
+        super.onItemRangeChanged(positionStart, itemCount);
+        onChanged();
+    }
+
+    @Override
+    public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+        super.onItemRangeChanged(positionStart, itemCount, payload);
+        onChanged();
+    }
+
+    @Override
+    public void onItemRangeInserted(int positionStart, int itemCount) {
+        super.onItemRangeInserted(positionStart, itemCount);
+        onChanged();
+    }
+
+    @Override
+    public void onItemRangeRemoved(int positionStart, int itemCount) {
+        super.onItemRangeRemoved(positionStart, itemCount);
+        onChanged();
+    }
+
+    @Override
+    public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+        super.onItemRangeMoved(fromPosition, toPosition, itemCount);
+        onChanged();
+    }
+}
+}
+</code></pre><h3 id="InternalAdapter"><a href="#InternalAdapter" class="headerlink" title="InternalAdapter"></a>InternalAdapter</h3><pre><code>public class InternalAdapter extends RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; {
+
+private static final String TAG = &quot;InternalAdapter&quot;;
+
+private static final int HEADER_ITEM_TYPE = 170118;
+private static final int FOOTER_ITEM_TYPE = 170116;
+
+private RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; mExternalAdapter;
+private int mBodyItemCount;
+private FooterView mFooterView;
+private @LayoutRes int mExternalHeaderResId;
+
+
+public InternalAdapter(RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; externalAdapter) {
+    mExternalAdapter = externalAdapter;
+    mBodyItemCount = externalAdapter.getItemCount();
+}
+
+
+@Override
+public int getItemViewType(int position) {
+    if(isHeaderView(position)){
+        return HEADER_ITEM_TYPE;
+    }
+
+    else if (isFootView(position)) {
+        return FOOTER_ITEM_TYPE;
+    }
+    return mExternalAdapter.getItemViewType(position);
+}
+
+@Override
+public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    switch (viewType) {
+        case HEADER_ITEM_TYPE:
+            View headerView = LayoutInflater.from(parent.getContext()).inflate(mExternalHeaderResId, parent, false);
+            return new HeaderView(headerView);
+        case FOOTER_ITEM_TYPE:
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_indicator, parent, false);
+            mFooterView = new FooterView(view);
+            return mFooterView;
+        default:
+            return mExternalAdapter.onCreateViewHolder(parent, viewType);
+    }
+}
+
+@Override
+public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    if(isHeaderView(position)){
+        return;
+    }
+    if (isFootView(position)) {
+        return;
+    }
+    if(mExternalHeaderResId &gt; 0){
+        position = position - getHeaderViewCount();
+    }
+    mExternalAdapter.onBindViewHolder(holder, position);
+}
+
+@Override
+public int getItemCount() {
+    mBodyItemCount = mExternalAdapter.getItemCount();
+    if(mBodyItemCount == 0){
+        return 0;
+    }
+    else{
+        return getHeaderViewCount() + mBodyItemCount + getFootViewCount();
+    }
+}
+
+
+
+
+
+private boolean isHeaderView(int position){
+    return mExternalHeaderResId &gt; 0 &amp;&amp; position == 0;
+}
+
+private boolean isFootView(int position) {
+    return (position &gt;= mBodyItemCount + getHeaderViewCount());
+}
+
+public int getFootViewCount() {
+    return 1;
+}
+
+public int getHeaderViewCount(){
+    return mExternalHeaderResId &gt; 0 ? 1 : 0;
+}
+
+
+
+
+
+public void setLoadingIndicatorViewVisible(int visible){
+    if(mFooterView != null){
+        mFooterView.setLoadingIndicatorViewVisible(visible);
+    }
+}
+
+public void setExternalHeaderResId(int externalHeaderResId) {
+    mExternalHeaderResId = externalHeaderResId;
+}
+
+public void loadMoreOnSuccess(){
+    setLoadingIndicatorViewVisible(View.GONE);
+}
+
+public void loadMoreOnError(){
+    setLoadingIndicatorViewVisible(View.GONE);
+}
+
+public void loadMoreOnComplete(){
+    setLoadingIndicatorViewVisible(View.GONE);
+}
+
+
+
+
+
+
+static class HeaderView extends RecyclerView.ViewHolder{
+
+    HeaderView(View itemView) {
+        super(itemView);
+    }
+}
+
+static class FooterView extends RecyclerView.ViewHolder {
+
+    @Bind(R.id.item_footer_indicator)
+    LoadingIndicatorView mLoadingIndicatorView;
+
+    FooterView(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+        mLoadingIndicatorView.setVisibility(View.GONE);
+    }
+
+    void setLoadingIndicatorViewVisible(int visible){
+        mLoadingIndicatorView.setVisibility(visible);
+    }
+}
+}
+</code></pre><h3 id="底部FooterView的布局item-footer-indicator-xml"><a href="#底部FooterView的布局item-footer-indicator-xml" class="headerlink" title="底部FooterView的布局item_footer_indicator.xml"></a>底部FooterView的布局item_footer_indicator.xml</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout
+xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;48dp&quot;
+android:background=&quot;@android:color/transparent&quot;
+&gt;
+
+&lt;com.sugary.refreshrecyclerview.enhancerecycler.indicator.LoadingIndicatorView
+    android:id=&quot;@+id/item_footer_indicator&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_centerInParent=&quot;true&quot;
+    app:indicator_color=&quot;@color/indicator_loading_more_orange&quot;
+    /&gt;
+
+&lt;/RelativeLayout&gt;
+</code></pre><h3 id="LoadingIndicatorView"><a href="#LoadingIndicatorView" class="headerlink" title="LoadingIndicatorView"></a>LoadingIndicatorView</h3><pre><code>public class LoadingIndicatorView extends View {
+
+//Sizes (with defaults in DP)
+public static final int DEFAULT_SIZE = 50;
+
+private Paint mPaint;
+
+private BaseIndicatorController mIndicatorController;
+
+private boolean mHasAnimation;
+
+
+public LoadingIndicatorView(Context context) {
+    this(context, null);
+}
+
+public LoadingIndicatorView(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+}
+
+public LoadingIndicatorView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(attrs);
+}
+
+private void init(AttributeSet attrs) {
+
+    TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LoadingIndicatorView);
+    int indicatorColor = a.getColor(R.styleable.LoadingIndicatorView_indicator_color, Color.GRAY);
+    a.recycle();
+
+    mPaint = new Paint();
+    mPaint.setColor(indicatorColor);
+    mPaint.setStyle(Paint.Style.FILL);
+    mPaint.setAntiAlias(true);
+
+    mIndicatorController = new BallPulseIndicator();
+    mIndicatorController.setTarget(this);
+}
+
+
+@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    int width = measureDimension(dp2px(DEFAULT_SIZE), widthMeasureSpec);
+    int height = measureDimension(dp2px(DEFAULT_SIZE), heightMeasureSpec);
+    setMeasuredDimension(width, height);
+}
+
+private int measureDimension(int defaultSize, int measureSpec) {
+    int result;
+    int specMode = MeasureSpec.getMode(measureSpec);
+    int specSize = MeasureSpec.getSize(measureSpec);
+    if (specMode == MeasureSpec.EXACTLY) {
+        result = specSize;
+    } else if (specMode == MeasureSpec.AT_MOST) {
+        result = Math.min(defaultSize, specSize);
+    } else {
+        result = defaultSize;
+    }
+    return result;
+}
+
+@Override
+protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    super.onLayout(changed, left, top, right, bottom);
+    if (!mHasAnimation) {
+        mHasAnimation = true;
+        mIndicatorController.initAnimation();
+    }
+}
+
+@Override
+protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+    drawIndicator(canvas);
+}
+
+
+
+
+
+void drawIndicator(Canvas canvas) {
+    mIndicatorController.draw(canvas, mPaint);
+}
+
+
+private int dp2px(int dpValue) {
+    return (int) getContext().getResources().getDisplayMetrics().density * dpValue;
+}
+
+
+
+
+
+@Override
+public void setVisibility(int v) {
+    if (getVisibility() != v) {
+        super.setVisibility(v);
+        if (v == GONE || v == INVISIBLE) {
+            mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.END);
+        } else {
+            mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.START);
+        }
+    }
+}
+
+@Override
+protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    if (mHasAnimation) {
+        mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.START);
+    }
+}
+
+@Override
+protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    mIndicatorController.setAnimationStatus(BaseIndicatorController.AnimStatus.CANCEL);
+}
+
+}
+</code></pre><h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><p>列表数据刷新，改成了调用EnhanceRecylerView方法，用自己建的Adapter刷新数据无效（这是这个轮子的缺陷，有待改进）。</p>
+<p>底部滑动动画使用了他人的开源动画</p>
+<p>在自制增强型RecyclerView过程中，也刷了一些资料，推荐阅读。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a href="http://mp.weixin.qq.com/s/CzrKotyupXbYY6EY2HP_dA" target="_blank" rel="noopener">RecyclerView必知必会</a>（五星推荐）</p>
+</li>
+<li><p><a href="https://github.com/CymChad/CymChad.github.io" target="_blank" rel="noopener">Github:RecyclerView优秀文集</a></p>
+</li>
+<li><p><a href="https://github.com/android-cjj/BeautifulRefreshLayout" target="_blank" rel="noopener">Github:BeautifulRefreshLayout</a></p>
+</li>
+<li><p><a href="https://github.com/CymChad/BaseRecyclerViewAdapterHelper" target="_blank" rel="noopener">Github:BaseRecyclerViewAdapterHelper</a></p>
+</li>
+</ul>
+<p>*<a href="https://github.com/jianghejie/XRecyclerView" target="_blank" rel="noopener">Github:XRecyclerView</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/RecyclerView/" rel="tag"># RecyclerView</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/03/2017/2017-01-03/" rel="next" title="对2016年的年度小结">
+                <i class="fa fa-chevron-left"></i> 对2016年的年度小结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/2017/2017-02-26/" rel="prev" title="安卓EditText－实现输入小数点后几位的逻辑演变">
+                安卓EditText－实现输入小数点后几位的逻辑演变 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b656298cdac292e" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpg"
+                alt="Ethan Ruan" />
+            
+              <p class="site-author-name" itemprop="name">Ethan Ruan</p>
+              <p class="site-description motion-element" itemprop="description">Java Coder & Kotlin Lover</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sugaryaruan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现的注意点解析"><span class="nav-number">2.</span> <span class="nav-text">实现的注意点解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何判断RecyclerView滑动到了底部"><span class="nav-number">2.0.1.</span> <span class="nav-text">如何判断RecyclerView滑动到了底部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#怎么做到上拉加载更多时出现一个底栏视图"><span class="nav-number">2.0.2.</span> <span class="nav-text">怎么做到上拉加载更多时出现一个底栏视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滑动到底栏出现加载更多动画"><span class="nav-number">2.0.3.</span> <span class="nav-text">滑动到底栏出现加载更多动画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReclcerViewyou多种布局，"><span class="nav-number">2.0.4.</span> <span class="nav-text">ReclcerViewyou多种布局，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？"><span class="nav-number">2.0.5.</span> <span class="nav-text">自定义了RecyclerView，如何做到像使用标准RecyclerView那样使用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何实现item的拖拽和侧滑删除？"><span class="nav-number">2.0.6.</span> <span class="nav-text">如何实现item的拖拽和侧滑删除？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心代码"><span class="nav-number">3.</span> <span class="nav-text">核心代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EnhanceRecyclerView"><span class="nav-number">3.1.</span> <span class="nav-text">EnhanceRecyclerView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InternalAdapter"><span class="nav-number">3.2.</span> <span class="nav-text">InternalAdapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#底部FooterView的布局item-footer-indicator-xml"><span class="nav-number">3.3.</span> <span class="nav-text">底部FooterView的布局item_footer_indicator.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LoadingIndicatorView"><span class="nav-number">3.4.</span> <span class="nav-text">LoadingIndicatorView</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结："><span class="nav-number">4.</span> <span class="nav-text">小结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Ruan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'KucTheGGj0jth3TFNY573jRN-gzGzoHsz',
+        appKey: 'WzvVriXrWbkpVb5Qdn6CICLP',
+        placeholder: 'Umm, say something ...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KucTheGGj0jth3TFNY573jRN-gzGzoHsz", "WzvVriXrWbkpVb5Qdn6CICLP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

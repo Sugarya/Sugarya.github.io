@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Books," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="让我们来说说函数式编程–Lambda表达式 上周开始，看了这本书–Java 8 函数式编程，以下是我的读书摘抄">
+<meta name="keywords" content="Books">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8函数式编程--编程范式的趋势">
+<meta property="og:url" content="https://sugarya.github.io/2017/06/16/2017/2017-06-16/index.html">
+<meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
+<meta property="og:description" content="让我们来说说函数式编程–Lambda表达式 上周开始，看了这本书–Java 8 函数式编程，以下是我的读书摘抄">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-05T02:58:05.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java8函数式编程--编程范式的趋势">
+<meta name="twitter:description" content="让我们来说说函数式编程–Lambda表达式 上周开始，看了这本书–Java 8 函数式编程，以下是我的读书摘抄">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sugarya.github.io/2017/06/16/2017/2017-06-16/"/>
+
+
+
+
+
+  <title>Java8函数式编程--编程范式的趋势 | Ethan Ruan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan Ruan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow my nose and connect the dots</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2017/06/16/2017/2017-06-16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java8函数式编程--编程范式的趋势</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-16T12:05:00+08:00">
+                2017-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/闲书札记/" itemprop="url" rel="index">
+                    <span itemprop="name">闲书札记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/16/2017/2017-06-16/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/06/16/2017/2017-06-16/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/16/2017/2017-06-16/" class="leancloud_visitors" data-flag-title="Java8函数式编程--编程范式的趋势">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,677 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>让我们来说说函数式编程–Lambda表达式</p>
+<p>上周开始，看了这本书–Java 8 函数式编程，以下是我的读书摘抄</p>
+<a id="more"></a>
+<p>让我们来说说函数式编程–Lambda表达式</p>
+<p>上周开始，看了这本书–Java 8 函数式编程，以下是我的读书摘抄。</p>
+<h2 id="背景知识："><a href="#背景知识：" class="headerlink" title="背景知识："></a>背景知识：</h2><p><strong>函数接口：</strong>只有一个抽象方法的接口</p>
+<p><strong>方法签名：</strong>由方法名+形参列表构成+返回值类型。JVM是并没有特别明确的将数据类型写出来，而是提供了特殊的表示法。</p>
+<p><strong>惰性求值方法：</strong> 只描述Stream，不产生实际执行的方法</p>
+<p><strong>及早求值：</strong> 立刻执行</p>
+<p><strong>函数的副作用：</strong>当调用函数时，除了返回函数值之外，还对主调用函数产生附加的影响（例如修改全局变量或修改参数）</p>
+<p><strong>纯函数：</strong>输入输出数据流全是显式的（显式的含义是：函数与外界交换数据只有一个唯一渠道——参数和返回值；函数从函数外部接受的所有输入信息都通过参数传递到该函数内部；函数输出到函数外部的所有信息都通过返回值传递到该函数外部）</p>
+<p><strong>非纯函数：</strong>与纯函数相反，函数通过参数和返回值以外的渠道，和外界进行数据交换。比如，读取全局变量，修改全局变量。</p>
+<p><strong>阿姆达尔定律：</strong>对于固定负载情况下描述并行处理效果的加速比s，S=1/(1-a+a/n)，其中a为并行计算部分所占比例，n为并行处理结点个数</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>在思考问题时，使用不可变值和函数，函数对一个值进行处理，映射成另一个值</p>
+<p>Lambda表达式</p>
+<ol>
+<li>传入一段代码块</li>
+<li>不需要显式声明／指定参数类型（编译器可以通过方法签名来推断类型）</li>
+</ol>
+<p>Lambda表达式引用的局部变量必须是final或既成事实上的final变量（基本类型只能赋值一次，对象的引用不能改变）</p>
+<h3 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h3><p><strong>意义和创新：</strong>遍历从外部迭代变成了内部迭代。把程序扮演Director导演类的部分逻辑和操作提取、转移到了类库中</p>
+<h4 id="实现机制"><a href="#实现机制" class="headerlink" title="实现机制"></a>实现机制</h4><p>Stream操作分为惰性求值和及早求值；形成一个惰性求值的链，最后用一个及早求值的操作返回想要的结果。</p>
+<p>整个过程被分解为多个惰性求值操作和一个单个及早求值操作，而这些多个操作只需要遍历一次。整个过程和建造者模式有共同之处。建造者模式使用一系列操作来设置属性并配置，最后调用build方法，这时，对象才被真正创建。</p>
+<h4 id="常用的流操作"><a href="#常用的流操作" class="headerlink" title="常用的流操作"></a>常用的流操作</h4><p>collect：流生成集合</p>
+<p>map：改变流中元素的类型</p>
+<p>flatMap：把最初流中的一个元素转成一个流</p>
+<p>filter：过滤流中的元素</p>
+<p>Max/Min：求极值，返回 Optional （涉及比较器类Comparator，因为比较意味着排序，排序意味着需要一个排序的指标）</p>
+<p>reduce</p>
+<h3 id="Lambda表达式正确使用姿势"><a href="#Lambda表达式正确使用姿势" class="headerlink" title="Lambda表达式正确使用姿势"></a>Lambda表达式正确使用姿势</h3><h4 id="1）明确要达成什么转化，而不是说明如何转化"><a href="#1）明确要达成什么转化，而不是说明如何转化" class="headerlink" title="1）明确要达成什么转化，而不是说明如何转化"></a>1）明确要达成什么转化，而不是说明如何转化</h4><h4 id="2）写出的函数尽量没有副作用"><a href="#2）写出的函数尽量没有副作用" class="headerlink" title="2）写出的函数尽量没有副作用"></a>2）写出的函数尽量没有副作用</h4><h5 id="纯函数的优点"><a href="#纯函数的优点" class="headerlink" title="纯函数的优点"></a>纯函数的优点</h5><ol>
+<li>无状态，线程安全。不需要线程同步。</li>
+<li>纯函数相互调用组装起来的函数，还是纯函数。</li>
+<li>可缓存结果，原生支持并行（不懂）</li>
+</ol>
+<p>I/O API可以看作是一种特殊的全局变量。文件、屏幕、数据库等输入输出结构可以看作是独立于运行环境之外的系统外全局变量，而不是应用程序自己定义的全局变量。</p>
+<h3 id="类库"><a href="#类库" class="headerlink" title="类库"></a>类库</h3><h4 id="装箱类型在Lambda表达式上的体现"><a href="#装箱类型在Lambda表达式上的体现" class="headerlink" title="装箱类型在Lambda表达式上的体现"></a>装箱类型在Lambda表达式上的体现</h4><ol>
+<li>int整型在内存中占用4个字节，Integer在内存中占用16字节；</li>
+<li>基本类型和装箱类型相互转化需要额外的计算开销</li>
+<li>在Java中想要一个包含整型值的列表List<int>,实际上得到的却是一个包含整型对象的列表List<integer>；</integer></int></li>
+</ol>
+<p>对于需要大量数值运算的算法来说，由于上述的原因，减缓了程序的运行速度</p>
+<p>因此，Stream类的某些方法对基本类型和装箱类型做了区分；Java 8对整型，长整型和双浮点型做了特殊处理；方法有：mapToLong(),MapToInt();</p>
+<h4 id="Lambda表达式的重载"><a href="#Lambda表达式的重载" class="headerlink" title="Lambda表达式的重载"></a>Lambda表达式的重载</h4><p>Lambda表达式的类型就是对应的函数接口类型。遇到重载时调用准则：</p>
+<ol>
+<li>优先执行最具体的类型</li>
+<li>如果最具体的类型有多个，则需要认为指定类型</li>
+</ol>
+<h4 id="默认方法"><a href="#默认方法" class="headerlink" title="默认方法"></a>默认方法</h4><p>Java 8新增一个关键词default，在接口中，可以存在由default修饰的默认方法（也就是说，Java 8接口里，不再只能是抽象方法，具体的方法也可以存在即默认方法；同时，也允许存在静态方法），当子类不实现这个接口的某个抽象方法时，子类就是使用该默认方法。</p>
+<p>还要注意一点：一个类要实现的接口里，存在默认方法和它父类的方法相同，则优先选择父类定义的方法。</p>
+<p>归纳出两条简单的定律：</p>
+<ol>
+<li>类胜于接口。如果在继承链中有方法或抽象方法声明，那么久可以忽略接口中定义的方法</li>
+<li>子类胜过父类。如果一个接口继承了另一个接口，且两个接口都定义了一个默认的方法，那么子类中定义的方法胜出。</li>
+</ol>
+<h4 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h4><p>该新的数据类型，用来替换null。Optional对象相当于值的容器，类似ThreadLocal用法</p>
+<ol>
+<li>创建Optional对象：Optional.of()</li>
+<li>获取值：get();</li>
+<li>获取可能存在的空值：empty().</li>
+<li>判断Optional对象理是否有值：isPresent();</li>
+<li>orElse(T t),当Optional对象为空时，提供一个备选值t</li>
+<li>orElseGet(Supplier supplier):当Optional对象为空时，调用这个函数接口</li>
+</ol>
+<h4 id="特殊的修饰"><a href="#特殊的修饰" class="headerlink" title="特殊的修饰"></a>特殊的修饰</h4><h5 id="FunctionalInterface"><a href="#FunctionalInterface" class="headerlink" title="@FunctionalInterface"></a>@FunctionalInterface</h5><p>该注释会强制javac检查一个接口是否符合函数接口的标准（一个接口，只有一个抽象方法），如果该注释添加给一个枚举类型，类或另一个注释，或者接口含不止一个抽象方法，javac就会报错（编译的时候）。重构代码时，使用它能很容易发现问题。</p>
+<h3 id="高级集合类"><a href="#高级集合类" class="headerlink" title="高级集合类"></a>高级集合类</h3><h4 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h4><p>本小节摘自<a href="http://www.jianshu.com/p/5b800057f2d8" target="_blank" rel="noopener">【译】Java 8的新特性—终极版</a></p>
+<p>方法引用使得开发者可以直接引用现存的方法、Java类的构造方法或者实例对象。方法引用和Lambda表达式配合使用，使得java类的构造方法看起来紧凑而简洁，没有很多复杂的模板代码。</p>
+<p>西门的例子中，Car类是不同方法引用的例子，可以帮助读者区分四种类型的方法引用。</p>
+<pre><code>public static class Car {
+public static Car create( final Supplier&lt; Car &gt; supplier ) {
+    return supplier.get();
+}              
+
+public static void collide( final Car car ) {
+    System.out.println( &quot;Collided &quot; + car.toString() );
+}
+
+public void follow( final Car another ) {
+    System.out.println( &quot;Following the &quot; + another.toString() );
+}
+
+public void repair() {   
+    System.out.println( &quot;Repaired &quot; + this.toString() );
+}
+}
+</code></pre><p>第一种方法引用的类型是构造器引用，语法是Class::new，或者更一般的形式：Class<t>::new。注意：这个构造器没有参数。</t></p>
+<pre><code>final Car car = Car.create( Car::new );
+final List&lt; Car &gt; cars = Arrays.asList( car );
+</code></pre><p>第二种方法引用的类型是静态方法引用，语法是Class::static_method。注意：这个方法接受一个Car类型的参数。</p>
+<pre><code>cars.forEach( Car::collide );
+</code></pre><p>第三种方法引用的类型是某个类的成员方法的引用，语法是Class::method，注意，这个方法没有定义入参：</p>
+<pre><code>cars.forEach( Car::repair );
+</code></pre><p>第四种方法引用的类型是某个实例对象的成员方法的引用，语法是instance::method。注意：这个方法接受一个Car类型的参数：</p>
+<pre><code>final Car police = Car.create( Car::new );
+cars.forEach( police::follow );
+</code></pre><h3 id="数据并行化"><a href="#数据并行化" class="headerlink" title="数据并行化"></a>数据并行化</h3><p>并发，并行；数据并行化；任务并行化</p>
+<p>调用parallelstream()／parallel(),生成一个并行化流</p>
+<h4 id="收集器"><a href="#收集器" class="headerlink" title="收集器"></a>收集器</h4><p>Collectors.toList()，Collectors.toSet,Collectors.to</p>
+<h3 id="调试Lambda表达式"><a href="#调试Lambda表达式" class="headerlink" title="调试Lambda表达式"></a>调试Lambda表达式</h3><p>对于业务稳定，生命周期较长的产品，可以引入单元测试。</p>
+<p>程序员写出的程序bug，有两种：</p>
+<ol>
+<li>实现业务逻辑的思路错误   </li>
+<li>实现业务逻辑的思路对了，但是在实现过程中出了问题，开发者设想的过程和真实的情况不同。</li>
+</ol>
+<p>软件产品种，大部分bug来源于第二种。我们对单元测试，下一个定义：单元测试是测试一段代码的行为是否符合预期的方式。我们对每一个方法输出结果都存在一个预期，这个预期是我们在实现业务过程中的一个环节，这些环节全部累加起来，每个环节的结果都是我们想要的，那么这个业务我们就能正确的实现了。因此，单元测试，能检测出第二种bug；</p>
+<h4 id="对重构Lamdba表达式的思考"><a href="#对重构Lamdba表达式的思考" class="headerlink" title="对重构Lamdba表达式的思考"></a>对重构Lamdba表达式的思考</h4><p>如果存在多个方法，每个方法的处理过程相同，输入输出类型相同，不同的是操作的具体逻辑，则可以把相同的操作提取成新的方法，不同的操作通过方法入参来体现。比如下面两个方法：</p>
+<p>计算音乐家数量</p>
+<pre><code>public long countMusicians(){
+    return albums.stream()
+                    .mapToLong(albu -&gt;.getMusicians().count)
+                    .sum()
+}
+</code></pre><p>计算单曲数量</p>
+<pre><code>public long countTracks(){
+    return albums.stream()
+                    .mapToLong(albu -&gt;.getTracks().count)
+                    .sum()
+}    
+</code></pre><p>要怎么重构呢？</p>
+<p>首先我们定义一个函数接口，输入Album类，输出一个long型, 引入泛型（Java 8其实已经定义了这种输入输出的接口了）</p>
+<pre><code>public interface ToLongFunction&lt;T&gt;{
+    long applyAsLong(T value);
+}
+</code></pre><p>我们知道，Lambda表达式返回类型是函数接口，因此上述的两个方法就可以重构成下面的样子</p>
+<pre><code>public long countMusicians(){
+    return countFeature(ablum -&gt; album.getMusicians().count())
+}
+
+public long countTracks(){
+    return countFeature(ablum -&gt; ablum.getTracks().count())
+}
+
+private long countFeature(ToLongFuction&lt;Album&gt; function){
+    return albums.stream()
+                    .mapToLong(function)
+                    .sum();
+}
+</code></pre><p>整个思考过程，和非函数式编程是类似的。</p>
+<h4 id="对惰性求值方法的调试"><a href="#对惰性求值方法的调试" class="headerlink" title="对惰性求值方法的调试"></a>对惰性求值方法的调试</h4><p>Java 8 提供了一个方法peek()，举个例子</p>
+<pre><code>Stream.of(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;)
+        .peek(e -&gt; System.out.println(&quot;Peeked value: &quot; + e))
+        .map(String::toUpperCase)
+        .peek(e -&gt; System.out.println(&quot;Mapped value: &quot; + e))
+        .collect(Collectors.toList());
+</code></pre><p>这样就能对流的每一个元素处理的先后值的变化进行观察了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Books/" rel="tag"># Books</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/05/2017/2017-06-05/" rel="next" title="浪潮之巅--站在时代的潮前企业">
+                <i class="fa fa-chevron-left"></i> 浪潮之巅--站在时代的潮前企业
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/22/2017/2017-06-22/" rel="prev" title="当Json序列化与反序列遇到Map<Object,Object>时">
+                当Json序列化与反序列遇到Map<Object,Object>时 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b656298cdac292e" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpg"
+                alt="Ethan Ruan" />
+            
+              <p class="site-author-name" itemprop="name">Ethan Ruan</p>
+              <p class="site-description motion-element" itemprop="description">Java Coder & Kotlin Lover</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sugaryaruan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识："><span class="nav-number">1.</span> <span class="nav-text">背景知识：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda表达式"><span class="nav-number">2.1.</span> <span class="nav-text">Lambda表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream-API"><span class="nav-number">2.2.</span> <span class="nav-text">Stream API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现机制"><span class="nav-number">2.2.1.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的流操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">常用的流操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda表达式正确使用姿势"><span class="nav-number">2.3.</span> <span class="nav-text">Lambda表达式正确使用姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1）明确要达成什么转化，而不是说明如何转化"><span class="nav-number">2.3.1.</span> <span class="nav-text">1）明确要达成什么转化，而不是说明如何转化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2）写出的函数尽量没有副作用"><span class="nav-number">2.3.2.</span> <span class="nav-text">2）写出的函数尽量没有副作用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#纯函数的优点"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">纯函数的优点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类库"><span class="nav-number">2.4.</span> <span class="nav-text">类库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#装箱类型在Lambda表达式上的体现"><span class="nav-number">2.4.1.</span> <span class="nav-text">装箱类型在Lambda表达式上的体现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lambda表达式的重载"><span class="nav-number">2.4.2.</span> <span class="nav-text">Lambda表达式的重载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认方法"><span class="nav-number">2.4.3.</span> <span class="nav-text">默认方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optional"><span class="nav-number">2.4.4.</span> <span class="nav-text">Optional</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特殊的修饰"><span class="nav-number">2.4.5.</span> <span class="nav-text">特殊的修饰</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#FunctionalInterface"><span class="nav-number">2.4.5.1.</span> <span class="nav-text">@FunctionalInterface</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级集合类"><span class="nav-number">2.5.</span> <span class="nav-text">高级集合类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法引用"><span class="nav-number">2.5.1.</span> <span class="nav-text">方法引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据并行化"><span class="nav-number">2.6.</span> <span class="nav-text">数据并行化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#收集器"><span class="nav-number">2.6.1.</span> <span class="nav-text">收集器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试Lambda表达式"><span class="nav-number">2.7.</span> <span class="nav-text">调试Lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对重构Lamdba表达式的思考"><span class="nav-number">2.7.1.</span> <span class="nav-text">对重构Lamdba表达式的思考</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对惰性求值方法的调试"><span class="nav-number">2.7.2.</span> <span class="nav-text">对惰性求值方法的调试</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Ruan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'KucTheGGj0jth3TFNY573jRN-gzGzoHsz',
+        appKey: 'WzvVriXrWbkpVb5Qdn6CICLP',
+        placeholder: 'Umm, say something ...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KucTheGGj0jth3TFNY573jRN-gzGzoHsz", "WzvVriXrWbkpVb5Qdn6CICLP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

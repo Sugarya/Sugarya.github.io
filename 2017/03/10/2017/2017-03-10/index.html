@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Fragment," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="想让App有丝滑般的切换速度和顺畅的体验么？那就放开Activity，使用Fragment来展示UI页面吧 Github futurice/android-best-practices上列举了一些列安卓开发最佳实践建议，其中对Fragment使用做了一些陈述（传送门），我表示赞同。 最近项目需要新增了一个功能模块，我引入了一个Activity，多个fragment的方式来组织UI，这个过程有了一些">
+<meta name="keywords" content="Android,Fragment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打造安卓App丝滑的操作体验－－Fragment深入使用和封装之道">
+<meta property="og:url" content="https://sugarya.github.io/2017/03/10/2017/2017-03-10/index.html">
+<meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
+<meta property="og:description" content="想让App有丝滑般的切换速度和顺畅的体验么？那就放开Activity，使用Fragment来展示UI页面吧 Github futurice/android-best-practices上列举了一些列安卓开发最佳实践建议，其中对Fragment使用做了一些陈述（传送门），我表示赞同。 最近项目需要新增了一个功能模块，我引入了一个Activity，多个fragment的方式来组织UI，这个过程有了一些">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-05T01:53:25.778Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打造安卓App丝滑的操作体验－－Fragment深入使用和封装之道">
+<meta name="twitter:description" content="想让App有丝滑般的切换速度和顺畅的体验么？那就放开Activity，使用Fragment来展示UI页面吧 Github futurice/android-best-practices上列举了一些列安卓开发最佳实践建议，其中对Fragment使用做了一些陈述（传送门），我表示赞同。 最近项目需要新增了一个功能模块，我引入了一个Activity，多个fragment的方式来组织UI，这个过程有了一些">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sugarya.github.io/2017/03/10/2017/2017-03-10/"/>
+
+
+
+
+
+  <title>打造安卓App丝滑的操作体验－－Fragment深入使用和封装之道 | Ethan Ruan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan Ruan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow my nose and connect the dots</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2017/03/10/2017/2017-03-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">打造安卓App丝滑的操作体验－－Fragment深入使用和封装之道</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T14:29:00+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/10/2017/2017-03-10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/03/10/2017/2017-03-10/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/10/2017/2017-03-10/" class="leancloud_visitors" data-flag-title="打造安卓App丝滑的操作体验－－Fragment深入使用和封装之道">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,752 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>想让App有丝滑般的切换速度和顺畅的体验么？那就放开Activity，使用Fragment来展示UI页面吧</p>
+<p>Github <a href="https://github.com/futurice/android-best-practices#activities-and-fragments" target="_blank" rel="noopener">futurice/android-best-practices</a>上列举了一些列安卓开发最佳实践建议，其中对Fragment使用做了一些陈述（<a href="https://github.com/futurice/android-best-practices#activities-and-fragments" target="_blank" rel="noopener">传送门</a>），我表示赞同。</p>
+<p>最近项目需要新增了一个功能模块，我引入了一个Activity，多个fragment的方式来组织UI，这个过程有了一些收获。</p>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想让App有丝滑般的切换速度和顺畅的体验么？那就放开Activity，使用Fragment来展示UI页面吧</p>
+<p>Github <a href="https://github.com/futurice/android-best-practices#activities-and-fragments" target="_blank" rel="noopener">futurice/android-best-practices</a>上列举了一些列安卓开发最佳实践建议，其中对Fragment使用做了一些陈述（<a href="https://github.com/futurice/android-best-practices#activities-and-fragments" target="_blank" rel="noopener">传送门</a>），我表示赞同。</p>
+<p>最近项目需要新增了一个功能模块，我引入了一个Activity，多个fragment的方式来组织UI，这个过程有了一些收获。</p>
+<p>对fragment的操作，我使用support v4包下的，FragmentManager和FragmentTransaction这两个类。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="如何启动一个Fragment"><a href="#如何启动一个Fragment" class="headerlink" title="如何启动一个Fragment"></a>如何启动一个Fragment</h3><h4 id="replace方式"><a href="#replace方式" class="headerlink" title="replace方式"></a>replace方式</h4><p>这里我没有用Activity下的getSupportFragmentManager得到了FragmentManager来替换Fragment，而是选择使用fragment下的getChildFragmentManager（）获取FragmentManager。</p>
+<p>放在基类BasicActivity里，</p>
+<pre><code>/**
+ * 替换当前Fragment里的某个FrameLayout布局
+ * @param resId 被替换的布局ID
+ * @param fragmentTab 新的Fragment名
+ * @param arguments 传入新的Fragment的Bundle
+ * @param isAddToBack 是否加入回退栈
+ */
+private void replaceOneFragment(@IdRes int resId, String fragmentTab, Bundle arguments, boolean isAddToBack) {
+    int childrenFragmentContainerResID = ((BasicFragment) mCurrentFragment).getChildrenFragmentContainerResID();
+    int layoutId = resId &lt;= 0 ? childrenFragmentContainerResID : resId;
+
+    if (layoutId == -1) {
+        throw new IllegalStateException(&quot;You should overwrite getChildrenFragmentContainerResID from BasicFragment&quot;);
+    }
+
+    FragmentManager manager = mCurrentFragment.getChildFragmentManager();
+    if (manager != null) {
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        transaction
+                .setCustomAnimations(R.anim.right_enter, R.anim.left_exit, R.anim.left_enter, R.anim.right_exit)
+                .replace(layoutId, fragmentProvider(fragmentTab, arguments), fragmentTab);
+        if (isAddToBack) {
+            transaction.addToBackStack(fragmentTab);
+        }
+
+        transaction.commitAllowingStateLoss();
+    }
+}
+</code></pre><p>说明：</p>
+<ol>
+<li>getChildrenFragmentContainerResID(),该方法在BasicFragment里，用来获取要替换的布局ID</li>
+<li>BasicActivity里，fragmentProvider()，Fragment提供者     </li>
+</ol>
+<h4 id="add-show-hide显示Fragment（支持SingleTask启动Fragment）"><a href="#add-show-hide显示Fragment（支持SingleTask启动Fragment）" class="headerlink" title="add/show/hide显示Fragment（支持SingleTask启动Fragment）"></a>add/show/hide显示Fragment（支持SingleTask启动Fragment）</h4><pre><code>    /**
+ * 显示特定Tag的Fragment,如果是第一次显示,则新建并添加该Fragment
+ *
+ * @param fragmentTab    Fragment标签名
+ * @param arguments      传入Fragment的参数
+ * @param isAddBackStack 是否加入FragmentManager回退栈
+ * @param launchMode     启动模式 分为： STANDARD，SINGLE，SINGLE_ENHANCEMENT
+ */
+private void showOneFragment(String fragmentTab, Bundle arguments, boolean isAddBackStack, LaunchMode launchMode) {
+    FragmentManager manager = getSupportFragmentManager();
+    if (manager == null) {
+        return;
+    }
+
+    Fragment fragmentByTag = manager.findFragmentByTag(fragmentTab);
+
+    if (fragmentByTag != null &amp;&amp; launchMode == LaunchMode.SINGLE_ENHANCEMENT) {
+        popMultipleBackStack(fragmentTab, arguments);
+        return;
+    }
+
+    FragmentTransaction transaction = manager.beginTransaction();
+    //设置过渡动画
+    transaction.setCustomAnimations(R.anim.right_enter, R.anim.left_exit, 0, 0);
+
+    //隐藏当前所有fragment
+    List&lt;Fragment&gt; fragments = manager.getFragments();
+    if (fragments != null &amp;&amp; fragments.size() &gt; 0) {
+        for (Fragment f : fragments) {
+            if (f != null) {
+                transaction.hide(f);
+            }
+        }
+    }
+    //第一次添加该Fragment
+    if (fragmentByTag == null) {
+        mCurrentFragment = fragmentProvider(fragmentTab, arguments);
+        mFragmentBackDeque.push(fragmentTab);
+        transaction.add(getFragmentContainerResID(), mCurrentFragment, fragmentTab);
+        if (isAddBackStack) {
+            transaction.addToBackStack(fragmentTab);
+        }
+        transaction.commitAllowingStateLoss();
+        return;
+    }
+
+    if (!(fragmentByTag instanceof BasicFragment)) {
+        throw new ClassCastException(&quot;fragment must extends BasicFragment&quot;);
+    }
+
+    //更新Arguments，按后退键时Fragment里的后退方法里使用
+    if (arguments != null) {
+        setSupportBackStackArguments(arguments);
+    }
+
+    //根据启动模式类型，采取不同的方式维护后退栈
+    switch (launchMode) {
+        case STANDARD:
+            mFragmentBackDeque.push(fragmentTab);
+            break;
+        case SINGLE:
+            synchronizeFragmentBackDequeWhenSingleLaunchMode(fragmentTab);
+            break;
+    }
+
+    BasicFragment basicFragment = (BasicFragment) fragmentByTag;
+    mCurrentFragment = fragmentByTag;
+    basicFragment.setSupportArguments(arguments);
+    transaction.show(fragmentByTag);
+    transaction.commitAllowingStateLoss();
+}
+
+ /**
+ * fragment 启动模式
+ */
+public enum LaunchMode {
+    /**
+     * 标准模式
+     */
+    STANDARD,
+    /**
+     * 单例模式，其他Fragment从自维护的mFragmentBackDeque栈里退出
+     */
+    SINGLE,
+    /**
+     * 强化版单例模式，其他Fragment从FragmentManager栈和自维护的mFragmentBackDeque栈里退出
+     */
+    SINGLE_ENHANCEMENT,
+}
+</code></pre><p>说明：</p>
+<ol>
+<li>popMultipleBackStack（）实现一次弹出多个Fragment</li>
+<li><p>在隐藏当前所有fragment操作，特别需要在遍历时，做个非空判断，</p>
+<pre><code>for (Fragment f : fragments) {
+        if (f != null) {
+            transaction.hide(f);
+        }
+   }
+</code></pre></li>
+</ol>
+<p>这样做，是因为Fragment出栈后，会出现栈内顺序不正确的bug，详看<a href="http://www.jianshu.com/p/d9143a92ad94" target="_blank" rel="noopener">Fragment全解析系列（一）：那些年踩过的坑</a>，一文中关于多个Fragment同时出栈的深坑BUG这一部分的内容。</p>
+<ol start="3">
+<li>synchronizeFragmentBackDequeWhenSingleLaunchMode（）单例模式下，管理自维护的Fragment后退栈</li>
+<li>mFragmentBackDeque是自维护回退管理队列</li>
+</ol>
+<h3 id="后退键监听管理"><a href="#后退键监听管理" class="headerlink" title="后退键监听管理"></a>后退键监听管理</h3><p>使用Fragment组织UI后，返回上一个页面的逻辑有了变化。如果遇到之前replace替换了，则先从该fragment的FragmentManager里恢复原来的被替换的fragment，没有，则把之前hide状态的Fragment重新show显示出来，这个过程需要用了队列自己来维护回退</p>
+<pre><code> @Override
+public void onBackPressed() {
+    if (mFragmentBackDeque == null || mCurrentFragment == null) {
+        return;
+    }
+
+    //检查当前Fragment的ChildFragmentManager回退栈是否需要回退
+    int childStackEntryCount = mCurrentFragment.getChildFragmentManager().getBackStackEntryCount();
+    if (childStackEntryCount &gt; 0) {
+        mCurrentFragment.getChildFragmentManager().popBackStackImmediate();
+        return;
+    }
+
+    //检查当前Fragment的自维护的回退栈是否需要回退
+    if (mFragmentBackDeque.size() &gt;= 2) {
+        showOneFragmentOnBackPressed();
+        return;
+    }
+
+    finish();
+}
+</code></pre><ol>
+<li><p>showOneFragmentOnBackPressed()实现返回键显示特定Tag的Fragment</p>
+</li>
+<li><p>同时，如果需要，我们可以给FragmentManager添加OnBackStackChangedListener，监听FragmentManager回退栈成员数量的变化，具体使用见文末的代码</p>
+</li>
+<li><p>还有一种思路，View提供了setOnKeyListener（OnKeyListener onKeyListener），用OnKeyListener来监听后退健。</p>
+</li>
+</ol>
+<h3 id="Fragment入参管理"><a href="#Fragment入参管理" class="headerlink" title="Fragment入参管理"></a>Fragment入参管理</h3><p>第一次启动Fragment，走的是fragment生命周期方法，之后启动fragment从hide状态重新show时，不走Fragment生命周期方法，而是调用onHiddenChanged(boolean hidden)方法。因此，在这两种场景下支持给fragment传入参数，并且做到每次显示fragment，都能拿到最新的入参bundle。</p>
+<p>我在BasicFragment设计如下：</p>
+<pre><code>/**
+ * Fragment Argument解析
+ * @param arguments
+ */
+protected void parseArguments(Bundle arguments){
+
+}
+
+@Override
+public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    parseArguments(getArguments());
+}
+
+@Override
+public void onHiddenChanged(boolean hidden) {
+    super.onHiddenChanged(hidden);
+    if(!hidden){
+        parseArguments(getSupportArguments());
+    }
+}
+</code></pre><p>这样，新的Fragmnet在继承BasicFragment时，只需要重新parseArguments（）即可</p>
+<h3 id="Toolbar管理"><a href="#Toolbar管理" class="headerlink" title="Toolbar管理"></a>Toolbar管理</h3><p>项目中使用Toolbar，用BasicFragmentWithToolbar来负责Toolbar的设置逻辑</p>
+<p>BasicFragmentWithToolbar类里的核心代码</p>
+<pre><code>@Override
+public void onHiddenChanged(boolean hidden) {
+    super.onHiddenChanged(hidden);
+    if (!hidden) {
+        configureToolbar();
+    }
+}
+
+@Override
+protected void configureToolbar() {
+    super.configureToolbar();
+    int stackEntryCount = getChildFragmentManager().getBackStackEntryCount();
+    if (stackEntryCount &gt; 0) {
+        FragmentManager.BackStackEntry stackEntry = getChildFragmentManager().getBackStackEntryAt(stackEntryCount - 1);
+        //Get the name that was supplied to FragmentTransaction.addToBackStack(String) when creating this entry
+        String fragmentTab = stackEntry.getName();
+        BasicFragmentWithToolbar fragmentByTag = (BasicFragmentWithToolbar) getChildFragmentManager().findFragmentByTag(fragmentTab);
+        if (fragmentByTag != null) {
+            fragmentByTag.setupToolbar();
+        }
+    } else {
+        setupToolbar();
+    }
+}
+
+/**
+ * 设置Toolbar的显示内容
+ */
+protected void setupToolbar() {
+    mToolbar.setNavigationIcon(R.drawable.icon_header_left);
+    mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getAttachActivity().onBackPressed();
+        }
+    });
+}
+</code></pre><h3 id="如何使用上述的Fragment封装"><a href="#如何使用上述的Fragment封装" class="headerlink" title="如何使用上述的Fragment封装"></a>如何使用上述的Fragment封装</h3><p>我举个例子，我建一个BillContainerActivity，来作为Bill相关的Fragment容器，代码如下</p>
+<pre><code>public class BillContainerActivity extends BasicActivity {
+
+private static final String TAG = &quot;BillContainerActivity&quot;;
+
+@Bind(R.id.frame_activity_order_body)
+FrameLayout mOrderBody;
+
+
+public static Intent getCallingIntent(Activity activity){
+    Intent intent = new Intent(activity,BillContainerActivity.class);
+    return intent;
+}
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    initializeShow();
+}
+
+private void initializeShow() {
+    showOneFragment(BillHomeFragment.class.getSimpleName(),true);
+}
+
+
+@Override
+protected BasicFragment fragmentProvider(String fragmentTab, Bundle arguments) {
+    BasicFragment currentFragment;
+
+    if(BillHomeFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = BillHomeFragment.newInstance();
+    }
+    else if(BillProcessFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = BillProcessFragment.newInstance(arguments);
+    }
+    else if(BillStructureFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = BillStructureFragment.newInstance(arguments);
+    }
+    else if(AdjustBillDetailFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = AdjustBillDetailFragment.newInstance(arguments);
+    }
+    else if(BrokerageDetailFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = BrokerageDetailFragment.newInstance(arguments);
+    }
+    else if(InvoiceDetailFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = InvoiceDetailFragment.newInstance(arguments);
+    }
+    else if(InvoiceListFragment.class.getSimpleName().equals(fragmentTab)){
+        currentFragment = InvoiceListFragment.newInstance(arguments);
+    }
+    else{
+        currentFragment = BillHomeFragment.newInstance();
+    }
+    return currentFragment;
+}
+
+
+@Override
+protected int getFragmentContainerResID() {
+    return R.id.frame_activity_order_body;
+}
+
+@Override
+protected int getLayoutResID() {
+    return R.layout.activity_bill_home;
+}
+
+}    
+</code></pre><p><strong>说明:</strong></p>
+<p>会发现作为Fragment容器的BillContainerActivity，代码量很少，主要做两件事</p>
+<ol>
+<li>初始化显示Fragment</li>
+<li>实现fragmentProvider方法，该方法把这个容器所需的Fragment构造出来</li>
+</ol>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>完整封装Fragment的代码随着项目需求在进化和改动，还是决定放到Github上<a href="https://github.com/Sugarya/FragmentCapsulation" target="_blank" rel="noopener">完整代码传送门</a>，欢迎star</p>
+<h2 id="相关阅读资料"><a href="#相关阅读资料" class="headerlink" title="相关阅读资料"></a>相关阅读资料</h2><p>特别鸣谢：YoKey系列</p>
+<ol>
+<li><a href="http://www.jianshu.com/p/d9143a92ad94" target="_blank" rel="noopener">Fragment全解析系列（一）：那些年踩过的坑</a></li>
+<li><a href="http://www.jianshu.com/p/fd71d65f0ec6" target="_blank" rel="noopener">Fragment全解析系列（二）：正确的使用姿势</a></li>
+<li><a href="http://www.jianshu.com/p/38f7994faa6b" target="_blank" rel="noopener">Fragment之我的解决方案：Fragmentation</a></li>
+</ol>
+<ul>
+<li><p><a href="http://www.10tiao.com/html/139/201610/2650117777/1.html" target="_blank" rel="noopener">Android开发之Fragment最佳实践</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v=k3IT-IJ0J98&amp;list=PLtP6Tqjv3rMtLUid-tvD97zlf8yCn_WiB" target="_blank" rel="noopener">What the Fragment?-Google I/O 2016</a>(需自备梯子)</p>
+</li>
+<li><p><a href="https://www.zhihu.com/question/39662488/answer/82469372" target="_blank" rel="noopener">知乎：关于 Android，用多个 activity，还是单 activity 配合 fragment？</a></p>
+</li>
+<li><p><a href="http://stackoverflow.com/questions/23504790/android-multiple-fragment-transaction-ordering/23523922#23523922" target="_blank" rel="noopener">Android multiple fragment transaction ordering</a></p>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Fragment/" rel="tag"># Fragment</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/26/2017/2017-02-26/" rel="next" title="安卓EditText－实现输入小数点后几位的逻辑演变">
+                <i class="fa fa-chevron-left"></i> 安卓EditText－实现输入小数点后几位的逻辑演变
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/12/2017/2017-03-12/" rel="prev" title="异类：一万小时练习的力量">
+                异类：一万小时练习的力量 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b656298cdac292e" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpg"
+                alt="Ethan Ruan" />
+            
+              <p class="site-author-name" itemprop="name">Ethan Ruan</p>
+              <p class="site-description motion-element" itemprop="description">Java Coder & Kotlin Lover</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sugaryaruan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何启动一个Fragment"><span class="nav-number">2.1.</span> <span class="nav-text">如何启动一个Fragment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#replace方式"><span class="nav-number">2.1.1.</span> <span class="nav-text">replace方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#add-show-hide显示Fragment（支持SingleTask启动Fragment）"><span class="nav-number">2.1.2.</span> <span class="nav-text">add/show/hide显示Fragment（支持SingleTask启动Fragment）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后退键监听管理"><span class="nav-number">2.2.</span> <span class="nav-text">后退键监听管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fragment入参管理"><span class="nav-number">2.3.</span> <span class="nav-text">Fragment入参管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Toolbar管理"><span class="nav-number">2.4.</span> <span class="nav-text">Toolbar管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用上述的Fragment封装"><span class="nav-number">2.5.</span> <span class="nav-text">如何使用上述的Fragment封装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关阅读资料"><span class="nav-number">4.</span> <span class="nav-text">相关阅读资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Ruan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'KucTheGGj0jth3TFNY573jRN-gzGzoHsz',
+        appKey: 'WzvVriXrWbkpVb5Qdn6CICLP',
+        placeholder: 'Umm, say something ...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KucTheGGj0jth3TFNY573jRN-gzGzoHsz", "WzvVriXrWbkpVb5Qdn6CICLP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

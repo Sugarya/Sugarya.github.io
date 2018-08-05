@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Books," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="代码的未来，松本行弘在2013年所著，该书对云计算、大数据时代下的各种编程语言以及相关技术进行了剖析，并对编程语言的未来发展趋势做出预测。 以下是我阅读这本书的笔记摘抄，这本书能提高程序员的素养。">
+<meta name="keywords" content="Books">
+<meta property="og:type" content="article">
+<meta property="og:title" content="松本行弘眼里的代码未来">
+<meta property="og:url" content="https://sugarya.github.io/2017/04/21/2017/2017-04-21/index.html">
+<meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
+<meta property="og:description" content="代码的未来，松本行弘在2013年所著，该书对云计算、大数据时代下的各种编程语言以及相关技术进行了剖析，并对编程语言的未来发展趋势做出预测。 以下是我阅读这本书的笔记摘抄，这本书能提高程序员的素养。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-05T02:02:45.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="松本行弘眼里的代码未来">
+<meta name="twitter:description" content="代码的未来，松本行弘在2013年所著，该书对云计算、大数据时代下的各种编程语言以及相关技术进行了剖析，并对编程语言的未来发展趋势做出预测。 以下是我阅读这本书的笔记摘抄，这本书能提高程序员的素养。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sugarya.github.io/2017/04/21/2017/2017-04-21/"/>
+
+
+
+
+
+  <title>松本行弘眼里的代码未来 | Ethan Ruan's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan Ruan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow my nose and connect the dots</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sugarya.github.io/2017/04/21/2017/2017-04-21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan Ruan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my_avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan Ruan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">松本行弘眼里的代码未来</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T11:07:00+08:00">
+                2017-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/闲书札记/" itemprop="url" rel="index">
+                    <span itemprop="name">闲书札记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/21/2017/2017-04-21/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/04/21/2017/2017-04-21/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/21/2017/2017-04-21/" class="leancloud_visitors" data-flag-title="松本行弘眼里的代码未来">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,254 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>代码的未来，松本行弘在2013年所著，该书对云计算、大数据时代下的各种编程语言以及相关技术进行了剖析，并对编程语言的未来发展趋势做出预测。</p>
+<p>以下是我阅读这本书的笔记摘抄，这本书能提高程序员的素养。<br><a id="more"></a><br>代码的未来，松本行弘在2013年所著，该书对云计算、大数据时代下的各种编程语言以及相关技术进行了剖析，并对编程语言的未来发展趋势做出预测。</p>
+<p>以下是我阅读这本书的笔记摘抄，这本书能提高程序员的素养。</p>
+<h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><h3 id="对摩尔定路的局限的思考"><a href="#对摩尔定路的局限的思考" class="headerlink" title="对摩尔定路的局限的思考"></a>对摩尔定路的局限的思考</h3><p>在不远的将来，会出现一些因素，对摩尔定律的继续生效构成障碍</p>
+<ol>
+<li>最近的LSI（大规模集成电路）的宽度已经缩小到只有数十纳米，只能排列几个原子，这样在原子尺度上来制造电路是相当困难的</li>
+<li>LSI中的电路是采用一种印刷技术印上去的，光的波长成了问题，如果图像的尺寸比光的波长还小，就无法清晰地转印。可见光的波长范围约为400-800nm，因此最近45nm制造的LSI是无法用可见光制造的，而是使用X光代替</li>
+<li>在这种原子尺寸的电路中，保持绝缘也是相当困难的。电流通过了原本不该通过的地方，这种漏电流还会引发发热，LSI越来约精密，其密度也越来越高，热密度也随之提高，如果没有充分的散热措施，连LSI本身都会溶化</li>
+</ol>
+<p>漏电流和热密度等问题，CPU的性能提高遇到了瓶颈。多CPU化，内存容量增大，SSD硬盘会成为主流，真正的并发编程也会成为主流</p>
+<h3 id="算命先生预言的原理"><a href="#算命先生预言的原理" class="headerlink" title="算命先生预言的原理"></a>算命先生预言的原理</h3><p>1.2节</p>
+<p>巴纳姆效应（福勒效应）<br>每个人都会很容易相信一个笼统的、一般性的人格描述特别适合他。即使这种描述十分空洞，仍然认为反映了自己的人格面貌，哪怕自己根本不是这种人</p>
+<p>冷读术（cold reading）：通过观察对方的言行举止中的一些细微之处来进行揣测，了解到他人的心理活动。像福尔摩斯对他的委托人所运用的那种技巧差不多。</p>
+<p>热读术（hot reading）：通过事先对对方进行详细的调查，藉时机说出对方的情况，此时就会显得神奇无比。</p>
+<h3 id="IT未来之预测"><a href="#IT未来之预测" class="headerlink" title="IT未来之预测"></a>IT未来之预测</h3><p>未来应该是位于过去到现在这个方向的延长线上</p>
+<h4 id="从价格看未来"><a href="#从价格看未来" class="headerlink" title="从价格看未来"></a>从价格看未来</h4><ol>
+<li>普通人所能拥有的计算机性能将比现在大大提高 </li>
+<li>现在还没使用计算机的地方，以后都会安装上计算机</li>
+</ol>
+<h4 id="从性能看未来"><a href="#从性能看未来" class="headerlink" title="从性能看未来"></a>从性能看未来</h4><p>看看现在的超级计算机，再过20年，就是现在的一般般的配置了，比如数万CPU，数十万核心配置会成为普遍</p>
+<p>基于这样的环境，编程又回编程什么样子呢？为了充分利用这么多的CPU，软件开发又会如何进化呢？未来的编程语言应该在如何利用CPU资源这个方面进行争夺，并行处理的功能。</p>
+<h4 id="从容量看未来"><a href="#从容量看未来" class="headerlink" title="从容量看未来"></a>从容量看未来</h4><p>在不久的将来，由超高速低容量的核心内置缓存，高速但断电会丢失数据的主内存（RAM），以及低速但可永久保存数据的外部存储器（HDD）所构成的结构将会消失，取而代之的可能将是由大规模的缓存，以及高速且能永久保存数据的内存所构成的新层次结构。相应的依赖过去存储结构的数据库系统将产生大规模的结构改革。</p>
+<h4 id="从带宽看未来"><a href="#从带宽看未来" class="headerlink" title="从带宽看未来"></a>从带宽看未来</h4><p>1G bit／s的上网服务已面向某些国家的家庭推出了</p>
+<p>在性能和带宽寻求平衡的过程中，网络彼此两端的系统构成也会像钟摆一样摇格不停，随着每次钟摆的来回，系统的规模，拓展性和自由度都能够得到提高。</p>
+<h2 id="第二章-编程语言的世界"><a href="#第二章-编程语言的世界" class="headerlink" title="第二章 编程语言的世界"></a>第二章 编程语言的世界</h2><p>世界上第一位程序员实际上是一位女性</p>
+<p>机器语言就是一串数字，将计算机的步骤从指令表中查出对应的机器语言编码，再人工写成数列。（机器语言和CPU执行之间至少还有一层：指通过指令表找到并输入对应的机器语言，机器就能执行一条条指令，指令让机器产生计算和处理）</p>
+<p>查表这种工作本来应该是计算机最擅长的，人们用更加容易记忆的指令（助记符）来代替数值，并开发了一种能够自动生成机器的语言程序，这就是汇编器。汇编器用来解释汇编语言的程序，汇编语言中所使用的助记符和计算机指令是一一对应的关系。</p>
+<p>也就是说汇编语言是由编程者自己的需要发明出来的</p>
+<p>编程语言的进化进程看，一个显著的关键词就是“抽象化”。随着抽象化的不断深入，程序员即便不去关心内部的详细情况，也可以编写出程序。人类一次所能掌握的概念的数量，有说法称，大部分人一次只能驾驭5到9个左右的概念。抽象化程序高的编程语言不必描述详细过程，从而可以用简短的代码达到目的。</p>
+<p>我的思考：</p>
+<p>语言的发展：机器语言－－》汇编语言－－－》高级语言（比如Java，Python），现在几乎程序员都处在使用高级语言上；高级语言经过编译器执行编译处理转化成汇编语言，再经过汇编器和链接器进行汇编和链接处理转化成机器语言，被计算机执行。而现在，编译器和汇编器和链接器都已经很成熟了，程序员在高级语言阶段写代码就可以了</p>
+<p>一方面，汇编语言虽然速度快，但是在工业化领域，一个系统用汇编语言，代码量将是极为庞大的，我推测有百万行的代码了。而高级语言，可能只有不到一万行。另一方面，编译器和汇编器非常完善了，引入了很多机制，保证最好的还原。同时，在现在CPU 达到2GB的能力下，高级语言编写的代码带来的损耗完全可以被忽略</p>
+<h3 id="未来编程语言"><a href="#未来编程语言" class="headerlink" title="未来编程语言"></a>未来编程语言</h3><p>格雷厄姆主张，100年后的编程语言的进化主线应该是以最少量公理为基础的“拥有最小最简洁核心的语言”，在现有编程语言中，最具有这一特征的莫过于他最喜欢的Lisp了，Lisp是100年后编程语言的进化方向。</p>
+<p>松本行弘认为，编程语言的进化动机，不是工具和语言本身的简化，而是将通过这些工具和语言所得到的结果更简洁地表达出来。抽象化的趋势会一直持续下去</p>
+<p>100年后的编程语言有这三种可能：</p>
+<ol>
+<li>可能性1：变化不大</li>
+<li>可能性2: 使用编程语言来编程这个行为本身不存在了，通过人机对话等方式</li>
+<li>可能性3: 发明了更高抽象度的编程语言。是比现在更加强调what，而对如何解决问题的how部分的细节，则不需要人们去过问。</li>
+</ol>
+<p>20年后的编程语言：</p>
+<p>编程语言本身不会发生多大的变化，实际上现在使用的很多语言，在20年前就已经存在了。</p>
+<p>20年后的语言，应该是在分布处理和并行处理功能上进行强化，使得开发者不需要特别心思就能使用这些功能。</p>
+<p>线程，RPC（远程过程调用）等显式地使用分布处理和并行处理的形式，早晚会遇到瓶颈，当核心数超过数千个的时候，显式地指定就变得毫无意义了。未来的编程无需显式操作就能实现分布处理和并行处理。</p>
+<h2 id="DSL（特定领域语言）"><a href="#DSL（特定领域语言）" class="headerlink" title="DSL（特定领域语言）"></a>DSL（特定领域语言）</h2><p>所谓DSL（Domain Specific Language），是指利用为特定领域所专门设计的词汇和语法，简化程序设计过程，提高生产效率的技术。是对特定目的的小规模语言的称呼。</p>
+<p>DSL的优势：拥有为特定领域所设计的词汇，可以在高级层面上编写代码，节约程序开发的时间。即，不涉及对象领域的内部详细，而是在高级层面上进行描述。</p>
+<h3 id="外部DSL"><a href="#外部DSL" class="headerlink" title="外部DSL"></a>外部DSL</h3><p>由专用语言引擎来实现的DSL，称为外部DSL。比如，数据库访问使用的SQL就是一种典型的外部DSL。正则表达式用来描述字符串模版，也是一种外部DSL。</p>
+<p>外部DSL的优点：它独立于编程开发所使用的语言之外，在不同语言中都可以使用。实际上是全新设计的语言和语言引擎，不必被特定的执行模块和现有语言的语法所左右。</p>
+<h3 id="内部DSL"><a href="#内部DSL" class="headerlink" title="内部DSL"></a>内部DSL</h3><p>不是创造一种新的语言，而是在现有语言中实现DSL，而作为DSL基础的这种现有语言称为<strong>宿主语言</strong>。Lisp，Smalltalk，Ruby这些语言适合作为DSL的宿主语言。</p>
+<p>内部DSL的优点：内部DSL借用宿主语言的语法，在理解内部DSL含义时，宿主语言的常识依然有效，可以使用宿主语言所具备的全部功能。</p>
+<h2 id="元编程"><a href="#元编程" class="headerlink" title="元编程"></a>元编程</h2><p>程序在运行过程中，本身的信息可以被访问和操作，就是元编程。程序由数据结构和算法构成，如果环境允许程序本身作为数据结构来操作的话，那么元编程也就和面向一般数据结构的一般操作没什么两样了。</p>
+<h2 id="内存管理与GC"><a href="#内存管理与GC" class="headerlink" title="内存管理与GC"></a>内存管理与GC</h2><p><strong>根</strong>判断对象是否可被引用的起始点</p>
+<h3 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h3><h4 id="标记清除（Mark-and-Sweep）"><a href="#标记清除（Mark-and-Sweep）" class="headerlink" title="标记清除（Mark and Sweep）"></a>标记清除（Mark and Sweep）</h4><p>从根开始将可能被引用的对象用递归的方式进行标记（通过对象内部的标志来实现），将没有标记的对象视为垃圾进行回收。<a href="http://www.jianshu.com/p/b0f5d21fe031" target="_blank" rel="noopener">标记清除原理详细介绍</a></p>
+<p>缺陷：</p>
+<ol>
+<li>每次清除都需要全局扫描一次，当在分配大量对象时，只有一小部分存活的情况下，所消耗的时间会大大超过必要的值。</li>
+<li>垃圾收集后有可能会造成大量的内存碎片</li>
+</ol>
+<h4 id="标记压缩"><a href="#标记压缩" class="headerlink" title="标记压缩"></a>标记压缩</h4><p>将没有标记的垃圾对象不断压缩</p>
+<p>优点：能够有效的缓解标记清除算法回收对象造成的内存碎片问题</p>
+<p>缺陷：它引入了额外的开销，比如说额外的空间来保存迁移地址，需要遍历多次堆内存等</p>
+<h4 id="复制收集"><a href="#复制收集" class="headerlink" title="复制收集"></a>复制收集</h4><p>将从根开始被引用的对象复制到另外的空间中，然后再将复制的对象所能够引用的对象用递归的方式不断复制下去。如果旧空间里都是垃圾对象，能一次性回收该旧空间</p>
+<p>优点：和标记压缩相比，它不需要遍历堆内存那么多次，节约了时间<br>缺陷：可用堆内存减少了一半</p>
+<h4 id="引用计数方式"><a href="#引用计数方式" class="headerlink" title="引用计数方式"></a>引用计数方式</h4><p>在每个对象中保存该对象的引用计数，当引用发生增减时对计数进行更新。引用计数的增减一般发生在变量赋值，对象内容更新，函数结束（局部变量不再被引用）等时间点。当一个对象引用计数为0时，则说明它将来不会再被应用。</p>
+<p>优点：</p>
+<ol>
+<li>对象不再被引用的瞬间就会被释放 </li>
+<li>释放操作是针对每个对象个别执行，GC产生的中段时间比较短</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>无法释放循环引用的对象 </li>
+<li>必须在引用发生增减时对引用计数作出正确的增减，如果漏掉了某个增减，就会引发很难找到原因的内存错误。</li>
+<li>引用计数管理不适合并行处理</li>
+</ol>
+<h3 id="分代回收（Generational-GC）"><a href="#分代回收（Generational-GC）" class="headerlink" title="分代回收（Generational GC）"></a>分代回收（Generational GC）</h3><p>对分配不久，诞生时间较短的年轻对象进行重点扫描，可以更有效地回收大部分垃圾。对所有涉及修改对象内容的地方进行保护，称为写屏障。</p>
+<p>刚刚生成不久的年轻对象划为新生代，存活时间较长的对象划为老生代。</p>
+<p>全部区域对象GC操作称为完全回收；只扫描新生代对象的回收操作，称为小回收（Minor GC）；将从老生代对新生代的引用记录在一个叫做记录集的表中，在执行小回收的过程中，这个记录集也作为根对待。</p>
+<p>缺点：</p>
+<ol>
+<li>最大中断时间没有得到改善</li>
+</ol>
+<h3 id="增量回收"><a href="#增量回收" class="headerlink" title="增量回收"></a>增量回收</h3><p>对实时性要求很高的程序中，比起缩短GC的平均中断时间，往往更看重GC的最大中断时间。GC操作细分成多个逐一执行。</p>
+<p>写屏障：已经完成扫描和标记的对象被修改，对新的对象产生了引用，这个新对象就不会被标记，明明存活的对象却被回收掉。</p>
+<h3 id="并行回收"><a href="#并行回收" class="headerlink" title="并行回收"></a>并行回收</h3><p>原有的程序运行的同时进行GC操作，用写屏障对当前的状态信息保持更新。不过，让GC操作完全并行，而一点都不影响原有程序的运行，是做不到的，在GC操作的某些特定阶段，仍然需要暂停原有程序运行</p>
+<p>任何一种GC算法，都是跟踪和引用计数回收两种思路的组合。</p>
+<h3 id="为什么需要引入异常处理"><a href="#为什么需要引入异常处理" class="headerlink" title="为什么需要引入异常处理"></a>为什么需要引入异常处理</h3><ol>
+<li>C语言，if-else方式，通过返回整数，实现繁琐</li>
+<li>有多处同样的错误，则要重复实现</li>
+</ol>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><p><strong>函数对象：</strong>将函数作为值来利用的方法</p>
+<p><strong>闭包：</strong>在函数对象中，将局部变量这一环境封闭起来的结构被称为闭包。被封闭起来的变量的生命周期与封闭它的函数对象生命周期相同</p>
+<p>对象是在数据中以方法的形式内含了过程，而闭包则是在过程中以环境的形式内含了数据</p>
+<h4 id="动态与静态"><a href="#动态与静态" class="headerlink" title="动态与静态"></a>动态与静态</h4><p>改善JavaScript性能的技术：</p>
+<ol>
+<li>JIT（Just In Time）</li>
+<li>特殊化；对高频的特殊条件下，运行高速版本的代码</li>
+</ol>
+<p>JavaScript是目前最快的动态语言</p>
+<p>无论任何程序，或多或少都包含了动态的特性。</p>
+<p>动态的编程语言，动态部分主要指运行模式和类型；动态运行模式就是运行中的程序能够识别自身，并对自身进行操作。动态类型有且只有数据拥有类型，静态类型是数据拥有类型，存放数据的变量，表达式也拥有类型，且类型在编译时固定。</p>
+<p>动态类型优点：</p>
+<p>1.简洁；即少了类型描述的代码和减少与算法本质无关的代码分量<br>2.灵活性高；少了类型带来的制约</p>
+<p>静态类型优点：</p>
+<p>1.程序中对类型的描述，可以帮助对程序的阅读和理解 2.编译时确定类型，比较容易发现bug，对于这一点，程序中的bug大多数其实是与逻辑有关的，单纯类型错误而导致的bug是少数的。</p>
+<h4 id="Duck-Typing"><a href="#Duck-Typing" class="headerlink" title="Duck Typing"></a>Duck Typing</h4><p>If it walks like a duck and quacks like a duck, it must be a duck.</p>
+<p>隆重推出鸭子类型，如果某个对象的行为和鸭子一模一样，那无论它真正的实体是什么，我们都可以将它看做一只鸭子。不考虑某个对象到底是哪一个类的实例，只关心其拥有怎样的行为。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>松本行弘的代码的未来一书还有其他有趣的内容，我想每个程序员都需要知道未来编程是什么样子，知道如今的编程语言正在朝哪些什么方向发展，Go，Lua，Dart这些语言有哪些设计差异。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Books/" rel="tag"># Books</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/26/2017/2017-03-26/" rel="next" title="聊聊安卓App里的搜索">
+                <i class="fa fa-chevron-left"></i> 聊聊安卓App里的搜索
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/18/2017/2017-05-18/" rel="prev" title="一分钟带你了解2017 Google I/O大会内容">
+                一分钟带你了解2017 Google I/O大会内容 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b656298cdac292e" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my_avatar.jpg"
+                alt="Ethan Ruan" />
+            
+              <p class="site-author-name" itemprop="name">Ethan Ruan</p>
+              <p class="site-description motion-element" itemprop="description">Java Coder & Kotlin Lover</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Sugarya" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/sugaryaruan" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sugaryaruan@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章"><span class="nav-number">1.</span> <span class="nav-text">第一章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对摩尔定路的局限的思考"><span class="nav-number">1.1.</span> <span class="nav-text">对摩尔定路的局限的思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算命先生预言的原理"><span class="nav-number">1.2.</span> <span class="nav-text">算命先生预言的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IT未来之预测"><span class="nav-number">1.3.</span> <span class="nav-text">IT未来之预测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从价格看未来"><span class="nav-number">1.3.1.</span> <span class="nav-text">从价格看未来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从性能看未来"><span class="nav-number">1.3.2.</span> <span class="nav-text">从性能看未来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从容量看未来"><span class="nav-number">1.3.3.</span> <span class="nav-text">从容量看未来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从带宽看未来"><span class="nav-number">1.3.4.</span> <span class="nav-text">从带宽看未来</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章-编程语言的世界"><span class="nav-number">2.</span> <span class="nav-text">第二章 编程语言的世界</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#未来编程语言"><span class="nav-number">2.1.</span> <span class="nav-text">未来编程语言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DSL（特定领域语言）"><span class="nav-number">3.</span> <span class="nav-text">DSL（特定领域语言）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部DSL"><span class="nav-number">3.1.</span> <span class="nav-text">外部DSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部DSL"><span class="nav-number">3.2.</span> <span class="nav-text">内部DSL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元编程"><span class="nav-number">4.</span> <span class="nav-text">元编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理与GC"><span class="nav-number">5.</span> <span class="nav-text">内存管理与GC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GC算法"><span class="nav-number">5.1.</span> <span class="nav-text">GC算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标记清除（Mark-and-Sweep）"><span class="nav-number">5.1.1.</span> <span class="nav-text">标记清除（Mark and Sweep）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标记压缩"><span class="nav-number">5.1.2.</span> <span class="nav-text">标记压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制收集"><span class="nav-number">5.1.3.</span> <span class="nav-text">复制收集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用计数方式"><span class="nav-number">5.1.4.</span> <span class="nav-text">引用计数方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代回收（Generational-GC）"><span class="nav-number">5.2.</span> <span class="nav-text">分代回收（Generational GC）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增量回收"><span class="nav-number">5.3.</span> <span class="nav-text">增量回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行回收"><span class="nav-number">5.4.</span> <span class="nav-text">并行回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要引入异常处理"><span class="nav-number">5.5.</span> <span class="nav-text">为什么需要引入异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包"><span class="nav-number">5.5.1.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态与静态"><span class="nav-number">5.5.2.</span> <span class="nav-text">动态与静态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Duck-Typing"><span class="nav-number">5.5.3.</span> <span class="nav-text">Duck Typing</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan Ruan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'KucTheGGj0jth3TFNY573jRN-gzGzoHsz',
+        appKey: 'WzvVriXrWbkpVb5Qdn6CICLP',
+        placeholder: 'Umm, say something ...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("KucTheGGj0jth3TFNY573jRN-gzGzoHsz", "WzvVriXrWbkpVb5Qdn6CICLP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
