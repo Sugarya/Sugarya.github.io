@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="程序中，变量活动范围有：方法/函数（局部）里的，成员变量（全局变量） 当一个变量从局部变量升级到全局变量，该变量可以跨方法使用，因此在一个方法里对该变量赋值，在另一个方法里就能马上感知到并获取变量的值，体现着监听设计思想。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T06:02:24.995Z">
+<meta property="og:updated_time" content="2018-08-05T09:01:10.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中对变量范围转换引发的思考">
 <meta name="twitter:description" content="程序中，变量活动范围有：方法/函数（局部）里的，成员变量（全局变量） 当一个变量从局部变量升级到全局变量，该变量可以跨方法使用，因此在一个方法里对该变量赋值，在另一个方法里就能马上感知到并获取变量的值，体现着监听设计思想。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -461,7 +459,6 @@
 <p>由此，还可以推广到逻辑思考切入点事宜。</p>
 <p>一个问题，肯定是处在特定的范围或事件中的。澄清前提，划清界限很有必要。解决一个问题，修复一个bug，首先需要把这个bug产生的起始点找到，这个起始点有时候是浮动的，可以往前多些，也可以往后移些。找到bug的起始点后，还要清楚这个bug的结束点。在这起始点和结束点之间的这一段范围里，我们去修改这个bug。为了定位bug，有时候当第一直觉和感知还无法定位bug的时候，就需要对这一段范围进行切割分段。如何切割？切割的依据是什么？这里涉及到责任链，可以选取一个范围大小的责任链作为参考进行分割，其实也即是业务逻辑功能模块来分割。然后定位到某一段时，再次分割。</p>
 <p>这种循序渐进的方式，带来了逻辑的严密，bug就不容易被我们漏过。面对问题，只要有严密的思路和逻辑对bug和问题进行分解、拆分，加上有效时间的累积实践和反馈，就一定能找到解决和修复的方法。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
 
       
     </div>

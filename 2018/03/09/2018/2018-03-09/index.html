@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="阅读阿里安卓开发手册系列最后一篇，以下是一些让我印象深刻的点，顺带记录自己简单的思考 【强制】使用完毕的图片，应该及时回收，释放宝贵的内存。 我的思考：及时回收的含义是说，对于Bitmap对象用完后要在Activity回调方法里置空。 【推荐】应根据实际展示需要，压缩图片，而不是直接显示原图。【推荐】使用 ARGB_565 代替 ARGB_888，在不怎么降低视觉效果的前提下，减少内存占用 说明:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T06:39:23.803Z">
+<meta property="og:updated_time" content="2018-08-05T09:12:01.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里Android开发手册读后感 下篇">
 <meta name="twitter:description" content="阅读阿里安卓开发手册系列最后一篇，以下是一些让我印象深刻的点，顺带记录自己简单的思考 【强制】使用完毕的图片，应该及时回收，释放宝贵的内存。 我的思考：及时回收的含义是说，对于Bitmap对象用完后要在Activity回调方法里置空。 【推荐】应根据实际展示需要，压缩图片，而不是直接显示原图。【推荐】使用 ARGB_565 代替 ARGB_888，在不怎么降低视觉效果的前提下，减少内存占用 说明:">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -500,7 +498,6 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
 </code></pre><p><em>【推荐】使用inBitmap重复利用内存空间，避免重复开辟新内存</em></p>
 <p><em>【强制】META-INF 目录中不能包含如.apk,.odex,.so 等敏感文件，该文件夹没有经过签名，容易被恶意替换</em></p>
 <p><em>【推荐】在有强依赖 onAnimationEnd 回调的交互时，如动画播放完毕才能操作页面，onAnimationEnd 可能会因各种异常没被回调，建 议加上超时保护或通过postDelay替代onAnimationEnd</em></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings"></p>
 
       
     </div>

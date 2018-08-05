@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险 Executors 返回的线程池对象的弊端如下: 1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T06:39:18.483Z">
+<meta property="og:updated_time" content="2018-08-05T09:12:07.743Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里Android开发手册读后感 中篇">
 <meta name="twitter:description" content="【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险 Executors 返回的线程池对象的弊端如下: 1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -493,7 +491,6 @@
 <p>实践证明，效果是惊人的。我的一个drawable-xxdpi里的png图片经tinypng压缩一次后，容量从3.4M降到了1.1M。二次压缩后容量为1M。</p>
 <p><em>【强制】在 Activity.onPause()或 Activity.onStop()回调中，关闭当前 activity 正在执 行的的动画。</em></p>
 <p><strong>我的思考：</strong><br>而不是放在Activity.onDestroy()回调中，因为destroy回调时机过晚，如果不退出或者不做销毁，动画资源便不会被释放</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings"></p>
 
       
     </div>

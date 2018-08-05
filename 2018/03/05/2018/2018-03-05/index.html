@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="上周阿里公布了她的Android开发规范手册，读完一半就有相当多让我感受深刻的，做些简单的思考，记录如下 【推荐】使用Toast时，建议定义一个全局的 Toast 对象，这样可以避免连续显示 Toast 时不能取消上一次 Toast 消息的情况(如果你有连续弹出 Toast 的情况，避免 使用 Toast.makeText) 我的思考：使用单例而不是静态工具类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T06:39:13.213Z">
+<meta property="og:updated_time" content="2018-08-05T09:12:14.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里Android开发手册读后感 上篇">
 <meta name="twitter:description" content="上周阿里公布了她的Android开发规范手册，读完一半就有相当多让我感受深刻的，做些简单的思考，记录如下 【推荐】使用Toast时，建议定义一个全局的 Toast 对象，这样可以避免连续显示 Toast 时不能取消上一次 Toast 消息的情况(如果你有连续弹出 Toast 的情况，避免 使用 Toast.makeText) 我的思考：使用单例而不是静态工具类">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -479,7 +477,6 @@
 <p>说明：<br>ScrollView 中嵌套 List 或 RecyclerView 的做法官方明确禁止。除了开发过程中遇到的各种视觉和交互问题，这种做法对性能也有较大损耗ListView 等UI组件自身有垂直滚动功能也没有必要在嵌套一层 ScrollView。目前为了较好的UI体验，更贴近Material Design的设计，推荐使用 NestedScrollView</p>
 <p><strong>我的思考：</strong><br>看下NestedScrollView的体系，<br>public class NestedScrollView extends FrameLayout implements NestedScrollingParent, NestedScrollingChild2, ScrollingView {}</p>
 <p>由此可见，NestedScrollView相比传统的ScrollingView，多了NestedScrollingParent和NestedScrollingChild2赋予的能力</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings"></p>
 
       
     </div>

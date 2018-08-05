@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T06:02:16.707Z">
+<meta property="og:updated_time" content="2018-08-05T09:00:46.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="减少App的启动时间">
 <meta name="twitter:description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -448,7 +446,6 @@
 <h3 id="这里还有三个注意事项："><a href="#这里还有三个注意事项：" class="headerlink" title="这里还有三个注意事项："></a>这里还有三个注意事项：</h3><p>Android6.0后权限的适配。如果在Application里执行代码有需要用户授权，那么需要在BaseActivity里，权限请求回调函数中，从新执行Application里的代码。</p>
 <p>同时还要关注，上述变动对主页Activity带来的影响，有些在主页里执行的代码要做异常处理，然后在请求授权的回调里重新执行一遍。</p>
 <p>项目工程里，如果引用的第三方库使用到了.so文件，这些.so文件的执行速度跟手机的硬件内核有关。因此，会看到，不同的手机，相同的优化方案，减少的App启动时间会不同。 </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
 
       
     </div>

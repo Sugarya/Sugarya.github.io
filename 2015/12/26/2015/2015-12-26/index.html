@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除，触发顺序: detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T08:04:48.120Z">
+<meta property="og:updated_time" content="2018-08-05T09:00:53.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FragmentTransition的replace，add，show，hide方法的使用差异">
 <meta name="twitter:description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除，触发顺序: detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attac">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -458,7 +456,6 @@
 <p>使用这种方式，我在项目中遇到了一个问题。如果二级操作界面进入到三级操作界面，再从三级操作界面返回到二级操作界面，那么这时候在一级操作界面里，调用了二级操作界面的对象的成员对象将变成null</p>
 <p>原来，当二级操作界面进入到三级操作界面，再从三级操作界面返回到二级操作界面，二级以上的界面通过replace来显示不同的界面，这时候二级操作界面的fragment将按上面的触发顺序重新走一遍生命周期方法，创建了新的实例，原来在一级目录里引用的二级界面上的Fragment的成员对象依然是旧实例里的</p>
 <p>因此这时候解决的办法可以，在每次创建二级界面的fragment实例时，重新更新一遍（set方法）一级界面会用到的所有涉及二级界面fragment的成员变量</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
 
       
     </div>

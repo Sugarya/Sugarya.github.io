@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
 <meta property="og:description" content="背景软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取， 从网络请求获取， 从本地生成业务逻辑的数据。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T06:18:40.969Z">
+<meta property="og:updated_time" content="2018-08-05T09:06:22.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="当Json序列化与反序列遇到Map&lt;Object,Object&gt;时">
 <meta name="twitter:description" content="背景软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取， 从网络请求获取， 从本地生成业务逻辑的数据。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -698,7 +696,6 @@
 </code></pre><p><strong>小结：</strong>fastjson序列化Map，生成的字符串不是json格式，Key部分直接序列化成对象。通过{}:[]这种格式来表现Map\&lt;CategoryEntity,List\<categoryentity>&gt;的key和value。</categoryentity></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>开发中，较少会遇到需要序列化Map\&lt;Object,Object&gt;，即使遇到了也可以通过改变实体类的数据结构来规避这种解析，把Key的Object对象放入到Value的对象里，组成新的实体类，而Map的Key用String来表示。因此，本例的Map\&lt;CategoryEntity,List\<categoryentity>&gt;,可以把Map的Key部分的对象Category放入到List集合的里。这样，在某些场景，把二维层面的数据，降为一维数据，通过链式的调用来获取原来二维的数据，把数据维度转化成了链式调用的深度。</categoryentity></p>
 <p>示例代码上传到Github上了，欢迎Star，<a href="https://github.com/Sugarya/JSONParserMapTest" target="_blank" rel="noopener">传送门</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="欢迎关注CodeThings公众号"></p>
 
       
     </div>
