@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="android," />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险 Executors 返回的线程池对象的弊端如下: 1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM">
-<meta name="keywords" content="android">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里Android开发手册读后感 中篇">
 <meta property="og:url" content="https://sugarya.github.io/2018/03/08/2018/2018-03-08/index.html">
@@ -88,7 +88,7 @@
 <meta property="og:description" content="【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险 Executors 返回的线程池对象的弊端如下: 1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-c2b40ae64200e884.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T05:44:25.717Z">
+<meta property="og:updated_time" content="2018-08-05T06:39:18.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里Android开发手册读后感 中篇">
 <meta name="twitter:description" content="【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险 Executors 返回的线程池对象的弊端如下: 1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,544 字
+                  1,413 字
                 </span>
               
 
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -443,12 +443,7 @@
         <p><em>【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险</em></p>
 <p>Executors 返回的线程池对象的弊端如下:</p>
 <p>1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM</p>
-<p>2）CachedThreadPool 和 ScheduledThreadPool : 允许 的创建线程数量为Integer.MAX_VALUE，可能会创建大量的线程，从而导致 OOM。</p>
-<a id="more"></a>
-<p><em>【强制】线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险</em></p>
-<p>Executors 返回的线程池对象的弊端如下:</p>
-<p>1)FixedThreadPool 和 SingleThreadPool : 允许的请求队列长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM</p>
-<p>2）CachedThreadPool 和 ScheduledThreadPool : 允许 的创建线程数量为Integer.MAX_VALUE，可能会创建大量的线程，从而导致 OOM。</p>
+<p>2）CachedThreadPool 和 ScheduledThreadPool : 允许 的创建线程数量为Integer.MAX_VALUE，可能会创建大量的线程，从而导致 OOM。<br><a id="more"></a></p>
 <p><strong>我的思考：</strong><br>FixedThreadPool和SingleThreadPool的执行策略存在堆积大量任务；CachedThreadPool，ScheduledThreadPool则存在堆积大量线程。这两种情况都可能造成OOM异常。</p>
 <p>详细说明看这篇英文文章：<a href="http://dev.bizo.com/2014/06/cached-thread-pool-considered-harmlful.html" target="_blank" rel="noopener">传送门</a>  </p>
 <p>概述为：</p>
@@ -516,7 +511,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/android/" rel="tag"># android</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -622,7 +617,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -633,7 +628,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -644,7 +639,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

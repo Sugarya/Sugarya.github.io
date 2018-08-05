@@ -88,7 +88,7 @@
 <meta property="og:description" content="程序中，变量活动范围有：方法/函数（局部）里的，成员变量（全局变量） 当一个变量从局部变量升级到全局变量，该变量可以跨方法使用，因此在一个方法里对该变量赋值，在另一个方法里就能马上感知到并获取变量的值，体现着监听设计思想。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T16:18:11.063Z">
+<meta property="og:updated_time" content="2018-08-05T06:02:24.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中对变量范围转换引发的思考">
 <meta name="twitter:description" content="程序中，变量活动范围有：方法/函数（局部）里的，成员变量（全局变量） 当一个变量从局部变量升级到全局变量，该变量可以跨方法使用，因此在一个方法里对该变量赋值，在另一个方法里就能马上感知到并获取变量的值，体现着监听设计思想。">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  904 字
+                  807 字
                 </span>
               
 
@@ -441,8 +441,8 @@
 
       
         <p>程序中，变量活动范围有：方法/函数（局部）里的，成员变量（全局变量）</p>
-<p>当一个变量从局部变量升级到全局变量，该变量可以跨方法使用，因此在一个方法里对该变量赋值，在另一个方法里就能马上感知到并获取变量的值，体现着监听设计思想。<br><a id="more"></a><br>程序中，变量活动范围有：方法/函数（局部）里的，成员变量（全局变量）。</p>
 <p>当一个变量从局部变量升级到全局变量，该变量可以跨方法使用，因此在一个方法里对该变量赋值，在另一个方法里就能马上感知到并获取变量的值，体现着监听设计思想。</p>
+<a id="more"></a>
 <p>变量升级，并不是都带来了好的方面。一个变量升级后，就要求程序员考虑是否需要对这个变量进行维护。（所谓维护就是该变量是否处在一个循环中）如果需要维护，即变量处在循环中，则要考虑是否需要对该变量进行初始化和善后处理（因为全局变量是和其他变量或方法相互联系的）如果需要，则进一步考虑变量在循环中从0次，到1次，到2次的变化过程，并从这三次变化过程中提取规律。如果获取规律？程序员的经验以及一些更底层的规律。</p>
 <p>把一个变量从局部编程全局的途径有如下方法：</p>
 <ul>
@@ -583,7 +583,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +594,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -605,7 +605,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。">
+<meta name="description" content="简述该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。 本文重点分享上拉加载更多的实现，同时实现添加头部视图，侧滑，拖拽功能实现，该实现存在以下注意点：">
 <meta name="keywords" content="Android,RecyclerView">
 <meta property="og:type" content="article">
 <meta property="og:title" content="是时候自己来造个轮子了－－增强型RecyclerView">
 <meta property="og:url" content="https://sugarya.github.io/2017/01/23/2017/2017-01-23/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。">
+<meta property="og:description" content="简述该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。 本文重点分享上拉加载更多的实现，同时实现添加头部视图，侧滑，拖拽功能实现，该实现存在以下注意点：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T01:47:03.932Z">
+<meta property="og:updated_time" content="2018-08-05T06:21:44.628Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="是时候自己来造个轮子了－－增强型RecyclerView">
-<meta name="twitter:description" content="该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。">
+<meta name="twitter:description" content="简述该增强型RecyclerView，增加了以下特性：  上拉滑动到底部，加载更多 支持添加Header头视图 支持加载数据为空时，显示特定视图 支持拖拽，侧滑删除  下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。 本文重点分享上拉加载更多的实现，同时实现添加头部视图，侧滑，拖拽功能实现，该实现存在以下注意点：">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,066 字
+                  1,996 字
                 </span>
               
 
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  11 分钟
+                  10 分钟
                 </span>
               
             </div>
@@ -440,15 +440,7 @@
       
 
       
-        <p>该增强型RecyclerView，增加了以下特性：</p>
-<ul>
-<li>上拉滑动到底部，加载更多</li>
-<li>支持添加Header头视图</li>
-<li>支持加载数据为空时，显示特定视图</li>
-<li>支持拖拽，侧滑删除</li>
-</ul>
-<p>下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。<br><a id="more"></a></p>
-<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>该增强型RecyclerView，增加了以下特性：</p>
+        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>该增强型RecyclerView，增加了以下特性：</p>
 <ul>
 <li>上拉滑动到底部，加载更多</li>
 <li>支持添加Header头视图</li>
@@ -456,7 +448,7 @@
 <li>支持拖拽，侧滑删除</li>
 </ul>
 <p>下拉刷新实现通过给RecyclerView包一层SwipRefreshLayout来实现。</p>
-<p>本文重点分享上拉加载更多的实现，同时实现添加头部视图，侧滑，拖拽功能实现，该实现存在以下注意点：</p>
+<p>本文重点分享上拉加载更多的实现，同时实现添加头部视图，侧滑，拖拽功能实现，该实现存在以下注意点：<br><a id="more"></a></p>
 <ol>
 <li>如何判断RecyclerView滑动到了底部</li>
 <li>通常RecyclerView显示的item布局相同，怎么做到上拉加载更多时出现一个底栏视图</li>
@@ -1176,7 +1168,7 @@ protected void onDetachedFromWindow() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1187,7 +1179,7 @@ protected void onDetachedFromWindow() {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1198,7 +1190,7 @@ protected void onDetachedFromWindow() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

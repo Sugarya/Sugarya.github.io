@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间？通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
+<meta name="description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
 <meta name="keywords" content="Android,Performance">
 <meta property="og:type" content="article">
 <meta property="og:title" content="减少App的启动时间">
 <meta property="og:url" content="https://sugarya.github.io/2015/12/10/2015/2015-12-10/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间？通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
+<meta property="og:description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T16:27:07.033Z">
+<meta property="og:updated_time" content="2018-08-05T06:02:16.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="减少App的启动时间">
-<meta name="twitter:description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间？通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
+<meta name="twitter:description" content="这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下： 如何查看App的启动时间通过android自带的工具adb，使用命令行查看adb shell am start -W -n 包名/.启动Activity例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  454 字
+                  370 字
                 </span>
               
 
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  1 分钟
                 </span>
               
             </div>
@@ -441,8 +441,8 @@
 
       
         <p>这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下：</p>
-<h3 id="如何查看App的启动时间？"><a href="#如何查看App的启动时间？" class="headerlink" title="如何查看App的启动时间？"></a>如何查看App的启动时间？</h3><p>通过android自带的工具adb，使用命令行查看<br>adb shell am start -W -n 包名/.启动Activity<br>例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity<br><a id="more"></a><br>这几天在做App的启动时间优化，减少了将近一半的启动时间。先把一些感悟分享如下：</p>
 <h3 id="如何查看App的启动时间"><a href="#如何查看App的启动时间" class="headerlink" title="如何查看App的启动时间"></a>如何查看App的启动时间</h3><p>通过android自带的工具adb，使用命令行查看<br>adb shell am start -W -n 包名/.启动Activity<br>例如：adb shell am start -W -n com.adb.xyz/.view.LaunchActivity</p>
+<a id="more"></a>
 <h3 id="优化思路："><a href="#优化思路：" class="headerlink" title="优化思路："></a>优化思路：</h3><p>打开App，程序首先运行Application 的onCreate方法，多数App接下来会进入扉页，最后是主页的Activity。如果在onCreate方法里，运行过多代码以及做了耗时操作，App在启动的时候就会出现一片白屏或黑屏。</p>
 <p>而我门要做的就是把运行在onCreate的方法里的代码尽量的移到扉页中运行。</p>
 <h3 id="这里还有三个注意事项："><a href="#这里还有三个注意事项：" class="headerlink" title="这里还有三个注意事项："></a>这里还有三个注意事项：</h3><p>Android6.0后权限的适配。如果在Application里执行代码有需要用户授权，那么需要在BaseActivity里，权限请求回调函数中，从新执行Application里的代码。</p>
@@ -583,7 +583,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +594,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -605,7 +605,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -660,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何查看App的启动时间？"><span class="nav-number">1.</span> <span class="nav-text">如何查看App的启动时间？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何查看App的启动时间"><span class="nav-number">2.</span> <span class="nav-text">如何查看App的启动时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化思路："><span class="nav-number">3.</span> <span class="nav-text">优化思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这里还有三个注意事项："><span class="nav-number">4.</span> <span class="nav-text">这里还有三个注意事项：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何查看App的启动时间"><span class="nav-number">1.</span> <span class="nav-text">如何查看App的启动时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化思路："><span class="nav-number">2.</span> <span class="nav-text">优化思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这里还有三个注意事项："><span class="nav-number">3.</span> <span class="nav-text">这里还有三个注意事项：</span></a></li></ol></div>
             
 
           </div>

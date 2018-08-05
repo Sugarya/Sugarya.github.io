@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="在我之前的一篇博客Java内存模型 上一文里，对Java的内存做了一番简单的梳理。通过上述专题的阅读和学习，又有了新的认识和思考。">
+<meta name="description" content="最近看到一个专题讲解Java内存模型的，感觉干货满满，现记录如下： 深入理解Java内存模型（一）——顺序 深入理解Java内存模型（二）——重排序 深入理解Java内存模型（三）——顺序一致性">
 <meta name="keywords" content="Java,JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java内存模型 下">
 <meta property="og:url" content="https://sugarya.github.io/2016/07/10/2016/2016-07-10/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="在我之前的一篇博客Java内存模型 上一文里，对Java的内存做了一番简单的梳理。通过上述专题的阅读和学习，又有了新的认识和思考。">
+<meta property="og:description" content="最近看到一个专题讲解Java内存模型的，感觉干货满满，现记录如下： 深入理解Java内存模型（一）——顺序 深入理解Java内存模型（二）——重排序 深入理解Java内存模型（三）——顺序一致性">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T15:19:12.708Z">
+<meta property="og:updated_time" content="2018-08-05T06:08:05.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存模型 下">
-<meta name="twitter:description" content="在我之前的一篇博客Java内存模型 上一文里，对Java的内存做了一番简单的梳理。通过上述专题的阅读和学习，又有了新的认识和思考。">
+<meta name="twitter:description" content="最近看到一个专题讲解Java内存模型的，感觉干货满满，现记录如下： 深入理解Java内存模型（一）——顺序 深入理解Java内存模型（二）——重排序 深入理解Java内存模型（三）——顺序一致性">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  923 字
+                  869 字
                 </span>
               
 
@@ -440,11 +440,10 @@
       
 
       
-        <p>在我之前的一篇博客<strong>Java内存模型 上</strong>一文里，对Java的内存做了一番简单的梳理。通过上述专题的阅读和学习，又有了新的认识和思考。<br><a id="more"></a></p>
-<p>最近看到一个专题讲解Java内存模型的，感觉干货满满，现记录如下：</p>
+        <p>最近看到一个专题讲解Java内存模型的，感觉干货满满，现记录如下：</p>
 <p><a href="http://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="noopener">深入理解Java内存模型（一）——顺序</a></p>
 <p><a href="http://www.infoq.com/cn/articles/java-memory-model-2" target="_blank" rel="noopener">深入理解Java内存模型（二）——重排序</a></p>
-<p><a href="http://www.infoq.com/cn/articles/java-memory-model-3" target="_blank" rel="noopener">深入理解Java内存模型（三）——顺序一致性</a></p>
+<p><a href="http://www.infoq.com/cn/articles/java-memory-model-3" target="_blank" rel="noopener">深入理解Java内存模型（三）——顺序一致性</a><br><a id="more"></a></p>
 <p><a href="http://www.infoq.com/cn/articles/java-memory-model-4" target="_blank" rel="noopener">深入理解Java内存模型（四）——volatile</a></p>
 <p><a href="http://www.infoq.com/cn/articles/java-memory-model-5" target="_blank" rel="noopener">深入理解Java内存模型（五）——锁</a></p>
 <p><a href="http://www.infoq.com/cn/articles/java-memory-model-6" target="_blank" rel="noopener">深入理解Java内存模型（六）——final</a></p>
@@ -614,7 +613,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -625,7 +624,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -636,7 +635,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

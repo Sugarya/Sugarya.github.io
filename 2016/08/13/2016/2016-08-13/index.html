@@ -88,7 +88,7 @@
 <meta property="og:description" content="在公司的技术分享会上，做了关于RxBus的学习分享，记录如下： 一.RxBus与RxJava一次RxJava调用过程可以划分为以下环节：  创建观察内容 （片段1） 数据处理／映射（片段2） 选择线程（片段3） 订阅（片段4，片段5） 完成／错误处理（片段6）">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-52375064d610d9df.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T15:43:22.544Z">
+<meta property="og:updated_time" content="2018-08-05T06:06:40.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxBus学习之旅－从入门到提高">
 <meta name="twitter:description" content="在公司的技术分享会上，做了关于RxBus的学习分享，记录如下： 一.RxBus与RxJava一次RxJava调用过程可以划分为以下环节：  创建观察内容 （片段1） 数据处理／映射（片段2） 选择线程（片段3） 订阅（片段4，片段5） 完成／错误处理（片段6）">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,150 字
+                  1,065 字
                 </span>
               
 
@@ -448,15 +448,7 @@
 <li>选择线程（片段3）</li>
 <li>订阅（片段4，片段5）</li>
 <li>完成／错误处理（片段6）<a id="more"></a>
-在公司的技术分享会上，做了关于RxBus的学习分享，记录如下：</li>
-</ul>
-<h2 id="一-RxBus与RxJava-1"><a href="#一-RxBus与RxJava-1" class="headerlink" title="一.RxBus与RxJava"></a>一.RxBus与RxJava</h2><p>一次RxJava调用过程可以划分为以下环节：</p>
-<ul>
-<li>创建观察内容 （片段1）</li>
-<li>数据处理／映射（片段2）</li>
-<li>选择线程（片段3）</li>
-<li>订阅（片段4，片段5）</li>
-<li>完成／错误处理（片段6）</li>
+</li>
 </ul>
 <p>示例代码：</p>
 <pre><code>Observable
@@ -789,7 +781,7 @@ void onClick17() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -800,7 +792,7 @@ void onClick17() {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -811,7 +803,7 @@ void onClick17() {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -866,7 +858,7 @@ void onClick17() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-RxBus与RxJava"><span class="nav-number">1.</span> <span class="nav-text">一.RxBus与RxJava</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-RxBus与RxJava-1"><span class="nav-number">2.</span> <span class="nav-text">一.RxBus与RxJava</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-RxBus与接口回调"><span class="nav-number">3.</span> <span class="nav-text">二.RxBus与接口回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-RxBus源码分析"><span class="nav-number">4.</span> <span class="nav-text">三.RxBus源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile"><span class="nav-number">4.1.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SerializedSubject"><span class="nav-number">4.2.</span> <span class="nav-text">SerializedSubject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PublishSubject"><span class="nav-number">4.3.</span> <span class="nav-text">PublishSubject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ofType操作符-filter操作符-cast操作符"><span class="nav-number">4.4.</span> <span class="nav-text">ofType操作符 = filter操作符 + cast操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CompositeSubscription"><span class="nav-number">4.5.</span> <span class="nav-text">CompositeSubscription</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-RxBus异常处理"><span class="nav-number">5.</span> <span class="nav-text">四.RxBus异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-小结"><span class="nav-number">6.</span> <span class="nav-text">五.小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谢三弟系列"><span class="nav-number">7.</span> <span class="nav-text">谢三弟系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Yokey系列"><span class="nav-number">8.</span> <span class="nav-text">Yokey系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">9.</span> <span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-RxBus与RxJava"><span class="nav-number">1.</span> <span class="nav-text">一.RxBus与RxJava</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-RxBus与接口回调"><span class="nav-number">2.</span> <span class="nav-text">二.RxBus与接口回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-RxBus源码分析"><span class="nav-number">3.</span> <span class="nav-text">三.RxBus源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile"><span class="nav-number">3.1.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SerializedSubject"><span class="nav-number">3.2.</span> <span class="nav-text">SerializedSubject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PublishSubject"><span class="nav-number">3.3.</span> <span class="nav-text">PublishSubject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ofType操作符-filter操作符-cast操作符"><span class="nav-number">3.4.</span> <span class="nav-text">ofType操作符 = filter操作符 + cast操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CompositeSubscription"><span class="nav-number">3.5.</span> <span class="nav-text">CompositeSubscription</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-RxBus异常处理"><span class="nav-number">4.</span> <span class="nav-text">四.RxBus异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-小结"><span class="nav-number">5.</span> <span class="nav-text">五.小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谢三弟系列"><span class="nav-number">6.</span> <span class="nav-text">谢三弟系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Yokey系列"><span class="nav-number">7.</span> <span class="nav-text">Yokey系列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">8.</span> <span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>

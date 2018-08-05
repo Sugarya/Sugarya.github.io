@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取 从网络请求获取 从本地生成业务逻辑的数据">
+<meta name="description" content="背景软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取， 从网络请求获取， 从本地生成业务逻辑的数据。">
 <meta name="keywords" content="Java,Json">
 <meta property="og:type" content="article">
 <meta property="og:title" content="当Json序列化与反序列遇到Map&lt;Object,Object&gt;时">
 <meta property="og:url" content="https://sugarya.github.io/2017/06/22/2017/2017-06-22/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取 从网络请求获取 从本地生成业务逻辑的数据">
+<meta property="og:description" content="背景软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取， 从网络请求获取， 从本地生成业务逻辑的数据。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T02:59:24.326Z">
+<meta property="og:updated_time" content="2018-08-05T06:18:40.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="当Json序列化与反序列遇到Map&lt;Object,Object&gt;时">
-<meta name="twitter:description" content="软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取 从网络请求获取 从本地生成业务逻辑的数据">
+<meta name="twitter:description" content="背景软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据 获取数据有如下方式：  从数据库获取， 从网络请求获取， 从本地生成业务逻辑的数据。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,578 字
+                  1,512 字
                 </span>
               
 
@@ -440,21 +440,14 @@
       
 
       
-        <p>软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据</p>
-<p>获取数据有如下方式：</p>
-<ol>
-<li>从数据库获取</li>
-<li>从网络请求获取</li>
-<li>从本地生成业务逻辑的数据</li>
-</ol>
-<a id="more"></a>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据</p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>软件开发从数据的角度会经历三个阶段：获取数据，处理数据，展示数据</p>
 <p>获取数据有如下方式：</p>
 <ol>
 <li>从数据库获取，</li>
 <li>从网络请求获取，</li>
 <li>从本地生成业务逻辑的数据。</li>
 </ol>
+<a id="more"></a>
 <p>App客户端上，数据最初来源于后台接口，http请求获取到json字符串，json反序列化生成实体类；在这个反序列化过程中可以生成基本数据类型，JavaBean，数组，集合。集合里有List和Map，平时我们遇到反序列化情况是Map&lt;String,Object&gt;，如果需要序列化成Map&lt;Object,Object&gt;，要怎么处理呢？</p>
 <p>Json格式的表达，是以Key：Value的形式，Key只能是字符串，Value可以是对象或者数据，Map\&lt;Object,Object&gt;中Map的键是对象，这要怎么用json表现？</p>
 <p>常用的Json解析库有Gson，Jackson, Fastjson。阿里的Fastjson号称解析速度最快，Jackson解析速度比Gson快，常用在服务器端。谷歌的Gson解析稳定，常在App端使用，在中小数据量解析上和Jackson性能相近。我们来看看这三个库解析的结果</p>
@@ -840,7 +833,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -851,7 +844,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -862,7 +855,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,Android,Fragment," />
+  <meta name="keywords" content="Android,Fragment," />
 
 
 
@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除触发顺序:detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attach(">
-<meta name="keywords" content="Java,Android,Fragment">
+<meta name="description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除，触发顺序: detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attac">
+<meta name="keywords" content="Android,Fragment">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FragmentTransition的replace，add，show，hide方法的使用差异">
 <meta property="og:url" content="https://sugarya.github.io/2015/12/26/2015/2015-12-26/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除触发顺序:detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attach(">
+<meta property="og:description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除，触发顺序: detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attac">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T01:50:46.438Z">
+<meta property="og:updated_time" content="2018-08-05T08:04:48.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FragmentTransition的replace，add，show，hide方法的使用差异">
-<meta name="twitter:description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除触发顺序:detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attach(">
+<meta name="twitter:description" content="android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。 replace使用使用replace()替换后会将之前的fragment的view从viewtree中删除，触发顺序: detach()-&amp;gt;onPause()-&amp;gt;onStop()-&amp;gt;onDestroyView() attac">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  751 字
+                  666 字
                 </span>
               
 
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -441,12 +441,10 @@
 
       
         <p>android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。</p>
-<h3 id="replace使用"><a href="#replace使用" class="headerlink" title="replace使用"></a>replace使用</h3><p>使用replace()替换后会将之前的fragment的view从viewtree中删除<br>触发顺序:<br>detach()-&gt;onPause()-&gt;onStop()-&gt;onDestroyView()</p>
+<h3 id="replace使用"><a href="#replace使用" class="headerlink" title="replace使用"></a>replace使用</h3><p>使用replace()替换后会将之前的fragment的view从viewtree中删除，触发顺序:</p>
+<p>detach()-&gt;onPause()-&gt;onStop()-&gt;onDestroyView()</p>
 <p>attach()-&gt;onCreateView()-&gt;onActivityCreated()-&gt;onStart()-&gt;onResume()</p>
 <a id="more"></a>
-<p>android项目，使用Fragment来展示视图，替换Activity显示，能有效的提高响应的速度。结合在项目中的实践，接下来说说我对这些方法的使用感悟。</p>
-<h3 id="replace使用-1"><a href="#replace使用-1" class="headerlink" title="replace使用"></a>replace使用</h3><p>使用replace()替换后会将之前的fragment的view从viewtree中删除<br>触发顺序:<br>detach()-&gt;onPause()-&gt;onStop()-&gt;onDestroyView()</p>
-<p>attach()-&gt;onCreateView()-&gt;onActivityCreated()-&gt;onStart()-&gt;onResume()</p>
 <p>使用该方法，每次都可以走一遍生命周期方法，让对象保持在最新的状态，同时也会带来频繁的数据请求，实例销毁和创建</p>
 <p>replace时，通过FragmentTransition的addToBackStack(String name)方法，把被置换的fragment压入任务栈，放在新的fragment下。在replace时如果带上tag参数，那么就可以通过FragmentManager的findFragmentByTag（）找到被置换的fragment对象</p>
 <p>这样，当按返回键时，被置换的Fragment就能重新显示出来，并执行对应的生命周期方法（如上显示的触发顺序）</p>
@@ -477,8 +475,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/Java/" rel="tag"># Java</a>
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
@@ -597,7 +593,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,7 +604,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -619,7 +615,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -674,7 +670,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#replace使用"><span class="nav-number">1.</span> <span class="nav-text">replace使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#replace使用-1"><span class="nav-number">2.</span> <span class="nav-text">replace使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add使用"><span class="nav-number">3.</span> <span class="nav-text">add使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#replace使用"><span class="nav-number">1.</span> <span class="nav-text">replace使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add使用"><span class="nav-number">2.</span> <span class="nav-text">add使用</span></a></li></ol></div>
             
 
           </div>

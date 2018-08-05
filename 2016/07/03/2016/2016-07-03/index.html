@@ -88,7 +88,7 @@
 <meta property="og:description" content="Java内存模型（Java Memory Model，JMM） 内存模型规定： 所有的变量都是存在主存当中（类似于物理内存） 每个线程都有自己的工作内存（类似于高速缓存） 线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。 每个线程不能访问其他线程的工作内存。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T15:16:20.667Z">
+<meta property="og:updated_time" content="2018-08-05T06:08:43.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存模型 上">
 <meta name="twitter:description" content="Java内存模型（Java Memory Model，JMM） 内存模型规定： 所有的变量都是存在主存当中（类似于物理内存） 每个线程都有自己的工作内存（类似于高速缓存） 线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。 每个线程不能访问其他线程的工作内存。">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  734 字
+                  625 字
                 </span>
               
 
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -447,13 +447,6 @@
 <li>线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。</li>
 <li>每个线程不能访问其他线程的工作内存。<a id="more"></a>
 </li>
-</ol>
-<p>Java内存模型（Java Memory Model，JMM）</p>
-<h3 id="内存模型规定：-1"><a href="#内存模型规定：-1" class="headerlink" title="内存模型规定："></a>内存模型规定：</h3><ol>
-<li>所有的变量都是存在主存当中（类似于物理内存）</li>
-<li>每个线程都有自己的工作内存（类似于高速缓存）</li>
-<li>线程对变量的所有操作都必须在工作内存中进行，而不能直接对主存进行操作。</li>
-<li>每个线程不能访问其他线程的工作内存。</li>
 </ol>
 <h3 id="缓存一致性（Cache-coherence）问题"><a href="#缓存一致性（Cache-coherence）问题" class="headerlink" title="缓存一致性（Cache coherence）问题"></a>缓存一致性（Cache coherence）问题</h3><p>当程序在运行过程中，会将运算需要的数据从主存复制一份到CPU的高速缓存当中，那么CPU进行计算时就可以直接从它的高速缓存读取数据和向其中写入数据，当运算结束之后，再将高速缓存中的数据刷新到主存当中</p>
 <p>在一个系统中，当许多不同的设备共享一个共同存储器资源，在高速缓存中的数据不一致，就会产生问题。也就是说如果一个变量在多个CPU中都存在缓存（一般在多线程编程时才会出现），那么就可能存在缓存不一致的问题。</p>
@@ -611,7 +604,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -622,7 +615,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -633,7 +626,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -688,7 +681,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存模型规定："><span class="nav-number">1.</span> <span class="nav-text">内存模型规定：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存模型规定：-1"><span class="nav-number">2.</span> <span class="nav-text">内存模型规定：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存一致性（Cache-coherence）问题"><span class="nav-number">3.</span> <span class="nav-text">缓存一致性（Cache coherence）问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存一致性可以分为三个层级："><span class="nav-number">3.1.</span> <span class="nav-text">缓存一致性可以分为三个层级：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为了解决缓存不一致性问题，通常来说有以下2种解决方法："><span class="nav-number">3.2.</span> <span class="nav-text">为了解决缓存不一致性问题，通常来说有以下2种解决方法：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存模型规定："><span class="nav-number">1.</span> <span class="nav-text">内存模型规定：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存一致性（Cache-coherence）问题"><span class="nav-number">2.</span> <span class="nav-text">缓存一致性（Cache coherence）问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存一致性可以分为三个层级："><span class="nav-number">2.1.</span> <span class="nav-text">缓存一致性可以分为三个层级：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为了解决缓存不一致性问题，通常来说有以下2种解决方法："><span class="nav-number">2.2.</span> <span class="nav-text">为了解决缓存不一致性问题，通常来说有以下2种解决方法：</span></a></li></ol></li></ol></div>
             
 
           </div>

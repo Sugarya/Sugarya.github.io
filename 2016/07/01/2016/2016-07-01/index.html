@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="并发编程的三个问题：原子性问题，可见性问题，有序性问题">
+<meta name="description" content="并发编程的三个问题：原子性问题，可见性问题，有序性问题 原子性概念简介 一个操作或者多个操作，要么全部执行，要么就都不执行 执行的过程不会被任何因素打断">
 <meta name="keywords" content="Java,JVM,Concurrency">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发编程">
 <meta property="og:url" content="https://sugarya.github.io/2016/07/01/2016/2016-07-01/index.html">
 <meta property="og:site_name" content="Ethan Ruan&#39;s Blog">
-<meta property="og:description" content="并发编程的三个问题：原子性问题，可见性问题，有序性问题">
+<meta property="og:description" content="并发编程的三个问题：原子性问题，可见性问题，有序性问题 原子性概念简介 一个操作或者多个操作，要么全部执行，要么就都不执行 执行的过程不会被任何因素打断">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-04T15:24:26.668Z">
+<meta property="og:updated_time" content="2018-08-05T06:08:59.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发编程">
-<meta name="twitter:description" content="并发编程的三个问题：原子性问题，可见性问题，有序性问题">
+<meta name="twitter:description" content="并发编程的三个问题：原子性问题，可见性问题，有序性问题 原子性概念简介 一个操作或者多个操作，要么全部执行，要么就都不执行 执行的过程不会被任何因素打断">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,306 字
+                  1,282 字
                 </span>
               
 
@@ -440,10 +440,11 @@
       
 
       
-        <p>并发编程的三个问题：原子性问题，可见性问题，有序性问题<br><a id="more"></a><br>并发编程的三个问题：原子性问题，可见性问题，有序性问题</p>
+        <p>并发编程的三个问题：原子性问题，可见性问题，有序性问题</p>
 <h2 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h2><h3 id="概念简介"><a href="#概念简介" class="headerlink" title="概念简介"></a>概念简介</h3><ol>
 <li>一个操作或者多个操作，要么全部执行，要么就都不执行</li>
-<li>执行的过程不会被任何因素打断</li>
+<li>执行的过程不会被任何因素打断<a id="more"></a>
+</li>
 </ol>
 <p>只有简单的读取、赋值（而且必须是将数字赋值给某个变量，变量之间的相互赋值不是原子操作）才是原子操作。Java内存模型只保证了基本读取和赋值是原子性操作。</p>
 <h3 id="Java语言提供的保证："><a href="#Java语言提供的保证：" class="headerlink" title="Java语言提供的保证："></a>Java语言提供的保证：</h3><p>通过synchronized和Lock来实现。由于synchronized和Lock能够保证任一时刻只有一个线程执行该代码块，那么自然就不存在原子性问题了，从而保证了原子性。</p>
@@ -652,7 +653,7 @@ doSomethingWithConfig(context);
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -663,7 +664,7 @@ doSomethingWithConfig(context);
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -674,7 +675,7 @@ doSomethingWithConfig(context);
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

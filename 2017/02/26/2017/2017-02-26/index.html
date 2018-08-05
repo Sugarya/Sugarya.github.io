@@ -88,7 +88,7 @@
 <meta property="og:description" content="简介在Android开发中，时不时需要用户输入一些数据，有输入就有格式上的要求。比如EditText输入金额时，通常要保留小数点后两位，这个如何实现呢？ 首先在布局文件里，通过android:inputType限定EditText输入的内容，numberDecimal表示只能输入带小数点的浮点格式">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1933990-28eb61a91f733c41.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-05T01:49:01.968Z">
+<meta property="og:updated_time" content="2018-08-05T06:21:26.456Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安卓EditText－实现输入小数点后几位的逻辑演变">
 <meta name="twitter:description" content="简介在Android开发中，时不时需要用户输入一些数据，有输入就有格式上的要求。比如EditText输入金额时，通常要保留小数点后两位，这个如何实现呢？ 首先在布局文件里，通过android:inputType限定EditText输入的内容，numberDecimal表示只能输入带小数点的浮点格式">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  960 字
+                  868 字
                 </span>
               
 
@@ -441,10 +441,7 @@
 
       
         <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在Android开发中，时不时需要用户输入一些数据，有输入就有格式上的要求。比如EditText输入金额时，通常要保留小数点后两位，这个如何实现呢？</p>
-<p>首先在布局文件里，通过android:inputType限定EditText输入的内容，numberDecimal表示只能输入带小数点的浮点格式</p>
-<a id="more"></a>
-<h2 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h2><p>在Android开发中，时不时需要用户输入一些数据，有输入就有格式上的要求。比如EditText输入金额时，通常要保留小数点后两位，这个如何实现呢？</p>
-<p>首先在布局文件里，通过android:inputType限定EditText输入的内容，numberDecimal表示只能输入带小数点的浮点格式</p>
+<p>首先在布局文件里，通过android:inputType限定EditText输入的内容，numberDecimal表示只能输入带小数点的浮点格式<br><a id="more"></a></p>
 <pre><code>&lt;EditText
     android:id=&quot;@+id/tiet_invoice_free_tax_amount&quot;
     style=&quot;@style/InvoiceDetailEditTextStyle&quot;
@@ -731,7 +728,7 @@ public void setDecimalNumber(int decimalNumber) {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -742,7 +739,7 @@ public void setDecimalNumber(int decimalNumber) {
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -753,7 +750,7 @@ public void setDecimalNumber(int decimalNumber) {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -808,7 +805,7 @@ public void setDecimalNumber(int decimalNumber) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一，普通实现"><span class="nav-number">2.1.</span> <span class="nav-text">方法一，普通实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二，简洁实现"><span class="nav-number">2.2.</span> <span class="nav-text">方法二，简洁实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三，优雅实现"><span class="nav-number">2.3.</span> <span class="nav-text">方法三，优雅实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-简单的自定义控件DecimalEditText，实现输入小数点后若干位"><span class="nav-number">3.</span> <span class="nav-text">二 简单的自定义控件DecimalEditText，实现输入小数点后若干位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一，普通实现"><span class="nav-number">1.1.</span> <span class="nav-text">方法一，普通实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二，简洁实现"><span class="nav-number">1.2.</span> <span class="nav-text">方法二，简洁实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法三，优雅实现"><span class="nav-number">1.3.</span> <span class="nav-text">方法三，优雅实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-简单的自定义控件DecimalEditText，实现输入小数点后若干位"><span class="nav-number">2.</span> <span class="nav-text">二 简单的自定义控件DecimalEditText，实现输入小数点后若干位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
