@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[程序员该如何选择成长路径]]></title>
+    <url>%2F2018%2F08%2F12%2F2018%2F2018-08-12%2F</url>
+    <content type="text"><![CDATA[想走专家之路的程序员，成长路径如何选择？这些年走来有一些认识和思考 软件技能模型我把编程技能所需分为四个层次： 应用层：所从事的开发岗位直接相关的编程知识 传输层：编程语言的特性和使用，建模思维，设计模式 基础层：包括数据结构和算法，操作系统，编译原理，计算机网络等等 数学层：高等数学，概率轮，线性代数，离散数学 因此可以形成这样一条链路： 应用层 –〉传输层 –〉基础层 -〉数学层 反向走 数学层 –〉基础层 –〉传输层 –〉应用层 现实的问题从应用层向下传递，哪一层涉及到了，就为解决该问题提供支持，解决的结果向上汇合给到上一层，然后在应用层给出代码。这像极了安卓开发里的触摸事件传递。 这四层构成一个橄榄型，大量的时间和精力需要投入到基础层和传输层环节。 时间投放大家在工作之中，不知觉的把大部分时间放在应用层，其实这样不好。而是要把大量的时间放在传输层和基础层，甚至是数学层上，超过的一半的时间放在基础层内容的精进上，尤其对于想走通技术专家之路的程序员更当如此。 现在你所从事的软件开发岗位，比如后端开发；职业生涯中后期你从事的领域变更了。过早的把时间投放在早期的应用层，将失去了快速迁移和深入的研究的潜力 你所在公司的项目，不一定能存活下来。把时间放在应用层，如果项目失败了，虽然代码写完，你的技术收获还在，但是项目的溢出利益没有了。大概率的精力投入在基础层，这样你的收益将会贯穿于整个职业生涯。 程序员的高阶状态是自己造轮子和写框架，能解决其他大多数程序员搞不定的问题。做到和大多数程序员不一样靠的是什么？那就要有大多数程序员所没有的东西，那是什么？基础层和数学层的能力。 小结回顾过去，有2年左右时间，我把超过一半业余时间投入到了项目本身和应用层学习上，走了弯路。 希望本篇内容能带给你有益的思考。]]></content>
+      <categories>
+        <category>生活百感</category>
+      </categories>
+      <tags>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面向对象世界的演化和设计--序章]]></title>
+    <url>%2F2018%2F08%2F09%2F2018%2F2018-08-09%2F</url>
+    <content type="text"><![CDATA[楔子现实世界精彩又复杂，业务逻辑和问题如何落实到代码上呢？ 采用一种划分、整理逻辑的方式把现实世界的问题映射到代码世界里，映射法则是软件编程的范式和思想： 面向过程（结构化编程） 面向对象 函数式 面向过程的结构化设计从上世纪70年代兴起，是软件开发第一个系统化的编程思想。 一次完整的结构化编程的宏观步骤 从代表目标系统整体功能的单个处理着手，自顶向下不断把复杂的处理分解为子处理 一层一层的分解下去，直到仅剩下若干个容易实现的子处理功能为止 用相应的工具来描述各个最低层的子处理 因此，结构化方法是围绕实现处理功能的“过程”来构造系统的，按功能来划分、组织、梳理逻辑。 现实中，用户需求的变化大部分是针对功能，这种变化对于基于过程的系统设计来说是跪弱的。结构化方法开发的软件，其稳定性、可修改性和可重用性都比较差，这是因为结构化方法的本质是功能分解。 结构化和面向对象的关系 面向对象改善了结构化的不足，系统的分解不再基于功能而是基于对象。 把原来一个功能的逻辑分割、打散，放入到类里成为对象的行为和属性，对象行为的逻辑实现是过程化的。 面向对象分析与设计对系统的分解，代表了一种演进式的开发，而不是对面向过程的革命式颠覆。 从结构化到面向对象，提醒我们开发业务功能的时候，把功能转化成对象来组织，否则就会不自觉的陷入结构化编程里。 从演化到设计类别和概念类别： 该类目所有成员的集合 概念： 描述所具有的共同的本质属性 举个例子，“鸟”既可以作为一个类别,也可以作为一个概念。当“鸟”作为一个类别时，它包含了会飞和不会飞的所有不同种类的鸟。当“鸟”作为一个概念时,则描述的是所有的鸟所具有的共同的本质属性，比如都有翅膀。 面向对象里的类说的是类别，面向对象里的对象说的是概念。类的实例化意味着认知从类别转变成概念 怎么做学过通信的人会知道，如果在时域处理问题困难重重，可以把时域转成频域，在频域处理完后，转回时域。 面向对象世界的演化过程是不断建立新概念的的过程，新概念的产生伴随着建立、熟悉和固化出短的思维路径。 某段代码片段 —〉 面向对象里的相关概念 —〉思维路径 —〉现实世界的场景片段 这样一条链路，从软件程序出发，把软件和现实连接了起来。 沿着链路反向走 某段代码片段〈— 面向对象里的相关概念〈—- 思维路径〈—- 现实世界的场景片段 把复杂现实的软件系统，分解成熟悉的场景片段 由场景片段，根据上面的链路找到对应的代码片段 组合代码片段，得出软件项目 专题计划基于上述的思考和认识，本系列将尝试收集演化过程中出现的一条条链路，并探讨如何组装众多的程序片段，得到软件项目。 预计由5个章节展开，它们分别是： 面向对象世界的演化与设计 – 萌芽 面向对象世界的演化与设计 – 扩张 面向对象世界的演化与设计 – 融合 面向对象世界的演化与设计 – 成熟 面向对象世界的演化与设计 – 后记]]></content>
+      <categories>
+        <category>面向对象世界的演化和设计</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>OOAD</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android原生项目集成ReactNative混合开发]]></title>
     <url>%2F2018%2F08%2F03%2F2018%2F2018-08-03%2F</url>
     <content type="text"><![CDATA[假设你已经配置好了ReactNative开发所需的开发环境，若没有，建议先看这篇React Native官网的翻译：搭建开发环境 以下是 本篇的正文: 初始化React Native 生成package.json文件，该文件用于记录react native版本信息和依赖包 加入React，React Native类库 生成flowconfig文件 12345678910npm init&quot;scripts&quot;: &#123; &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;, &quot;start&quot;: &quot;node node_modules/react-native/local-cli/cli.js start&quot;&#125;npm install --save react react-native@版本号curl -o .flowconfig https://raw.githubusercontent.com/facebook/react-native/master/.flowconfig 配置原生安卓项目的Gradle12345678910111213141516171819202122232425allprojects &#123; repositories &#123; maven &#123; url &quot;$rootDir/node_modules/react-native/android&quot; &#125; jcenter() &#125;&#125;dependencies &#123; implementation &apos;com.facebook.react:react-native:版本号&apos;&#125;android &#123; defaultConfig &#123; ndk &#123; //选择要添加的对应cpu类型的.so库。 abiFilters &apos;armeabi&apos;, &quot;armeabi-v7a&quot;,&quot;armeabi-v7a&quot;,&quot;x86&quot; &#125; &#125; configurations.all &#123; resolutionStrategy.force &apos;com.google.code.findbugs:jsr305:3.0.0&apos; &#125;&#125; 添加权限12345&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;&lt;uses-permission android:name=&quot;android.permission.SYSTEM_ALERT_WINDOW&quot;/&gt;&lt;uses-permission android:name=&quot;android.permission.SYSTEM_OVERLAY_WINDOW&quot;/&gt;&lt;activity android:name=&quot;com.facebook.react.devsupport.DevSettingsActivity&quot;/&gt; 添加React native入口在项目根目录下，新建index.js文件作为React Native控件配置页 Hello World示例 12345678910111213141516171819202122232425import React from &apos;react&apos;;import &#123;AppRegistry, StyleSheet, Text, View&#125; from &apos;react-native&apos;;class HelloWorld extends React.Component &#123; render() &#123; return ( &lt;View style=&#123;styles.container&#125;&gt; &lt;Text style=&#123;styles.hello&#125;&gt;Hello, World&lt;/Text&gt; &lt;/View&gt; ); &#125;&#125;var styles = StyleSheet.create(&#123; container: &#123; flex: 1, justifyContent: &apos;center&apos;, &#125;, hello: &#123; fontSize: 20, textAlign: &apos;center&apos;, margin: 10, &#125;,&#125;);AppRegistry.registerComponent(&apos;AndroidRnDemoApp&apos;, () =&gt; HelloWorld); 编译运行到安卓真机12adb reverse tcp:8081 tcp:8081npm start 打包新建assert资产文件 1react-native bundle --platform android --dev false --entry-file index.js --bundle-output app/src/main/assets/index.android.bundle --assets-dest app/src/main/res/ 小结 本次Android集成了React Native0.51.0版本的环境（最新为0.56.0），采取了原生项目为主，编译和打包仍走安卓项目的Gradle流程 React Native集成过程中，由于Kotlin改写了模块iml文件里的某处标签信息，使得项目无法正常编译，往文件里手动添加如下标签得以修复： 1&lt;orderEntry type=&quot;jdk&quot; jdkName=&quot;Android API 27 Platform&quot; jdkType=&quot;Android SDK&quot; /&gt;]]></content>
@@ -768,8 +791,8 @@
         <category>Android开发</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>Android</tag>
+        <tag>Java</tag>
         <tag>RxJava</tag>
       </tags>
   </entry>
@@ -803,8 +826,8 @@
         <category>Android开发</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>Android</tag>
+        <tag>Java</tag>
         <tag>RxJava</tag>
       </tags>
   </entry>
@@ -959,8 +982,8 @@
         <category>代码杂思</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>Android</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
 </search>
